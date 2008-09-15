@@ -8,9 +8,9 @@
 %
 %
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
-% -- Version 1.5 --
+% -- Version 1.6 --
 %
-\documentclass[print]{kartei}
+\documentclass[print,a6paper]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
@@ -41,5 +41,7 @@
 
 	\begin{karte}{}{}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}
 		\label{karte:frage} Siehe Karte \ref{karte:antwort}
+		
+		Und der Absatz ? 
 	\end{karte}
 \end{document}
