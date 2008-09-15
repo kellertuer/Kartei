@@ -10,38 +10,34 @@
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
 % -- Version 1.6 --
 %
-\documentclass[print,a6paper]{kartei}
+\documentclass[a6paper]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
 \usepackage[scaled]{helvet}
 \usepackage[ngerman]{babel} % Neue Rechtschreibung
 %Menge an Paketen die für vor allem mathematisches und informatisches gut brauchbar ist
-\usepackage{graphicx,textcomp,booktabs,mathptmx,courier,calc,trfsigns}
-\usepackage{enumerate,subfigure,listings,color,amsmath,amssymb,euscript}
 %
 % Deutsche Absatzformatierung
 %
 \setlength{\parindent}{0pt} 
 \setlength{\parskip}{1em}	
-
 \begin{document}
-	
-	\begin{karte}{Lebensphilosophie}{Prüfungsfrage}{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest}
+	\begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
 	42
 	\end{karte}
 	
-	\begin{karte}{Zahlenkunde}{}{Was ist der Unterschied in der Verwendung von Drölf und $n$ bei „Ihnen“ ?}
+ 	\begin{karte}[Zahlenkunde]{Was ist der Unterschied in der Verwendung von Drölf und $n$ bei „Ihnen“ ?}
 	$n$ wird verwendet für Zahlen bis hin zu „verdammt groß“, Drölf nur bis hin zu verdammt.
 	\end{karte}
-
-	\begin{karte}{Informatik}{LabelKarte}{Was ist verschränkte Rekursion ?}
-	\label{karte:antwort} Siehe Antwort auf Karte \ref{karte:frage}
+	\section*{Informatik}
+	\subsection*{Spaß mit Verweisen}
+	\renewcommand{\kommentarstil}{\textsc}
+	\begin{karte}{Was ist verschränkte Rekursion ?}[ein Beispiel für Label]
+	\label{karte:antwort} Siehe Karte \ref{karte:frage}
 	\end{karte}
 
-	\begin{karte}{}{}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}
-		\label{karte:frage} Siehe Karte \ref{karte:antwort}
-		
-		Und der Absatz ? 
+	\begin{karte}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}[ein Beispiel für Label \# 2]
+			Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
 	\end{karte}
 \end{document}

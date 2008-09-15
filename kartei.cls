@@ -37,10 +37,72 @@
 %Standard: A6 
 \card@papersize=1%
 
+%
+% Antowrttext (Rückseite mitte)
+% Answertext
+%
+\newcommand{\cardantwort}{\emph{Antwort}}%
+\newcommand{\antworttext}[1]{\renewcommand{\cardantwort}{#1}}%
+
+%english stuff
+\newcommand{\answertext}{}%
+\let\answertext=\antworttext%
+
+%
+% Fach (Standard vorne links)
+% Subject
+%
+%
+\newcommand{\dasfach}[1]{%
+\ifx\card@fach\@empty%
+\fachstil{#1}%
+\else%
+\fachstil{\card@fach}\relax%
+\fi%
+}
+\newcommand{\fach}[1]{\def\card@fach{#1}}%
+\newcommand{\fachstil}{\emph}
+%Expliziter Standard: leer
+\global\let\card@fach\@empty
+
+%english names
+\newcommand{\subject}{}
+\let\subject=\fach
+\newcommand{\thesubject}{}
+\let\thesubject=\dasfach
+\newcommand{\subjectstyle}{}
+\let\subjectstyle=\fachstil
+
+%
+% Kommentar 2 (Standard vorne rechts)
+%
+%
+\newcommand{\derkommentar}[1]{%
+\ifx\card@kommentar\@empty%
+ \kommentarstil{#1}
+\else%
+ \kommentarstil\card@kommentar\relax%
+\fi%
+}
+\newcommand{\kommentar}[1]{\def\card@kommentar{#1}}%
+\newcommand{\kommentarstil}{\emph}
+% Expluiziter Standard : leer
+\global\let\card@kommentar\@empty
+
+%english names
+\newcommand{\comment}{}
+\let\comment=\kommentar
+\newcommand{\thecomment}{}
+\let\thecomment=\derkommentar
+\newcommand{\commentstyle}{}
+\let\commentstyle=\kommentarstil
+
+
 
 \LoadClass[a4paper,twoside, 10pt, landscape]{article}
 \RequirePackage{fancyhdr}
 \RequirePackage{vmargin}
+\RequirePackage{xargs}
 \newcommand{\setcardpagelayout}{}
 
 \DeclareOption{print}{%
@@ -58,19 +120,19 @@
 
 \DeclareOption{a6paper}{
 \setpapersize[landscape]{A6}% 
-\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{2.5mm}
+\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}
 \card@papersize=0%
 }
 
 \DeclareOption{a7paper}{
 \setpapersize[landscape]{A7}% 
-\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{2mm}%
+\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
 \card@papersize=1%
 }%
 
 \DeclareOption{a8paper}{
 \setpapersize[landscape]{A8}% 
-\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1.5mm}%
+\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
 \card@papersize=2%
 }%	
 
@@ -117,52 +179,6 @@
 	\renewcommand{\setcardpagelayout}{} % no print
 \fi	
 
-%
-% Definieren des A6-Blattes mit entsprechenden Schriftgrößen
-%
-%
-% Standard-Layout: 	Kopf:  Kartennummer vorne mittig, hinten links (also bei y0), hinten mitte „Antwort“
-% 					Fußzeile: leer
-%
-\renewcommand{\headrulewidth}{0.2pt}
-\renewcommand{\footrulewidth}{0.0pt} 
-\pagestyle{fancy}{% 
-	\fancyhf{}%
-	\fancyhead[CO,LE]{\emph{\theCardID}}%	
-	\fancyhead[RE]{}%
-	\fancyhead[CE]{\emph{Antwort}}%
-}
-
-%
-% Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
-%
-\newcounter{CardID}
-\renewcommand{\theCardID}{\# \arabic{CardID}}
-
-
-%
-%	Karteikartenumgebung:
-%	#1 Kopfzeile vorne Links
-% 	#2 Kopfzeile vorne rechts
-% 	#3 Titel der Vorderseite  	
-%
-\newenvironment{karte}[3]
-{% Vor der Umgebung: Vorderseite bauen
- %
-	\pagestyle{fancy}{% 
-		\fancyhead[LO]{\emph{#1}} %Fach
-		\fancyhead[RO]{\emph{#2}} %Kommentar
-	}%
-~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #3}\hfill~}\vfill~
-\refstepcounter{CardID}
-\newpage%
-}%
-{% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
- % und neue Karteikarte auf ungerader Seite beginnen lassen
- %
-	\fancyhead[LO]{\emph{\textbf{Achtung:} Rückseite der Karte ist zu voll}}
-	\cleardoublepage
-}
 \RequirePackage{pgfpages,tikz}
 %
 % redefine page output, so that 4 odd are on first, 4 even on second, adapted from pgfpages
@@ -1745,6 +1761,82 @@
 	border code=\pgfsetlinewidth{.5pt}\pgfstroke
   }%
 }%
+
+
+%
+% Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
+%
+\newcounter{CardID}
+\renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
+
+\makeatletter
+% Section wird nun für Fächer verwendet
+% Dazu wird zunächst die alte Section gesichert
+\newcommand{\origsection}{}
+\let\origsection=\section
+%
+% Makro nun neu definieren:
+\def\section{\@ifstar\unnumberedsection\numberedsection} 
+\def\numberedsection#1{\refstepcounter{section}\fach{\thesection.\ #1}}%
+\def\unnumberedsection#1{\fach{#1}}%
+
+% Subsection wird nun für das Kommentarfeld verwendet
+% Dazu wird zunächst die alte Subsection gesichert
+\newcommand{\origsubsection}{}
+\let\origsubsection=\subsection
+% Zähler nur auf subseciton setzen
+%
+% Makro nun neu definieren:
+\def\subsection{\@ifstar\unnumberedsubsection\numberedsubsection} 
+\def\numberedsubsection#1{%
+	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+	\refstepcounter{subsection}%
+	\kommentar{\thesubsection.\ #1}}%
+\def\unnumberedsubsection#1{%
+\renewcommand{\thesubsection}{\arabic{subsection}}
+\kommentar{#1}}%
+\makeatother
+
+%
+%	Karteikartenumgebung:
+%	#1 (optional) Kopfzeile vorne Links : Fach
+% 	#2 Titel der Vorderseite  	
+% 	#3 (optional) Kopfzeile vorne rechts : Kommentar
+%
+\newenvironmentx{karte}[3][1,3]
+{% Vor der Umgebung: Vorderseite bauen
+ %
+	\pagestyle{fancy}
+	{
+		\fancyhead[LO]{\dasfach{#1}} %\emph{#1}} %Fach
+		\fancyhead[RO]{\derkommentar{#3}} %Kommentar
+	}
+	\pagestyle{fancy}{% 
+	}%
+~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
+\refstepcounter{CardID}
+\newpage%
+}%
+{% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
+ % und neue Karteikarte auf ungerader Seite beginnen lassen
+ %
+	\fancyhead[LO]{\emph{\textbf{Achtung:} Rückseite der Karte ist zu voll}}
+	\cleardoublepage
+}
+
+
+%
+% Standard-Layout: 	Kopf:  Kartennummer vorne mittig, hinten links (also bei y0), hinten mitte „Antwort“
+% 					Fußzeile: leer
+%
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.0pt} 
+\pagestyle{fancy}{% 
+	\fancyhf{}%
+	\fancyhead[CO,LE]{\theCardID}}%	
+	\fancyhead[RE]{}%
+	\fancyhead[CE]{\cardantwort}%
+}
 
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
