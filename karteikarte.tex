@@ -1,0 +1,138 @@
+%
+%		* ----------------------------------------------------------------------------
+%		* "THE BEER-WARE LICENSE" (Revision 42/023):
+%		* Ronny Bergmann <mail@darkmoonwolf.de> wrote this file. As long as you retain 
+%		* this notice you can do whatever you want with this stuff. If we meet some day,
+%		* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
+%		* ----------------------------------------------------------------------------
+%
+%
+% Dokument-Vorlage für Din A6 Karteikarten 
+% -- Version 1.5 --
+%
+% - Karteikartenumgebung mit automatischer Durchnummerierung (Referenzen verweisen auf die Karteikarten # Nummer)
+% - Für eine Karte kann
+% 	* Kopf oben rechts und rechts (wird jeweils kursiv gesetzt)
+% 	* Ein Titel für die Vorderseite angegeben werden
+% 
+% - Karteikartenumgebung karte die wie folgt verwendet wird
+% 
+%	\begin{karte}{KopfRechts}{KopfLinks}{Karteikartentitel}
+%		Rückseite
+%	\end{karte}
+%
+\documentclass[twoside, 10pt, landscape]{article}
+\usepackage[utf8]{inputenc} %UTF8
+\usepackage[OT1]{fontenc}
+\usepackage[scaled]{helvet}
+\usepackage[ngerman]{babel} % Neue Rechtschreibung
+%Menge an Paketen die für vor allem mathematisches und informatisches gut brauchbar ist
+\usepackage{graphicx,textcomp,booktabs,mathptmx,courier,calc,fancyhdr,trfsigns}
+\usepackage{enumerate,subfigure,listings,color,amsmath,amssymb,euscript}
+%
+% Definieren des A6-Blattes mit entsprechenden Schriftgrößen
+%
+\usepackage{geometry}
+\geometry{	a6paper,%
+			tmargin=1cm, bmargin=.5cm,% 
+			lmargin=.5cm, rmargin=.5cm,% 
+			headheight=1.3em, headsep=1em,% 
+			footskip=.25cm} 
+
+%
+% Deutsche Absatzformatierung
+%
+\setlength{\parindent}{0pt} 
+\setlength{\parskip}{1em}	
+
+%
+% Standard-Layout: 	Kopf:  Kartennummer vorne mittig, hinten links (also bei y0), hinten mitte „Antwort“
+% 					Fußzeile: leer
+%
+\renewcommand{\headrulewidth}{0.2pt}
+\renewcommand{\footrulewidth}{0.0pt} 
+\pagestyle{fancy}{% 
+	\fancyhf{}%
+	\fancyhead[CO,LE]{\emph{\theCardID}}%	
+	\fancyhead[RE]{}%
+	\fancyhead[CE]{\emph{Antwort}}%
+}
+
+%
+% Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
+%
+\newcounter{CardID}
+\renewcommand{\theCardID}{\# \arabic{CardID}}
+
+%
+%	Karteikartenumgebung:
+%	#1 Kopfzeile vorne Links
+% 	#2 Kopfzeile vorne rechts
+% 	#3 Titel der Vorderseite  	
+%
+\newenvironment{karte}[3]
+{% Vor der Umgebung: Vorderseite bauen
+ %
+	\pagestyle{fancy}{% 
+		\fancyhead[LO]{\emph{#1}} %Fach
+		\fancyhead[RO]{\emph{#2}} %Kommentar
+	}%
+~\vfill{~\hfill \Large #3\hfill~}\vfill~
+\refstepcounter{CardID}
+\newpage%
+}%
+{% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
+ % und neue Karteikarte auf ungerader Seite beginnen lassen
+ %
+	\fancyhead[LO]{\emph{TODO - ab und an Karteikarte zuviel generiert,}}
+	\fancyhead[RO]{\emph{wenn Rückseite recht voll}}
+	\cleardoublepage
+}
+
+%
+%	Beginn des Dokumentes, hier mit einer recht vollen Karte und 
+% 	2 Beispielkarten mit Referenzbeispiel
+%
+
+\begin{document}
+	
+	\begin{karte}{Rechnerarchitektur}{Prüfungsfrage}{RISC \& CISC}
+			\begin{tabular}{p{.45\textwidth}|p{.49\textwidth}}
+				\parbox[t]{.45\textwidth}
+				{\textbf{CISC} - Complex Instruction Set Computing\\
+				\begin{itemize}
+					\item klassischer Befehlssatz
+					\item Ziel: komplexität in die CPU $\Rightarrow$ Speicherersparnis
+					\item viele leistungsfähige Einzelbefehle
+					\item unterschiedliche Befehlsformate/breite
+					\item Nachteile: hoher Decodierungsaufwand, längere Einzelausführungszeit
+					\item ursprünglich mikroprogrammiert
+					\item \emph{Beispielarchitektur} x86\\
+					(ab Pentium Pro interne Umsetzung in RISC/ $\mu$Op)
+				\end{itemize}}
+				&
+				\parbox[t]{.45\textwidth}
+				{\textbf{RISC} - Reduced Instruction Set Computing\\
+				\begin{itemize}
+					\item reduzierter Befehlssatz, einheitliche Befehlsbreite
+					\item kurze Decodierzeit \& schnelle Einzelbefehle
+					\item[$\Rightarrow$] schnellere Interrupts 
+					\item nur \emph{Load} und \emph{Store} greifen auf Speicher zu
+					\item[$\Rightarrow$] großer Registersatz 
+					\item führt die SPEC-Top500 an
+					\item teilweise trotzdem komplexere Befehle etwa MMX oder AltiVec
+					\item \emph{Beispielarchitektur} PPC, ARM, ATMega
+				\end{itemize}
+				}
+			\end{tabular}
+	\end{karte}
+
+	\begin{karte}{Gar kein Fach}{LabelKarte}{eine Karte}
+		Eine Karte mit einem Label \label{label1}
+	\end{karte}
+
+	\begin{karte}{Auch kein Fach}{Referenzkarte}{noch eine Karte}
+		Und ein Verweis auf die LabelKarte (siehe \ref{label1}).
+	\end{karte}
+
+\end{document}
