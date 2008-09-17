@@ -12,8 +12,7 @@
 \setlength{\parindent}{0pt} 
 \setlength{\parskip}{1em}	
 
-\setlength{\marginparwidth}{3cm}
-\newcommand\leftpar[1]{\marginpar[]{\sffamily #1}}
+\setlength{\marginparwidth}{2cm}
 \begin{document}
 \title{Karteikarten in \LaTeX}
 \author{Ronny Bergmann\\\texttt{mail@darkmoonwolf.de}}
@@ -23,7 +22,6 @@
 Um Karteikarten in \LaTeX\ zu verfassen genügen zunächst die einfachen Formate Din A6, A7 und A8. Möchte man jedoch das Ergebnis auch drucken, so muss man die Reihenfolge umsortieren. Dazu bietet dieses Paket neben einer Kartenumgebung die Definition der Karteikarten an sich und des Druckformates.
 
 \section{Dokumentoptionen}
-\leftpar{\textbackslash documentclass}
 Die normalen Optionen eines Artikels, wie etwa Schriftgröße (Standard hier auf \lstinline!10pt!), können selbst auch übergeben werden und werden dann 
 weitergegeben. Die Karteikarten sind stets im Querformat gesetzt.
 \subsection{Kartenformat}
@@ -60,9 +58,9 @@ Die Kartenumgebung heißt \lstinline!karte!. Die Karten werden automatisch durch
 	\item[Pflicht] Der Frage oder dem Titel der Karteikarte
 	\item[optional] Dem Kommentar oder zweitem Stichwort
 \end{enumerate}
-In der Umgebung selbst ist die Antwort bzw. Rückseite der Karteikarte.
+In der Umgebung selbst wird dann die eigentliche Antwort angegeben. Diese wird auf die Rückseite der Karteikarte gesetzt.
 
-Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, rechts den Kommentar. Zentral auf der Vorderseite wird die Frage gesetzt. Auf der Rückseite wird links die Kartennummer wiederholt, mittig der Term „Antwort“. Hier wird schließlich der Inhalt der Umgebung wiedergegeben.
+Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, rechts den Kommentar. Zentral auf der Vorderseite wird die Frage gesetzt. Auf der Rückseite wird links die Kartennummer wiederholt, mittig der Term „Antwort“. Dieser Term läßt sich auch verändern, siehe \ref{par:Antwort}.
 
 \subsection{Beispiele}
 \begin{itemize}
@@ -98,7 +96,10 @@ Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, re
 \subsection{Strukturierung}
 \paragraph{Fächer \& Kommentare}
 Sowohl das Fach als auch der Kommentar können fest besetzt werden, damit man das Fach nicht immer neu angeben muss. Dies erfolgt mit dem Befehl \lstinline!\fach{}!, ist das Fach damit auf einen nichtleeren Wert gesetzt, wird der in der \lstinline!karte!-Umgebung übergebene Text ignoriert und das Fach ausgegeben. Analog verläuft es mit dem Kommentar über den Befehl \lstinline!\kommentar{}!. Standardmäßig sind beide auf leer gesetzt, so dass die Parameter der Kartenumgebung ausgegeben werden. 
-Zusätzlich läßt sich mit \lstinline!\fachstil{}! und \lstinline!\kommentarstil{}! eine Formatierung des Textes angeben. Möglich sind dabei die üblichen \LaTeX-Anweisungen wie etwa \lstinline!\textbf!, \lstinline!\textsc!, \lstinline!\emph!,$\ldots$ Diese Formatierung betrifft auch die normal als Parameter übergebenen Fächer und Kommentare der nachfolgenden Karteikarten. 
+
+\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! diese Fächer setzt. Möchte man die Nummerirung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden. Dies läuft analog mit den Kommentaren und \lstinline!\subsection! bzw. für ein setzen des Kommentars ohne Nummerierung \lstinline!\subsection*!
+
+\paragraph{Formatierung} Zusätzlich läßt sich mit \lstinline!\fachstil{}! und \lstinline!\kommentarstil{}! eine Formatierung des Textes angeben. Möglich sind dabei die üblichen \LaTeX-Anweisungen wie etwa \lstinline!\textbf!, \lstinline!\textsc!, \lstinline!\emph!,$\ldots$ Diese Formatierung betrifft auch die normal als Parameter übergebenen Fächer und Kommentare der nachfolgenden Karteikarten. 
 
 Um also für das Fach „Lebensphilosophie“ eine Reihe von Karten zu erstellen, wobei eben jenes Fach in \emph{kursiv} gesetzt sein soll, benötigt man also
 \begin{lstlisting}
@@ -107,12 +108,16 @@ Um also für das Fach „Lebensphilosophie“ eine Reihe von Karten zu erstellen
 \end{lstlisting}
 Direkt vor der ersten Karteikarte bei der dies wirksam sein soll.
 
-Außerdem kann auch der zentral auf der Rückseite platzierte Wert (Standardmäßig steht dort „\emph{Antwort}“) mit dem Befehl \lstinline!\antworttext{}! verändert werden. Eventuelle Formatierungen dieses Eintrags sind auch innerhalb des Befehls anzugeben. Der Standard ist also
+\paragraph{Antwort-Tag auf der Rückseite}\label{par:Antwort} Außerdem kann auch der zentral auf der Rückseite platzierte Wert (Standardmäßig steht dort „\emph{Antwort}“) mit dem Befehl \lstinline!\antworttext{}! verändert werden. Eventuelle Formatierungen dieses Eintrags sind auch innerhalb des Befehls anzugeben. Der Standard ist also
 \begin{lstlisting}
 	\antworttext{\emph{Antwort}}
 \end{lstlisting}
-
-\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! diese Fächer setzt. Möchte man die Nummerirung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden. Dies läuft analog mit den Kommentaren und \lstinline!\subsection! bzw. für ein setzen des Kommentars ohne Nummerierung \lstinline!\subsection*!
+\subsection{Kartennummerierung}
+Die Nummerierung der Karten ist standardmäßig definiert mit
+\begin{lstlisting}
+	\renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
+\end{lstlisting}
+Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird auf der Vorder- und Rückseite der Karte sowie bei Verweisen verwendet. Durch ändern des Befehlt \lstinline!\theCardID! kann dies beeinflusst werden.
 %
 %
 %
@@ -145,8 +150,15 @@ Das Drucklayout ist eine Variation der durch \lstinline!pgfpages! aus dem Projek
 \paragraph{„Inhalt der Rückseite zu umfangreich“} % (fold)
 Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, das führt dazu, dass eine an sich als Vorderseite gedachte Seite den zweiten Teil der Antwort enthält. Hier ist die Kopfzeile mit einem Hinweis versehen. Die darauffolgende Karteikarte beginnt wieder auf einer ungeraden Seite. Die Nummerierung ist davon nicht betroffen. Gelöst wird dies vorherst durch ein \lstinline!~\cleardoublepage!, 
 % _inhalt_der_rückseite_zu_groß_ (end)
-\paragraph{selbst festlegen, welche Felder in Kopf und Fuß was enthalten, etwa unten rechts das Fach o.ä.}
-\paragraph{Rückseitenformat festlegen}
+
+\paragraph{Positionierung von Kartennumer, Fach \& Kommentar festlegen}
+Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente im Kopf festlegen kann und diese bei Bedarf auch in die Fußzeile legen kann, etwa den Kommentar in die Fußzeile der Vorderseite.
+
+\paragraph{Rückseitenformat festlegen} 
+Für die Rückseite könnte man noch ein Format festlegen. Dies könnte die Wahl umfassen, ob normale Absätze vorhanden sein sollen, oder nicht. Außerdem wären Felder denkbar zum Eintragen, wie gut man eine Karteikarte beherrscht.
+
+\paragraph{Liste der Karteikarten \textbackslash Lernkontrolltabelle} 
+Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenübersicht als auch eine Lernkontrolle einbinden, auf der man seine Lernfortschirtte verzeichnen kann.
 \newpage
 \section{Lizenz}
 \begin{lstlisting}[basicstyle=\footnotesize\sffamily, numbers=none]
