@@ -14,6 +14,12 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{kartei}[2008/08/30 ver 1.6]
+\LoadClass[a4paper,twoside, 10pt, landscape]{article}
+\RequirePackage{fancyhdr}
+\RequirePackage{vmargin}
+\RequirePackage{xargs}
+\newcommand{\setcardpagelayout}{}
+
 \makeatletter
 %
 % lokale Variablen
@@ -24,18 +30,14 @@
 \card@useprintfalse%
 
 % Border Style
-% 0 = no border / 1 = small border / 2 = big border
-\newcount\card@borderstyle
-%Standard no border
-\card@borderstyle=0%
-
-% Border Style
 % 0 = DIN A6
 % 1 = DIN A7
 % 2 = DIN A8
 \newcount\card@papersize
 %Standard: A6 
-\card@papersize=1%
+\card@papersize=0%
+\setpapersize[landscape]{A6}% 
+\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}
 
 %
 % Antowrttext (Rückseite mitte)
@@ -54,10 +56,10 @@
 %
 %
 \newcommand{\dasfach}[1]{%
-\ifx\card@fach\@empty%
-\fachstil{#1}%
-\else%
+\ifx\@empty#1%
 \fachstil{\card@fach}\relax%
+\else%
+\fachstil{#1}%
 \fi%
 }
 \newcommand{\fach}[1]{\def\card@fach{#1}}%
@@ -78,10 +80,10 @@
 %
 %
 \newcommand{\derkommentar}[1]{%
-\ifx\card@kommentar\@empty%
- \kommentarstil{#1}
+\ifx\@empty#1%
+	\kommentarstil\card@kommentar\relax%
 \else%
- \kommentarstil\card@kommentar\relax%
+	\kommentarstil{#1}
 \fi%
 }
 \newcommand{\kommentar}[1]{\def\card@kommentar{#1}}%
@@ -97,25 +99,8 @@
 \newcommand{\commentstyle}{}
 \let\commentstyle=\kommentarstil
 
-
-
-\LoadClass[a4paper,twoside, 10pt, landscape]{article}
-\RequirePackage{fancyhdr}
-\RequirePackage{vmargin}
-\RequirePackage{xargs}
-\newcommand{\setcardpagelayout}{}
-
 \DeclareOption{print}{%
 \card@useprinttrue
-}%
-\DeclareOption{noborder}{
-\card@borderstyle=0
-}%
-\DeclareOption{smallborder}{
-\card@borderstyle=1
-}%
-\DeclareOption{bigborder}{
-\card@borderstyle=2
 }%
 
 \DeclareOption{a6paper}{
@@ -139,41 +124,13 @@
 \ProcessOptions
 \ifcard@useprint%
 	\ifcase \card@papersize%
-		%DIN A6 because 0
-		\ifcase \card@borderstyle
-			%Case 0 no border
 			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6noborder}[a4paper, landscape, border shrink=0mm]}%
-			\or%
-			%Case 1 small border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6smallborder}[a4paper, landscape, border shrink=0mm]}%
-			\or%
-			%Case 2 big border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6bigborder}[a4paper, landscape, border shrink=0mm]}%
-		\fi
 		\or
 		%DIN A7 because 1
-		\ifcase \card@borderstyle
-			%Case 0 no border
 			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7noborder}[a4paper, border shrink=0mm]}%
-			\or%
-			%Case 1 small border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7smallborder}[a4paper, border shrink=0mm]}%
-			\or%
-			%Case 2 big border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7bigborder}[a4paper, border shrink=0mm]}%
-		\fi
 		\or
 		%DIN A8 because 2
-		\ifcase \card@borderstyle
-			%Case 0 no border
 			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8noborder}[a4paper, landscape, border shrink=0mm]}%
-			\or%
-			%Case 1 small border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8smallborder}[a4paper,  landscape, border shrink=0mm]}%
-			\or%
-			%Case 2 big border
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8bigborder}[a4paper, landscape, border shrink=0mm]}%
-		\fi
 	\fi
 \else
 	\renewcommand{\setcardpagelayout}{} % no print
@@ -425,148 +382,6 @@
 }% 
 
 \makeatother
-\pgfpagesdeclarelayout{cardprintA6bigborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=8,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.73\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.73\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.27\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.27\pgfphysicalheight}%
-  }%
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.73\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.73\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.27\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.46\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.27\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-\pgfpagesdeclarelayout{cardprintA6smallborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=8,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.74\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.74\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.26\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.26\pgfphysicalheight}%
-  }%
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.74\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.74\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.26\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.48\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.26\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
 \pgfpagesdeclarelayout{cardprintA6noborder}
 {
  \edef\pgfpageoptionheight{\the\paperheight} 
@@ -765,260 +580,6 @@
     resized width=.5\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
     center=\pgfpoint{.25\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-\pgfpagesdeclarelayout{cardprintA7smallborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=16,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.86\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.86\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.62\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.62\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.38\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.38\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.14\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.14\pgfphysicalheight}%
-  }%
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.74\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.26\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-\pgfpagesdeclarelayout{cardprintA7bigborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=16,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.845\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.845\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.615\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.615\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.385\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.385\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.155\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.48\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.155\pgfphysicalheight}%
-  }%
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.73\pgfphysicalwidth}{.155\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.46\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.27\pgfphysicalwidth}{.155\pgfphysicalheight},%
 	border code=\pgfsetlinewidth{.5pt}\pgfstroke
   }%
 }%
@@ -1271,498 +832,6 @@
 
 }%
 
-\pgfpagesdeclarelayout{cardprintA8smallborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=32,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.86\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.86\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.86\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.86\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.38\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.38\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.38\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.38\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{17} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.62\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{19} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.62\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{21} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.62\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{23} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.62\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{25} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.14\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{27} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.14\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{29} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.14\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{31} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.14\pgfphysicalheight}%
-  }%
-
-
-
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.86\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.62\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{18} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{20} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{22} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{24} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.38\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{26} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.86\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{28} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.62\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{30} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.38\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{32} % 1
-  {%
-    resized width=.24\pgfphysicalwidth,%
-    resized height=.24\pgfphysicalheight,%
-    center=\pgfpoint{.14\pgfphysicalwidth}{.14\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-}%
-
-\pgfpagesdeclarelayout{cardprintA8bigborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=32,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.845\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.845\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.845\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.845\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.385\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.385\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.385\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.385\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{17} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.615\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{19} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.615\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{21} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.615\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{23} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.615\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{25} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.155\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{27} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.155\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{29} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.155\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{31} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.155\pgfphysicalheight}%
-  }%
-
-
-
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.845\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.615\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{18} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{20} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{22} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{24} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.385\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{26} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.845\pgfphysicalwidth}{.155\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{28} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.615\pgfphysicalwidth}{.155\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{30} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.385\pgfphysicalwidth}{.155\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{32} % 1
-  {%
-    resized width=.23\pgfphysicalwidth,%
-    resized height=.23\pgfphysicalheight,%
-    center=\pgfpoint{.155\pgfphysicalwidth}{.155\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-
-
 %
 % Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
 %
@@ -1795,15 +864,13 @@
 \def\unnumberedsubsection#1{%
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \kommentar{#1}}%
-\makeatother
-
 %
 %	Karteikartenumgebung:
 %	#1 (optional) Kopfzeile vorne Links : Fach
 % 	#2 Titel der Vorderseite  	
 % 	#3 (optional) Kopfzeile vorne rechts : Kommentar
 %
-\newenvironmentx{karte}[3][1,3]
+\newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {% Vor der Umgebung: Vorderseite bauen
  %
 	\pagestyle{fancy}
@@ -1823,8 +890,7 @@
 	\fancyhead[LO]{\emph{\textbf{Achtung:} Rückseite der Karte ist zu voll}}
 	\cleardoublepage
 }
-
-
+\makeatother
 %
 % Standard-Layout: 	Kopf:  Kartennummer vorne mittig, hinten links (also bei y0), hinten mitte „Antwort“
 % 					Fußzeile: leer
