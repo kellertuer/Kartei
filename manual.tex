@@ -14,12 +14,12 @@
 
 \setlength{\marginparwidth}{2cm}
 \begin{document}
-\title{Karteikarten in \LaTeX}
+\title{Karteikarten in \LaTeX\\{\normalsize Version 1.7}}
 \author{Ronny Bergmann\\\texttt{mail@darkmoonwolf.de}}
-\date{September 2008}
+\date{November 2008}
 \maketitle
 \section{Einleitung}
-Um Karteikarten in \LaTeX\ zu verfassen genügen zunächst die einfachen Formate Din A6, A7 und A8. Möchte man jedoch das Ergebnis auch drucken, so muss man die Reihenfolge umsortieren. Dazu bietet dieses Paket neben einer Kartenumgebung die Definition der Karteikarten an sich und des Druckformates.
+Um Karteikarten in \LaTeX\ zu verfassen genügen zunächst die einfachen Formate Din A6, A7 und A8. Möchte man jedoch das Ergebnis auch drucken, so muss man die Reihenfolge umsortieren. Dazu bietet dieses Paket neben einer Kartenumgebung für die Definition der Karteikarten ein Druckformat.
 
 \section{Dokumentoptionen}
 Die normalen Optionen eines Artikels, wie etwa Schriftgröße (Standard hier auf \lstinline!10pt!), können selbst auch übergeben werden und werden dann 
@@ -30,23 +30,17 @@ Es gibt die folgenden Karteikartenformate
 \paragraph{\lstinline!a7paper!} Din A7-Karteikarten $(105$mm$\times 74$mm$)$
 \paragraph{\lstinline!a8paper!} Din A8-Karteikarten $(74$mm$\times 52$mm$)$, diese scheinen recht klein, hier wirkt die Standardschriftgröße fast etwas groß.
 \subsection{Druck}
-\paragraph{\lstinline!print!} Die Option lstinline!print! in der Dokumentklasse schaltet zwischen der Setzart der Karten als einzelne Seiten und dem Satz auf eine DinA4-Seite um.
+\paragraph{\lstinline!print!} Die Option \lstinline!print! in der Dokumentklasse schaltet zwischen der Setzart der Karten als einzelne Seiten und dem Satz auf eine DinA4-Seite um.
 
 Auf der Rückseite der Karteikarten wird zusätzlich ein Rand um jede Karteikarte erzeugt, der beim Ausschneiden helfen soll.
 
 Die Anordnung sind 4 (bei A6), 8 (bei Din A7) bzw. 16 (bei Din A8) Karten auf einer Seite. Dabei sind A6 und A8 auf Querformat gesetzt, A7 auf Hochformat. Dadurch muss beim Duplex-Druck Für A6 und A8 \emph{über die kurze Seite geklappt} gedruckt werden, bei A7 \emph{über die lange Seite}.
-\subsection{Druck - Randoptionen}
-Die Randoptionen sind nur wirksam, wenn die Option \lstinline!print! angegeben ist. Dann gibt es die folgenden Möglichkeiten. 
-\paragraph{\lstinline!noborder!} Ergibt einen Satz ohne Rand. Das bedeutet, dass die Karteikarten im Druck exakt die Größe haben, die sie nach dem Din-A-Standard haben müßten. Allerdings ist dieses PDF nur druckbar, wenn der Drucker randlos drucken kann, ansonsten fehlen einige Zeichen am Rand.
-\paragraph{\lstinline!smallborder!} Hier wird ein relativ kleiner Rand um die Karten dadurch erzeugt, dass diese auf 98\% verkleinert werden. Damit ist das Format in einigen Druckern zwar immer noch nicht druckbar, es wird auf der anderen Seite aber nur ein klein wenig verkleinert. 
-\paragraph{\lstinline!bigborder!} Hier werden die Karten auf 96\% verkleinert. Damit sollte das Ergebnis auf fast allen Druckern ohne Abschnitte druckbar sein.
 
-Alternativ kann auch die \lstinline!noborder!-Variante vor dem Druck entsprechend verkleinert werden mit der Option „automatische Seitenskalierung“ verkleinert werden. Die Variante ohne Rand wird gesetzt, wenn keine Randoption angegeben wird.
-
+Die Karteikarten werden in ihrer Originalgröße auf dem Din-A4-Blatt angeordnet, zum Druck sollte man die Option „Auf Seitengröße verkleinern“ des jeweiligen Druck-Dialogs wählen. Dann sind die Karten um den Druckrand verkleinert.
 \subsection{Beispiele}
 \begin{itemize}
-	\item A6-Karteikarten, normal gesetzt \lstinline!\documentclass[a6paper]{kartei}!
-	\item A7-Karteikarten, Druckformat mit großem Rand\\ \lstinline!\documentclass[a7paper, print, bigborder]{kartei}!
+	\item Zum Erstellen von A6-Karteikarten, normal gesetzt \lstinline!\documentclass[a6paper]{kartei}!
+	\item Für A7-Karteikarten im Druckformat \lstinline!\documentclass[a7paper, print]{kartei}!
 \end{itemize}
 %
 %
@@ -60,7 +54,11 @@ Die Kartenumgebung heißt \lstinline!karte!. Die Karten werden automatisch durch
 \end{enumerate}
 In der Umgebung selbst wird dann die eigentliche Antwort angegeben. Diese wird auf die Rückseite der Karteikarte gesetzt.
 
-Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, rechts den Kommentar. Zentral auf der Vorderseite wird die Frage gesetzt. Auf der Rückseite wird links die Kartennummer wiederholt, mittig der Term „Antwort“. Dieser Term läßt sich auch verändern, siehe \ref{par:Antwort}.
+Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, rechts den Kommentar. Zentral auf der Vorderseite wird die Frage gesetzt. Auf der Rückseite wird links die Kartennummer wiederholt, mittig der Term „Antwort“.
+
+Die beiden Stichworte Fach und Kommentar lassen sich auch global festlegen, ebenso wie der Antwortterm sich verändern lässt. Details dazu finden sich im Abschnitt \ref{subsec:Struktur}.
+
+\newpage
 
 \subsection{Beispiele}
 \begin{itemize}
@@ -91,27 +89,34 @@ Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, re
 %\kommentar{standardfach}
 %\kommentar{} zum expliziten leeren
 %\kommentarstil{ --stilangabe-- }
-%\antworttext{\textsc{Antwort}}
+%\antwort{Antwort}
+%\antwortstil{ --stilangabe-- }
 
-\subsection{Strukturierung}
+\subsection{Strukturierung}\label{subsec:Struktur}
 \paragraph{Fächer \& Kommentare}
-Sowohl das Fach als auch der Kommentar können fest besetzt werden, damit man das Fach nicht immer neu angeben muss. Dies erfolgt mit dem Befehl \lstinline!\fach{}!, ist das Fach damit auf einen nichtleeren Wert gesetzt, wird der in der \lstinline!karte!-Umgebung übergebene Text ignoriert und das Fach ausgegeben. Analog verläuft es mit dem Kommentar über den Befehl \lstinline!\kommentar{}!. Standardmäßig sind beide auf leer gesetzt, so dass die Parameter der Kartenumgebung ausgegeben werden. 
+Neben der Möglichkeit bei einer Karte das Fach und den Kommentar explizit anzugeben lässt sich beides auch global setzen, so dass es bei den darauffolgenden Karten verwendet wird.
 
-\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! diese Fächer setzt. Möchte man die Nummerirung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden. Dies läuft analog mit den Kommentaren und \lstinline!\subsection! bzw. für ein setzen des Kommentars ohne Nummerierung \lstinline!\subsection*!
+Mit \lstinline!\fach! (engl. \lstinline!\subject!) gefolgt von einem Text in \lstinline!{geschweiften Klammern}! setzt man das Fach für die nachfolgenden Karten. Die Schriftformatierung kann über Neudefinition des Befehl \lstinline!\fachstil! (engl. \lstinline!\subjectstyle!) vorgenommen werden. Standardmäßig ist der Stil auf \emph{kursiv} gesetzt. Um an einer Stelle den Momentanen Wert Auszugeben, gibt es den Befehl \lstinline!\dasfach{}!. Wird bei einer Karte bei gesetztem Fach trotzdem ein Fach angegeben, so hat das Fach der Karte Vorrang, so kann in einem großen Block auch eine Ausnahmekarte erzeugt werden.
 
-\paragraph{Formatierung} Zusätzlich läßt sich mit \lstinline!\fachstil{}! und \lstinline!\kommentarstil{}! eine Formatierung des Textes angeben. Möglich sind dabei die üblichen \LaTeX-Anweisungen wie etwa \lstinline!\textbf!, \lstinline!\textsc!, \lstinline!\emph!,$\ldots$ Diese Formatierung betrifft auch die normal als Parameter übergebenen Fächer und Kommentare der nachfolgenden Karteikarten. 
+Analog lässt sich der Kommentar global setzen mit \lstinline!\kommentar{Kommentartext}! (engl. \lstinline!\comment!), dessen Stil mit \lstinline!\kommentarstil! (engl. \lstinline!\commentstyle!), respektive die Ausgabe mit \lstinline!\derkommentar! (engl. \lstinline!\thecomment!). Auch dies wird von einem lokalen Wert, der bei einer Karte angegeben wird überschrieben, so dass in einem Block von Karten mit gleichem Kommentar auch eine einzelne Ausnahme angegeben werden kann
 
 Um also für das Fach „Lebensphilosophie“ eine Reihe von Karten zu erstellen, wobei eben jenes Fach in \emph{kursiv} gesetzt sein soll, benötigt man also
 \begin{lstlisting}
 	\fach{Lebensphilosophie}
-	\fachstil{\emph}
+	\renewcommand{\fachstil}{\emph}
 \end{lstlisting}
-Direkt vor der ersten Karteikarte bei der dies wirksam sein soll.
+Direkt vor der ersten Karteikarte bei der dies wirksam sein soll. Alle darauf folgenden Karten ohne Angabe des optionalen Fach-Parameters werden mit dem Fach Lebensphilosophie ausgegeben.
 
-\paragraph{Antwort-Tag auf der Rückseite}\label{par:Antwort} Außerdem kann auch der zentral auf der Rückseite platzierte Wert (Standardmäßig steht dort „\emph{Antwort}“) mit dem Befehl \lstinline!\antworttext{}! verändert werden. Eventuelle Formatierungen dieses Eintrags sind auch innerhalb des Befehls anzugeben. Der Standard ist also
+\paragraph{Antworttext auf der Rückseite}\label{par:Antwort} Und wiederum nochmals Analog lässt sich der Antworttext setzen mittels \lstinline!\antwort! (engl. \lstinline!\answer!) bzw. dessen Stil über Neudefinition von \lstinline!\antwortstil! (engl. \lstinline!\answerstyle!). Zusätzlich ist auch der Antworttext im Fließtext wiedergebbar mittels \lstinline!\dieantwort! (engl. \lstinline!\theanswer!, und dieser Befehl gibt nicht ausschließlich „42“ aus).
+
+Um also den Antworttext auf Esperanto anzugeben, also auf „respondo“ zusetzen, was gleichzeitig in \textsc{Kapitälchen} gesetzt werden soll, verwendet man die beiden Befehle
 \begin{lstlisting}
-	\antworttext{\emph{Antwort}}
+	\antwort{respondo}
+	\renewcommand{\antwortstil}{\textsc}
 \end{lstlisting}
+
+\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! diese Fächer setzt. Möchte man die Nummerierung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden. Dies läuft analog mit den Kommentaren und \lstinline!\subsection! bzw. für ein setzen des Kommentars ohne Nummerierung \lstinline!\subsection*!.
+
 \subsection{Kartennummerierung}
 Die Nummerierung der Karten ist standardmäßig definiert mit
 \begin{lstlisting}
@@ -122,24 +127,28 @@ Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird au
 %
 %
 \section{technische Details}
+\subsection{Benötigte Pakete}
+Um dieses Kartenpaket zu verwenden muss man mindestens die Pakete \lstinline!fancyhdr!, \lstinline!vmargin!, \lstinline!xargs!, \lstinline!pgfpages! und \lstinline!tiks! installiert haben. Diese finden sich alle im CTAN.
 \subsection{Die Kartenumgebung}
 Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!article!, und setzt damit die oben beschriebenen Sachen im Kopf für jede Karteikarte. Der Zähler wird dabei inkrementiert und als Standard vorher gesetzt.
 \begin{lstlisting}[title=Die Kartenumgebung]
-\newenvironment{karte}[3]
-	{% Vor der Umgebung: Vorderseite bauen
-		\pagestyle{fancy}{% 
-			\fancyhead[LO]{\emph{#1}} %Fach
-			\fancyhead[RO]{\emph{#2}} %Kommentar
-		}%
-		~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #3}\hfill~}\vfill~
-		\refstepcounter{CardID}
-		\newpage%
-	}%
-	{% Nach Umgebung: Warnung im Kopf (bis der Umbruch verhindert wird) 
-	 % und neue Karteikarte auf ungerader Seite beginnen lassen
-		\fancyhead[LO]{\emph{\textbf{Achtung:} Rueckseite der Karte ist zu voll}}
-		\cleardoublepage
+\newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
+{
+	\pagestyle{fancy}
+	{
+		\fancyhead[LO]{\dasfach{#1}} %\emph{#1}} %Fach
+		\fancyhead[RO]{\derkommentar{#3}} %Kommentar
 	}
+	\pagestyle{fancy}{% 
+	}%
+~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
+\refstepcounter{CardID}
+\newpage%
+}
+{
+	\fancyhead[LO]{\emph{\textbf{Achtung:} Antwortseite der Karte ist zu voll}} %vorlaeufige Loesung
+	\cleardoublepage
+}
 \end{lstlisting}
 \subsection{Das Drucklayout}
 Das Drucklayout ist eine Variation der durch \lstinline!pgfpages! aus dem Projekt \lstinline!pgf & tikz!\footnote{\url{http://sourceforge.net/projects/pgf/}} bereitgestellten Befehle zur Anordnung mehrerer Seiten / Präsentationsfolien auf einer einzigen Seite. Diese wurdn modifiziert, so dass alle geraden Seiten (Vorderseiten) auf der ersten und alle ungeraden Seiten (Rückseiten) auf der Rückseite angeordnet werden. Die Rückseite ist außerdem in der Reihenfolge so verändert, dass das Ergebnis Duplex-Druckbar ist. Die Ränder auf der Rückseite werden ebenso damit erzeugt. 
@@ -174,7 +183,7 @@ Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenü
 
 \section{Changelog}
 \begin{description}
-	\item[1.7 - TODO] Fach \& Kommentartext global definierbar, Antworttext veränderbar
+	\item[1.7 - 02.11.2008] Fach \& Kommentartext sind jetzt global setzbar über \lstinline!\section! und \lstinline!\subsection! (und deren \lstinline!*!-Derivate), Druckoptionen entfernt., Antworttext veränderbar
 	\item[1.6 - 09.09.2008] A7, A8-Karteikarten und die Druckränder eingefügt. Erste Version mit diesem Manual
 \end{description}
 \end{document}

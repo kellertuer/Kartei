@@ -8,7 +8,7 @@
 %
 %
 % Dokumentklasse für Din A6 Karteikarten 
-% -- Version 1.6 --
+% -- Version 1.7 --
 %
 % Erklärungen und Ähnliches, siehe manual.pdf
 
@@ -40,15 +40,25 @@
 \setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}
 
 %
-% Antowrttext (Rückseite mitte)
-% Answertext
+% Antwort (Standard Rückseite Mitte
+% Answer
 %
-\newcommand{\cardantwort}{\emph{Antwort}}%
-\newcommand{\antworttext}[1]{\renewcommand{\cardantwort}{#1}}%
+%
+\newcommand{\dieantwort}{%
+\antwortstil{\card@antwort}\relax%
+}
+\newcommand{\antwort}[1]{\def\card@antwort{#1}}%
+\newcommand{\antwortstil}{}
+%Expliziter Standard: leer (Antwort wird am Ende des Dokumentes gesetzt
+\global\let\card@antwort\@empty
 
-%english stuff
-\newcommand{\answertext}{}%
-\let\answertext=\antworttext%
+%english names
+\newcommand{\answer}{}
+\let\answer=\antwort
+\newcommand{\theanswer}{}
+\let\theanswer=\dieantwort
+\newcommand{\answerstyle}{}
+\let\answerstyle=\antwortstil
 
 %
 % Fach (Standard vorne links)
@@ -892,7 +902,7 @@
 }
 \makeatother
 %
-% Standard-Layout: 	Kopf:  Kartennummer vorne mittig, hinten links (also bei y0), hinten mitte „Antwort“
+% Standard-Layout: 	Kopf:  Kartennummer vorne mittig & hinten links (also bei y0), hinten mitte „Antwort“
 % 					Fußzeile: leer
 %
 \renewcommand{\headrulewidth}{0.2pt}
@@ -901,10 +911,11 @@
 	\fancyhf{}%
 	\fancyhead[CO,LE]{\theCardID}}%	
 	\fancyhead[RE]{}%
-	\fancyhead[CE]{\cardantwort}%
+	\fancyhead[CE]{\dieantwort}%
 }
 
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
+\antwort{Antwort}
 \setcardpagelayout
