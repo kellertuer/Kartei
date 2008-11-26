@@ -8,22 +8,25 @@
 %
 %
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
-% -- Version 1.6 --
+% -- Version 1.7 --
 %
-\documentclass[a6paper]{kartei}
+\documentclass[a7paper]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
 \usepackage[scaled]{helvet}
 \usepackage[ngerman]{babel} % Neue Rechtschreibung
-%Menge an Paketen die für vor allem mathematisches und informatisches gut brauchbar ist
 %
 % Deutsche Absatzformatierung
 %
 \setlength{\parindent}{0pt} 
 \setlength{\parskip}{1em}	
 \begin{document}
-	\begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
+\begin{karte}[Fach]{FrageoderTitel}[Kommentar]  
+Antwor 
+\end{karte}
+
+\begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
 	42
 	\end{karte}
 	
@@ -37,7 +40,7 @@
 	\label{karte:antwort} Siehe Karte \ref{karte:frage}
 	\end{karte}
 
-	\begin{karte}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}[ein Beispiel für Label \# 2]
-			Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
+	\begin{karte}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}
+	\label{karte:frage}		Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
 	\end{karte}
 \end{document}
