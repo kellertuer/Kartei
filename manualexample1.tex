@@ -1,0 +1,33 @@
+%
+%		* ----------------------------------------------------------------------------
+%		* "THE BEER-WARE LICENSE" (Revision 42/023):
+%		* Ronny Bergmann <mail@darkmoonwolf.de> wrote this file. As long as you retain 
+%		* this notice you can do whatever you want with this stuff. If we meet some day,
+%		* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
+%		* ----------------------------------------------------------------------------
+%
+%
+% Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
+% -- Version 1.7 --
+%
+\documentclass[a7paper]{kartei}
+
+\usepackage[utf8]{inputenc} %UTF8
+\usepackage[OT1]{fontenc}
+\usepackage[scaled]{helvet}
+\usepackage[ngerman]{babel} % Neue Rechtschreibung
+%
+% Deutsche Absatzformatierung
+%
+\setlength{\parindent}{0pt} 
+\setlength{\parskip}{1em}	
+\begin{document}
+\begin{karte}[Fach]{Frage oder Titel}[Kommentar]  
+	Antworttext
+\end{karte}
+\begin{karte}[Lebensphilosophie]
+	{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest?}
+	[wichtig!]
+	42
+\end{karte}
+\end{document}

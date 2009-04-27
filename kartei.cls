@@ -909,7 +909,7 @@
 \renewcommand{\footrulewidth}{0.0pt} 
 \pagestyle{fancy}{% 
 	\fancyhf{}%
-	\fancyhead[CO,LE]{\theCardID}}%	
+	\fancyhead[CO,LE]{\theCardID}%	
 	\fancyhead[RE]{}%
 	\fancyhead[CE]{\dieantwort}%
 }
