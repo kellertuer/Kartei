@@ -642,56 +642,56 @@
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.375\pgfphysicalheight},%
+    center=\pgfpoint{.125\pgfphysicalwidth}{.625\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{11} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpoint{.375\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{13} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpoint{.625\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{15} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.375\pgfphysicalheight}%
+    center=\pgfpoint{.875\pgfphysicalwidth}{.625\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{17} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.625\pgfphysicalheight},%
+    center=\pgfpoint{.125\pgfphysicalwidth}{.375\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{19} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpoint{.375\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{21} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpoint{.625\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{23} % 1
   {%
     border shrink=\pgfpageoptionborder,%
     resized width=.25\pgfphysicalwidth,%
     resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.625\pgfphysicalheight}%
+    center=\pgfpoint{.875\pgfphysicalwidth}{.375\pgfphysicalheight}%
   }%
   \pgfpageslogicalpageoptions{25} % 1
   {%
