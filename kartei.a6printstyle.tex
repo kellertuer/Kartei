@@ -1,0 +1,60 @@
+%
+% Kartei Source Code
+%
+% Last Chance: Kartei 1.8, 2009/12/25
+%
+%
+%
+% A6 printstyle definition 
+%
+\pgfpagesdeclarelayout{cardprintA6}
+{%
+	\edef\pgfpageoptionheight{\the\paperheight}%
+	\edef\pgfpageoptionwidth{\the\paperwidth}%
+	\edef\pgfpageoptionborder{1pt}%
+}
+{%
+  \pgfpagesphysicalpageoptions{%
+    logical pages=8,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+  }%
+  \pgfpageslogicalpageoptions{1} % 1st Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{3} % 2nd Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    center=\pgfpoint{\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+  \pgfpageslogicalpageoptions{5} % 3rd Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    center=\pgfpoint{.5\pgfphysicalwidth}{0cm}%
+  }%
+  \pgfpageslogicalpageoptions{7} % 4th Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    center=\pgfpoint{\pgfphysicalwidth}{0cm}%
+  }%
+%Backsides
+  \pgfpageslogicalpageoptions{2} % 1st Card
+  {%
+    center=\pgfpoint{\pgfphysicalwidth}{.5\pgfphysicalheight},%
+%	rotation=180
+  }%
+  \pgfpageslogicalpageoptions{4} % 2nd Card
+  {%
+    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{6} % 3rd Card
+  {%
+    center=\pgfpoint{\pgfphysicalwidth}{0cm},%
+  }%
+  \pgfpageslogicalpageoptions{8} % 4th Card
+  {%
+    center=\pgfpoint{.5\pgfphysicalwidth}{0cm},%
+  }%
+}%

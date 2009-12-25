@@ -8,16 +8,12 @@
 %
 %
 % Dokumentklasse für Din A6 Karteikarten 
-% -- Version 1.7 --
+% -- Version 1.8 --
 %
 % Erklärungen und Ähnliches, siehe manual.pdf
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2008/08/30 ver 1.6]
-\LoadClass[a4paper,twoside, 10pt, landscape]{article}
-\RequirePackage{fancyhdr}
-\RequirePackage{vmargin}
-\RequirePackage{xargs}
+\ProvidesClass{kartei}[2009/12/26 Karteikarten in LaTeX, Version 1.8]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
@@ -33,11 +29,10 @@
 % 0 = DIN A6
 % 1 = DIN A7
 % 2 = DIN A8
+% 3 = DIN A9
 \newcount\card@papersize
 %Standard: A6 
 \card@papersize=0%
-\setpapersize[landscape]{A6}% 
-\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}
 
 %
 % Antwort (Standard Rückseite Mitte
@@ -78,8 +73,8 @@
 \global\let\card@fach\@empty
 
 %english names
-\newcommand{\subject}{}
-\let\subject=\fach
+\newcommand{\cardsubject}{}
+\let\cardsubject=\fach
 \newcommand{\thesubject}{}
 \let\thesubject=\dasfach
 \newcommand{\subjectstyle}{}
@@ -101,6 +96,11 @@
 % Expluiziter Standard : leer
 \global\let\card@kommentar\@empty
 
+% Rotation
+\newcount\card@backsiderotation
+%Standard: 0 Degree, nicht überkopf 
+\card@backsiderotation=0%
+
 %english names
 \newcommand{\comment}{}
 \let\comment=\kommentar
@@ -109,738 +109,94 @@
 \newcommand{\commentstyle}{}
 \let\commentstyle=\kommentarstil
 
+%
+% Declare options
+%
+
+\DeclareOption{flip}
+{
+\card@backsiderotation=180%
+}
+
 \DeclareOption{print}{%
 \card@useprinttrue
 }%
 
+
 \DeclareOption{a6paper}{
-\setpapersize[landscape]{A6}% 
-\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}
 \card@papersize=0%
 }
 
 \DeclareOption{a7paper}{
-\setpapersize[landscape]{A7}% 
-\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
 \card@papersize=1%
 }%
 
 \DeclareOption{a8paper}{
-\setpapersize[landscape]{A8}% 
-\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
 \card@papersize=2%
 }%	
 
-\ProcessOptions
-\ifcard@useprint%
+\DeclareOption{a9paper}{
+\card@papersize=3%
+}%	
+
+%All unknown Options to article
+\DeclareOption*{% 
+\PassOptionsToClass{\CurrentOption}{scrartcl}% 
+}
+\ProcessOptions\relax
+\LoadClass[twoside]{scrartcl}
+\RequirePackage[headsepline,footsepline]{scrpage2}
+\RequirePackage{xargs}
+\RequirePackage{vmargin}
+
 	\ifcase \card@papersize%
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6noborder}[a4paper, landscape, border shrink=0mm]}%
+			\setpapersize[landscape]{A6}% 
+			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
 		\or
 		%DIN A7 because 1
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7noborder}[a4paper, border shrink=0mm]}%
+			\setpapersize[landscape]{A7}% 
+			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
 		\or
 		%DIN A8 because 2
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8noborder}[a4paper, landscape, border shrink=0mm]}%
+		\setpapersize[landscape]{A8}% 
+		\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
+		\or
+		%DIN A9 because 3
+		\setpapersize[landscape]{A9}% 
+		\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
+	\fi
+
+\ifcard@useprint%
+\setpapersize[landscape]{A4}% 
+	\ifcase \card@papersize%
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
+		\or
+		%DIN A7 because 1
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
+		\or
+		%DIN A8 because 2
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
+		\or
+		%DIN A9 because 3
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
 	\fi
 \else
 	\renewcommand{\setcardpagelayout}{} % no print
 \fi	
 
 \RequirePackage{pgfpages,tikz}
-%
-% redefine page output, so that 4 odd are on first, 4 even on second, adapted from pgfpages
-%
-\renewcommand\pgfshipoutphysicalpage{%
-  \ifnum\pgf@logicalpages>0\relax%
-    \pgfpages@buildshipoutoddbox%
-    \pgfpages@shipoutshipoutbox%
-    \pgfpages@performoddcopying%
-  \fi%
-  \ifnum\pgf@logicalpages>0\relax% 
-    \pgfpages@buildshipoutevenbox%
-    \pgfpages@shipoutshipoutbox%
-    \pgfpages@performevencopying%
-    \global\pgfphysicalpageemptytrue%
-    \global\pgf@holdingphysicalpagefalse%  
-  \fi%
-}
 
-\newbox\pgfpages@shipoutbox
-
-\def\pgfpages@buildshipoutoddbox{%
-  \setbox\pgfpages@shipoutbox=\vbox{{%
-    \set@typeset@protect%
-    \offinterlineskip%
-    \pgfsys@beginpicture%
-    \pgf@cpn=1\relax%
-	\advance \pgf@logicalpages by -1\relax%
-    \loop%
-      \setbox0=\hbox to \csname pgfpages@p@\the\pgf@cpn @width\endcsname{%
-        \hskip1in%
-        \vbox to \csname pgfpages@p@\the\pgf@cpn @height\endcsname%
-          {\vskip1in\offinterlineskip\expandafter\copy\csname
-            pgfpages@box@\the\pgf@cpn\endcsname\vss}\hss}%
-      \pgfsys@beginscope%
-        % Translate lower left corner
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @center\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformshift{\csname pgfpages@p@\the\pgf@cpn @center\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @scale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformscale{\csname pgfpages@p@\the\pgf@cpn @scale\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @xscale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformxscale{\csname pgfpages@p@\the\pgf@cpn @xscale\endcsname}{1}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformyscale{\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname\relax%
-          \pgfscope%
-        \else%
-          \pgflowlevel{\pgftransformrotate{\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname}}%
-        \fi%
-        \@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
-        \@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
-        \pgflowlevel{\pgftransformshift{\pgfpoint{-.5\@tempdima}{-.5\@tempdimb}}}%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname\relax%
-        \else%
-        \pgfpathmoveto{\pgfpointorigin}%
-        \pgfpathmoveto{\pgfpoint{1in}{-1in}}%h4ckz0rt for vmargin
-        \pgfpathlineto{\pgfpoint{\wd0+1in}{-1in}}% because it uses 1 inch border 
-        \pgfpathlineto{\pgfpoint{\wd0+1in}{\ht0-1in}}% and to compensate we have to
-        \pgfpathlineto{\pgfpoint{1in}{\ht0-1in}}% hack sis
-        \pgfpathclose%
-          {\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
-        \else%
-          {
-            \expandafter\@tempdima\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
-            \color{black}
-            \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{0pt}{\ht0-\@tempdima}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{\wd0-\@tempdima}{0pt}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{\wd0-\@tempdima}{\ht0-\@tempdima}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfusepath{fill}%
-            \pgfpathmoveto{\pgfpoint{0pt}{\@tempdima}}
-            \pgfpathcurveto{\pgfpoint{0pt}{0.555\@tempdima}}{\pgfpoint{.555\@tempdima}{0pt}}{\pgfpoint{\@tempdima}{0pt}}
-            \pgfpathlineto{\pgfpoint{\wd0-\@tempdima}{0pt}}
-            \pgfpathcurveto{\pgfpoint{\wd0-.555\@tempdima}{0pt}}{\pgfpoint{\wd0}{.555\@tempdima}}{\pgfpoint{\wd0}{\@tempdima}}
-            \pgfpathlineto{\pgfpoint{\wd0}{\ht0-\@tempdima}}
-            \pgfpathcurveto{\pgfpoint{\wd0}{\ht0-.555\@tempdima}}{\pgfpoint{\wd0-.555\@tempdima}{\ht0}}{\pgfpoint{\wd0-\@tempdima}{\ht0}}
-            \pgfpathlineto{\pgfpoint{\@tempdima}{\ht0}}
-            \pgfpathcurveto{\pgfpoint{.555\@tempdima}{\ht0}}{\pgfpoint{0pt}{\ht0-.555\@tempdima}}{\pgfpoint{0pt}{\ht0-\@tempdima}}
-            \pgfpathclose
-            \pgfusepath{clip}
-            \color{white}
-            \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\wd0}{\ht0}}
-            \pgfusepath{fill}
-          }
-        \fi%
-        \ht0=0pt%
-        \wd0=0pt%
-        \dp0=0pt%
-        \pgfsys@hbox0%
-        \endpgfscope%
-      \pgfsys@endscope%
-    \ifnum\pgf@cpn<\pgf@logicalpages%
-      \advance \pgf@cpn by 2\relax%  
-    \repeat%
-	\advance \pgf@logicalpages by 1\relax%
-    \pgfsys@endpicture%
-    }}%
-}
-
-\newbox\pgfpages@shipoutbox
-
-\def\pgfpages@buildshipoutevenbox{% (fold)
-  \setbox\pgfpages@shipoutbox=\vbox{{%
-    \set@typeset@protect%
-    \offinterlineskip%
-    \pgfsys@beginpicture%
-    \pgf@cpn=2\relax%
-    \loop%
-      \setbox0=\hbox to \csname pgfpages@p@\the\pgf@cpn @width\endcsname{%
-        \hskip1in%
-        \vbox to \csname pgfpages@p@\the\pgf@cpn @height\endcsname%
-          {\vskip1in\offinterlineskip\expandafter\copy\csname
-            pgfpages@box@\the\pgf@cpn\endcsname\vss}\hss}%
-      \pgfsys@beginscope%
-        % Translate lower left corner
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @center\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformshift{\csname pgfpages@p@\the\pgf@cpn @center\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @scale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformscale{\csname pgfpages@p@\the\pgf@cpn @scale\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @xscale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformxscale{\csname pgfpages@p@\the\pgf@cpn @xscale\endcsname}{1}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname\relax%
-        \else%
-          \pgflowlevel{\pgftransformyscale{\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname}}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname\relax%
-          \pgfscope%
-        \else%
-          \pgflowlevel{\pgftransformrotate{\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname}}%
-        \fi%
-        \@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
-        \@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
-        \pgflowlevel{\pgftransformshift{\pgfpoint{-.5\@tempdima}{-.5\@tempdimb}}}%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname\relax%
-        \else%
-          \pgfpathmoveto{\pgfpointorigin}%
-          \pgfpathmoveto{\pgfpoint{1in}{-1in}}%h4ckz0rt for vmargin
-          \pgfpathlineto{\pgfpoint{\wd0+1in}{-1in}}% because it uses 1 inch border 
-          \pgfpathlineto{\pgfpoint{\wd0+1in}{\ht0-1in}}% and to compensate we have to
-          \pgfpathlineto{\pgfpoint{1in}{\ht0-1in}}% hack sis
-          \pgfpathclose%
-          {\csname pgfpages@p@\the\pgf@cpn @bordercode\endcsname}%
-        \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
-        \else%
-          {
-            \expandafter\@tempdima\csname pgfpages@p@\the\pgf@cpn @cornerwidth\endcsname\relax%
-            \color{black}
-            \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{0pt}{\ht0-\@tempdima}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{\wd0-\@tempdima}{0pt}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfpathrectangle{\pgfpoint{\wd0-\@tempdima}{\ht0-\@tempdima}}{\pgfpoint{\@tempdima}{\@tempdima}}%
-            \pgfusepath{fill}%
-            \pgfpathmoveto{\pgfpoint{0pt}{\@tempdima}}
-            \pgfpathcurveto{\pgfpoint{0pt}{0.555\@tempdima}}{\pgfpoint{.555\@tempdima}{0pt}}{\pgfpoint{\@tempdima}{0pt}}
-            \pgfpathlineto{\pgfpoint{\wd0-\@tempdima}{0pt}}
-            \pgfpathcurveto{\pgfpoint{\wd0-.555\@tempdima}{0pt}}{\pgfpoint{\wd0}{.555\@tempdima}}{\pgfpoint{\wd0}{\@tempdima}}
-            \pgfpathlineto{\pgfpoint{\wd0}{\ht0-\@tempdima}}
-            \pgfpathcurveto{\pgfpoint{\wd0}{\ht0-.555\@tempdima}}{\pgfpoint{\wd0-.555\@tempdima}{\ht0}}{\pgfpoint{\wd0-\@tempdima}{\ht0}}
-            \pgfpathlineto{\pgfpoint{\@tempdima}{\ht0}}
-            \pgfpathcurveto{\pgfpoint{.555\@tempdima}{\ht0}}{\pgfpoint{0pt}{\ht0-.555\@tempdima}}{\pgfpoint{0pt}{\ht0-\@tempdima}}
-            \pgfpathclose
-            \pgfusepath{clip}
-            \color{white}
-            \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\wd0}{\ht0}}
-            \pgfusepath{fill}
-          }
-        \fi%
-        \ht0=0pt%
-        \wd0=0pt%
-        \dp0=0pt%
-        \pgfsys@hbox0%
-        \endpgfscope%
-      \pgfsys@endscope%
-    \ifnum\pgf@cpn<\pgf@logicalpages%
-      \advance \pgf@cpn by 2\relax%  
-    \repeat%
-    \pgfsys@endpicture%
-    }}%
-}
-\def\pgfpages@performoddcopying{
-  \pgf@cpn=1\relax% copy first
-	\advance \pgf@logicalpages by -1\relax%
-  \loop%
-    \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @copy\endcsname\relax
-    \else%
-      \edef\pgf@temp{\noexpand\global\noexpand\setbox\csname pgfpages@box@%
-        \the\pgf@cpn\endcsname=\noexpand\copy\csname pgfpages@box@\csname
-        pgfpages@p@\the\pgf@cpn @copy\endcsname\endcsname}%
-      \pgf@temp%
-    \fi%
-  \ifnum\pgf@cpn<\pgf@logicalpages%
-    \advance \pgf@cpn by 2\relax%  
-  \repeat%
-  \pgf@cpn=1\relax% then void
-  \loop%
-    \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @copy\endcsname\relax
-      \expandafter\global\expandafter\setbox\csname pgfpages@box@\the\pgf@cpn\endcsname=\box\voidb@x%
-    \else%
-    \fi%
-  \ifnum\pgf@cpn<\pgf@logicalpages%
-    \advance \pgf@cpn by 2\relax%  
-  \repeat%
-	\advance \pgf@logicalpages by 1\relax%
-}
-\def\pgfpages@performevencopying{
-  \pgf@cpn=2\relax% copy first
-  \loop%
-    \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @copy\endcsname\relax
-    \else%
-      \edef\pgf@temp{\noexpand\global\noexpand\setbox\csname pgfpages@box@%
-        \the\pgf@cpn\endcsname=\noexpand\copy\csname pgfpages@box@\csname
-        pgfpages@p@\the\pgf@cpn @copy\endcsname\endcsname}%
-      \pgf@temp%
-    \fi%
-  \ifnum\pgf@cpn<\pgf@logicalpages%
-    \advance \pgf@cpn by 2\relax%  
-  \repeat%
-  \pgf@cpn=2\relax% then void
-  \loop%
-    \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @copy\endcsname\relax
-      \expandafter\global\expandafter\setbox\csname pgfpages@box@\the\pgf@cpn\endcsname=\box\voidb@x%
-    \else%
-    \fi%
-  \ifnum\pgf@cpn<\pgf@logicalpages%
-    \advance \pgf@cpn by 2\relax%  
-  \repeat%
-}% 
+\input{kartei.pageshipout.tex}
 
 \makeatother
-\pgfpagesdeclarelayout{cardprintA6noborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=8,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.75\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.75\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.25\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.25\pgfphysicalheight}%
-  }%
 
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.75\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.75\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.25\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.5\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.25\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-%
-%A7 Stuff
-%
-\pgfpagesdeclarelayout{cardprintA7noborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=16,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.875\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.875\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.625\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.625\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.375\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.375\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.125\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.125\pgfphysicalheight}%
-  }%
+\input{kartei.a6printstyle}
 
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.75\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.5\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.25\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-}%
-%
-%A8 Stuff
-%
-\pgfpagesdeclarelayout{cardprintA8noborder}
-{
- \edef\pgfpageoptionheight{\the\paperheight} 
-  \edef\pgfpageoptionwidth{\the\paperwidth}
-  \edef\pgfpageoptionborder{1pt}
-}
-{
-  \pgfpagesphysicalpageoptions
-  {%
-    logical pages=32,%
-    physical height=\pgfpageoptionheight,%
-    physical width=\pgfpageoptionwidth,%
-  }
-  \pgfpageslogicalpageoptions{1} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.875\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{3} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.875\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{5} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.875\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{7} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.875\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{9} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.625\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{11} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.625\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{13} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.625\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{15} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.625\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{17} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.375\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{19} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.375\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{21} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.375\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{23} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.375\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{25} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.125\pgfphysicalheight},%
-  }%
-  \pgfpageslogicalpageoptions{27} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.125\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{29} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.125\pgfphysicalheight}%
-  }%
-  \pgfpageslogicalpageoptions{31} % 1
-  {%
-    border shrink=\pgfpageoptionborder,%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.125\pgfphysicalheight}%
-  }%
+\input{kartei.a7printstyle}
 
+\input{kartei.a8printstyle}
 
-
-
-  \pgfpageslogicalpageoptions{2} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{4} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{6} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{8} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.875\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{10} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{12} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{14} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{16} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.625\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{18} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{20} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{22} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{24} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.375\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-  \pgfpageslogicalpageoptions{26} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.875\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{28} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.625\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-	}%
-  \pgfpageslogicalpageoptions{30} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.375\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-  \pgfpageslogicalpageoptions{32} % 1
-  {%
-    resized width=.25\pgfphysicalwidth,%
-    resized height=.25\pgfphysicalheight,%
-    center=\pgfpoint{.125\pgfphysicalwidth}{.125\pgfphysicalheight},%
-	border code=\pgfsetlinewidth{.5pt}\pgfstroke
-  }%
-
-}%
+\input{kartei.a9printstyle}
 
 %
 % Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
@@ -875,6 +231,14 @@
 \renewcommand{\thesubsection}{\arabic{subsection}}
 \kommentar{#1}}%
 %
+% Pagestyle commands
+%
+\def\cardtitleheader{}%
+\def\cardbackheader{\theCardID\hfill\dieantwort\hfill}%
+\def\cardtitlefooter{}%
+\def\cardbackfooter{}%
+
+%
 %	Karteikartenumgebung:
 %	#1 (optional) Kopfzeile vorne Links : Fach
 % 	#2 Titel der Vorderseite  	
@@ -883,39 +247,33 @@
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {% Vor der Umgebung: Vorderseite bauen
  %
-	\pagestyle{fancy}
-	{
-		\fancyhead[LO]{\dasfach{#1}} %\emph{#1}} %Fach
-		\fancyhead[RO]{\derkommentar{#3}} %Kommentar
-	}
-	\pagestyle{fancy}{% 
-	}%
+	\def\cardtitleheader{\dasfach{#1}\hfill\theCardID\hfill\derkommentar{#3}}%
+	\def\cardbackheader{\theCardID\hfill\dieantwort\hfill}%
+	\thispagestyle{cardpagestyle}
+ %
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
 \refstepcounter{CardID}
 \newpage%
-}%
+}% Ende Vor der Umgebung
 {% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
  % und neue Karteikarte auf ungerader Seite beginnen lassen
  %
-	\fancyhead[LO]{\emph{\textbf{Achtung:} Rückseite der Karte ist zu voll}}
-	\cleardoublepage
+%	\def\cardbackheader{\emph{Achtung:} Rückseite ist zu voll!}%
+	\newpage
 }
 \makeatother
-%
-% Standard-Layout: 	Kopf:  Kartennummer vorne mittig & hinten links (also bei y0), hinten mitte „Antwort“
-% 					Fußzeile: leer
-%
-\renewcommand{\headrulewidth}{0.2pt}
-\renewcommand{\footrulewidth}{0.0pt} 
-\pagestyle{fancy}{% 
-	\fancyhf{}%
-	\fancyhead[CO,LE]{\theCardID}%	
-	\fancyhead[RE]{}%
-	\fancyhead[CE]{\dieantwort}%
-}
 
+\AtBeginDocument{%
+\defpagestyle{cardpagestyle}%
+	{(0pt, 0pt)%
+		{\cardbackheader}{\cardtitleheader}{\cardtitleheader}}%
+	{(0pt, 0pt)%
+		{\cardbackfooter}{\cardtitlefooter}{\cardtitlefooter}}%
+\pagestyle{cardpagestyle}
+}
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
 \antwort{Antwort}
+% using pagestyle
 \setcardpagelayout

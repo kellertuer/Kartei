@@ -1,0 +1,150 @@
+%
+% Kartei Source Code
+%
+% Last Chance: Kartei 1.8, 2009/12/25
+%
+%
+%
+% A7 printstyle definition 
+%
+
+\pgfpagesdeclarelayout{cardprintA7}
+{%
+	\edef\pgfpageoptionheight{\the\paperheight}%
+	\edef\pgfpageoptionwidth{\the\paperwidth}%
+	\edef\pgfpageoptionborder{1pt}%
+}%
+{
+  \pgfpagesphysicalpageoptions%
+  {%
+    logical pages=16,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+  }%
+%
+% Front (odd pages)
+%
+  \pgfpageslogicalpageoptions{1}% First Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.25\pgfpageoptionheight,%
+    original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{3}% Second Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.25\pgfpageoptionheight,%
+    original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{5}% Third Card
+  {%
+  	border shrink=\pgfpageoptionborder,%
+  	original width=.25\pgfpageoptionheight,%
+  	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.75\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{7}% Fourth Card
+  {%
+  	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{9}% Fifth Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.5\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{11} % Sixth Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{13} % Seventh Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.25\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{15} % Eigth Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight},%
+  }%
+%
+% Backsides (Even Pages)
+%
+  \pgfpageslogicalpageoptions{2} % First Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{4} % Second Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+	}%
+  \pgfpageslogicalpageoptions{6} % Third Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{8} % 1
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.75\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{10} % 1
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{12} % 1
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.5\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{14} % 1
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+  \pgfpageslogicalpageoptions{16} % 1
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.25\pgfpageoptionheight,%
+	original height=.5\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.25\pgfphysicalheight},%
+	border code=\pgfsetlinewidth{.5pt}\pgfstroke
+  }%
+}%
