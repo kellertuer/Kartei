@@ -169,6 +169,7 @@
 
 \ifcard@useprint%
 \setpapersize[landscape]{A4}% 
+\setmargXXX
 	\ifcase \card@papersize%
 	%0 is A6
 			\ifcase \card@backsiderotation% no rotation =0
