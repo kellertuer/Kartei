@@ -7,7 +7,7 @@
 %
 % A6 printstyle definition 
 %
-\pgfpagesdeclarelayout{cardprintA6}
+\pgfpagesdeclarelayout{cardprintA6rotation}
 {%
 	\edef\pgfpageoptionheight{\the\paperheight}%
 	\edef\pgfpageoptionwidth{\the\paperwidth}%
@@ -51,29 +51,33 @@
   \pgfpageslogicalpageoptions{2} % 1st Card
   {%
   	border shrink=\pgfpageoptionborder,%
+	rotation=180,%
 	original width=.5\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-    center=\pgfpoint{.5\pgfphysicalwidth}{\pgfphysicalheight},%
+    center=\pgfpoint{1.17\pgfphysicalwidth}{.27\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{4} % 2nd Card
   {%
   	border shrink=\pgfpageoptionborder,%
 	original width=.5\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-    center=\pgfpoint{0\pgfphysicalwidth}{\pgfphysicalheight},%
+    center=\pgfpoint{.67\pgfphysicalwidth}{.27\pgfphysicalheight},%
+	rotation=180,%
 	}%
   \pgfpageslogicalpageoptions{6} % 3rd Card
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.5\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+    center=\pgfpoint{1.17\pgfphysicalwidth}{-.23\pgfphysicalheight},%
+	rotation=180,%
   }%
   \pgfpageslogicalpageoptions{8} % 4th Card
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.5\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-    center=\pgfpoint{0\pgfphysicalwidth}{.5\pgfphysicalheight},%
+    center=\pgfpoint{.67\pgfphysicalwidth}{-.23\pgfphysicalheight},%
+	rotation=180,%
   }%
 }%

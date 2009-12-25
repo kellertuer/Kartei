@@ -25,7 +25,7 @@
 %Standard: Kein Print
 \card@useprintfalse%
 
-% Border Style
+% Card Sizes
 % 0 = DIN A6
 % 1 = DIN A7
 % 2 = DIN A8
@@ -33,6 +33,12 @@
 \newcount\card@papersize
 %Standard: A6 
 \card@papersize=0%
+% Rotation der Rückseite
+% 0 = nicht gedreht
+% 1 = 180° gedreht (überkopf)
+\newcount\card@backsiderotation
+%Standard: 0 Degree, nicht überkopf 
+\card@backsiderotation=0%
 
 %
 % Antwort (Standard Rückseite Mitte
@@ -96,11 +102,6 @@
 % Expluiziter Standard : leer
 \global\let\card@kommentar\@empty
 
-% Rotation
-\newcount\card@backsiderotation
-%Standard: 0 Degree, nicht überkopf 
-\card@backsiderotation=0%
-
 %english names
 \newcommand{\comment}{}
 \let\comment=\kommentar
@@ -115,7 +116,7 @@
 
 \DeclareOption{flip}
 {
-\card@backsiderotation=180%
+\card@backsiderotation=1%
 }
 
 \DeclareOption{print}{%
@@ -169,7 +170,12 @@
 \ifcard@useprint%
 \setpapersize[landscape]{A4}% 
 	\ifcase \card@papersize%
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
+	%0 is A6
+			\ifcase \card@backsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
+			\fi
 		\or
 		%DIN A7 because 1
 			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
@@ -191,7 +197,7 @@
 \makeatother
 
 \input{kartei.a6printstyle}
-
+\input{kartei.a6printstylerotation}
 \input{kartei.a7printstyle}
 
 \input{kartei.a8printstyle}

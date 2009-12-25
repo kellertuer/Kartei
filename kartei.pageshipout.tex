@@ -24,7 +24,7 @@
 
 \newbox\pgfpages@shipoutbox
 
-\def\pgfpages@buildshipoutoddbox{%
+\def\pgfpages@buildshipoutoddbox{% (fold)	
   \setbox\pgfpages@shipoutbox=\vbox{{%
     \set@typeset@protect%
     \offinterlineskip%
@@ -55,11 +55,13 @@
         \else%
           \pgflowlevel{\pgftransformyscale{\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname}}%
         \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname\relax%
-          \pgfscope%
-        \else%
-          \pgflowlevel{\pgftransformrotate{\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname}}%
-        \fi%
+		\pgfscope% 
+		\expandafter\ifx\csname pgfpages@p@\the\pgf@cpn 
+		@rotation\endcsname\relax% 
+		        \else% 
+		          \pgflowlevel{\pgftransformrotate{\csname 
+		pgfpages@p@\the\pgf@cpn @rotation\endcsname}}% 
+		        \fi% 
         \@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
         \@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
         \pgflowlevel{\pgftransformshift{\pgfpoint{-.5\@tempdima}{-.5\@tempdimb}}}%
@@ -109,7 +111,7 @@
 	\advance \pgf@logicalpages by 1\relax%
     \pgfsys@endpicture%
     }}%
-}
+} %(end)
 
 \newbox\pgfpages@shipoutbox
 
@@ -143,11 +145,13 @@
         \else%
           \pgflowlevel{\pgftransformyscale{\csname pgfpages@p@\the\pgf@cpn @yscale\endcsname}}%
         \fi%
-        \expandafter\ifx\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname\relax%
-          \pgfscope%
-        \else%
-          \pgflowlevel{\pgftransformrotate{\csname pgfpages@p@\the\pgf@cpn @rotation\endcsname}}%
-        \fi%
+		\pgfscope% 
+		\expandafter\ifx\csname pgfpages@p@\the\pgf@cpn 
+		@rotation\endcsname\relax% 
+		        \else% 
+		          \pgflowlevel{\pgftransformrotate{\csname 
+		pgfpages@p@\the\pgf@cpn @rotation\endcsname}}% 
+		        \fi% 
         \@tempdima=\csname pgfpages@p@\the\pgf@cpn @width\endcsname\relax%
         \@tempdimb=\csname pgfpages@p@\the\pgf@cpn @height\endcsname\relax%
         \pgflowlevel{\pgftransformshift{\pgfpoint{-.5\@tempdima}{-.5\@tempdimb}}}%
@@ -245,4 +249,4 @@
   \ifnum\pgf@cpn<\pgf@logicalpages%
     \advance \pgf@cpn by 2\relax%  
   \repeat%
-}% 
+}% (end)
