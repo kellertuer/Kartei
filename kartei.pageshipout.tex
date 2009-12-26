@@ -9,16 +9,24 @@
 %
 \renewcommand\pgfshipoutphysicalpage{%
   \ifnum\pgf@logicalpages>0\relax%
+	\ifcard@usefrontgrid%
+		\AddToShipoutPicture{\card@FrontGridPic}%
+	\fi%
     \pgfpages@buildshipoutoddbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performoddcopying%
+	\ClearShipoutPicture
   \fi%
   \ifnum\pgf@logicalpages>0\relax% 
+	\ifcard@useReargrid%
+		\AddToShipoutPicture{\card@RearGridPic}
+	\fi%
     \pgfpages@buildshipoutevenbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performevencopying%
     \global\pgfphysicalpageemptytrue%
     \global\pgf@holdingphysicalpagefalse%  
+	\ClearShipoutPicture
   \fi%
 }
 

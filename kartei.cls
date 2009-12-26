@@ -11,17 +11,16 @@
 % -- Version 1.8 --
 %
 % Erklärungen und Ähnliches, siehe manual.pdf
-
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{kartei}[2009/12/26 Karteikarten in LaTeX, Version 1.8]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
 %
-% lokale Variablen
+% lokale Variablen und Optionsträger 
 %
 %Print Version oder nicht ?
-\newif\ifcard@useprint
+\newif\ifcard@useprint%
 %Standard: Kein Print
 \card@useprintfalse%
 
@@ -33,18 +32,186 @@
 \newcount\card@papersize
 %Standard: A6 
 \card@papersize=0%
+
 % Rotation der Rückseite
 % 0 = nicht gedreht
 % 1 = 180° gedreht (überkopf)
-\newcount\card@backsiderotation
+\newcount\card@Rearsiderotation
 %Standard: 0 Degree, nicht überkopf 
-\card@backsiderotation=0%
+\card@Rearsiderotation=0%
+
+%
+% Gittermaße
+%
+\newlength\card@gridx
+\newlength\card@gridy
+% Eigenschaften: Gitter vorne / hinten
+\newif\ifcard@usefrontgrid
+%Standard -> vorne kein Gitter
+\card@usefrontgridfalse%
+% Eigenschaften: Gitter vorne / hinten
+\newif\ifcard@useReargrid
+%Standard -> vorne kein Gitter
+\card@useReargridtrue%
+
+%
+%-----------------
+%
+%
+% Declare options
+%
+
+%Flip Rearsides
+\DeclareOption{flip}{%
+	\card@Rearsiderotation=1%
+}
+%Print output
+\DeclareOption{print}{%
+	\card@useprinttrue
+}%
+%A6 Cards
+\DeclareOption{a6paper}{%
+	\card@papersize=0%
+}
+%A7 Cards
+\DeclareOption{a7paper}{%
+	\card@papersize=1%
+}%
+%A8 Cards
+\DeclareOption{a8paper}{
+	\card@papersize=2%
+}%	
+%A9 Cards
+\DeclareOption{a9paper}{
+\card@papersize=3%
+}
+% Activate both grids
+\DeclareOption{grid=both}{%
+	\card@usefrontgridtrue%
+	\card@useReargridtrue%
+}
+% Activate front grid only
+\DeclareOption{grid=front}{%
+	\card@usefrontgridtrue%
+	\card@useReargridfalse%
+}
+% Activate Rearsidegrid only (Standard)
+\DeclareOption{grid=rear}{%
+	\card@usefrontgridfalse%
+	\card@useReargridtrue%
+}
+% Activate both grids
+\DeclareOption{grid=none}{%
+	\card@usefrontgridfalse%
+	\card@useReargridfalse%
+}
+%All unknown Options to article
+\DeclareOption*{%
+\PassOptionsToClass{\CurrentOption}{scrartcl}% 
+}
+\ProcessOptions\relax
+%
+% Pakete laden
+%
+\LoadClass[twoside]{scrartcl}
+\RequirePackage[headsepline,footsepline]{scrpage2}
+\RequirePackage{xargs}
+\RequirePackage{vmargin}
+\RequirePackage{pgfpages,tikz}
+\RequirePackage{eso-pic}
+%
+% Seitenformate durchdefinieren
+%
+\ifcase \card@papersize%
+			\setpapersize[landscape]{A6}% 
+			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
+			\setlength{\card@gridx}{\paperwidth}%
+			\setlength{\card@gridy}{\paperheight}%			
+		\or%
+		%DIN A7 because 1
+			\setpapersize[landscape]{A7}% 
+			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
+			\setlength{\card@gridx}{\paperwidth}% 
+			\setlength{\card@gridy}{\paperheight}%
+		\or%
+		%DIN A8 because 2
+			\setpapersize[landscape]{A8}% 
+			\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
+			\setlength{\card@gridx}{\paperwidth}%
+			\setlength{\card@gridy}{\paperheight}%
+		\or%
+		%DIN A9 because 3
+			\setpapersize[landscape]{A9}% 
+			\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
+			\setlength{\card@gridx}{\paperwidth}
+			\setlength{\card@gridy}{\paperheight}%
+	\fi%
+%
+\ifcard@useprint%
+	\ifcase \card@papersize%
+	%0 is A6
+			\setpapersize[landscape]{A4}%
+			\ifcase \card@Rearsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
+			\fi
+		\or
+		%DIN A7 because 1
+			\setpapersize[portrait]{A4}%
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
+		\or
+		%DIN A8 because 2
+			\setpapersize[landscape]{A4}%
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
+		\or
+		%DIN A9 because 3
+			\setpapersize[portrait]{A4}%
+			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
+	\fi
+	% Border Styles
+	\newcommand\card@RearGridPic{%
+		\put(72.364672364672365,-72.364672364672365){%
+			\parbox[b][\paperheight]{\paperwidth}{%
+				\begin{tikzpicture}
+					\draw[rear grid] (1pt,1pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
+				\end{tikzpicture}
+			}%
+		}%
+	}%
+	\newcommand\card@FrontGridPic{%
+		\put(72.364672364672365,-72.364672364672365){%
+			\parbox[b][\paperheight]{\paperwidth}{%
+				\begin{tikzpicture}
+				\draw[front grid] (1pt,1pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
+				\end{tikzpicture}
+			}%
+		}%
+	}%
+\else
+	\renewcommand{\setcardpagelayout}{} % no print
+\fi
+\input{kartei.pageshipout.tex}
+
+\input{kartei.a6printstyle}
+\input{kartei.a6printstylerotation}
+\input{kartei.a7printstyle}
+%A7 rotation
+\input{kartei.a8printstyle}
+%A8 rotation
+\input{kartei.a9printstyle}
+%A9 rotation
+
+
+%
+% -----------------
+% Eigene Felder und Befehler
+% -----------------
+%
 
 %
 % Antwort (Standard Rückseite Mitte
 % Answer
-%
-%
 \newcommand{\dieantwort}{%
 \antwortstil{\card@antwort}\relax%
 }
@@ -63,9 +230,7 @@
 
 %
 % Fach (Standard vorne links)
-% Subject
-%
-%
+% CardSubject
 \newcommand{\dasfach}[1]{%
 \ifx\@empty#1%
 \fachstil{\card@fach}\relax%
@@ -87,9 +252,8 @@
 \let\subjectstyle=\fachstil
 
 %
-% Kommentar 2 (Standard vorne rechts)
-%
-%
+% Kommentar (Standard vorne rechts)
+% Comment
 \newcommand{\derkommentar}[1]{%
 \ifx\@empty#1%
 	\kommentarstil\card@kommentar\relax%
@@ -110,104 +274,7 @@
 \newcommand{\commentstyle}{}
 \let\commentstyle=\kommentarstil
 
-%
-% Declare options
-%
 
-\DeclareOption{flip}
-{
-\card@backsiderotation=1%
-}
-
-\DeclareOption{print}{%
-\card@useprinttrue
-}%
-
-
-\DeclareOption{a6paper}{
-\card@papersize=0%
-}
-
-\DeclareOption{a7paper}{
-\card@papersize=1%
-}%
-
-\DeclareOption{a8paper}{
-\card@papersize=2%
-}%	
-
-\DeclareOption{a9paper}{
-\card@papersize=3%
-}%	
-
-%All unknown Options to article
-\DeclareOption*{% 
-\PassOptionsToClass{\CurrentOption}{scrartcl}% 
-}
-\ProcessOptions\relax
-\LoadClass[twoside]{scrartcl}
-\RequirePackage[headsepline,footsepline]{scrpage2}
-\RequirePackage{xargs}
-\RequirePackage{vmargin}
-
-	\ifcase \card@papersize%
-			\setpapersize[landscape]{A6}% 
-			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
-		\or
-		%DIN A7 because 1
-			\setpapersize[landscape]{A7}% 
-			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
-		\or
-		%DIN A8 because 2
-		\setpapersize[landscape]{A8}% 
-		\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
-		\or
-		%DIN A9 because 3
-		\setpapersize[landscape]{A9}% 
-		\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
-	\fi
-
-\ifcard@useprint%
-\setpapersize[landscape]{A4}% 
-\setmargXXX
-	\ifcase \card@papersize%
-	%0 is A6
-			\ifcase \card@backsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
-			\fi
-		\or
-		%DIN A7 because 1
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
-		\or
-		%DIN A8 because 2
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
-		\or
-		%DIN A9 because 3
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
-	\fi
-\else
-	\renewcommand{\setcardpagelayout}{} % no print
-\fi	
-
-\RequirePackage{pgfpages,tikz}
-
-\input{kartei.pageshipout.tex}
-
-\makeatother
-
-\input{kartei.a6printstyle}
-\input{kartei.a6printstylerotation}
-\input{kartei.a7printstyle}
-
-\input{kartei.a8printstyle}
-
-\input{kartei.a9printstyle}
-
-%
-% Karteikartenzähler & Ausgabe des Counters in Form „# Nummer“ bei Referenzen und in der Kopfzeile
-%
 \newcounter{CardID}
 \renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
 
@@ -241,9 +308,9 @@
 % Pagestyle commands
 %
 \def\cardtitleheader{}%
-\def\cardbackheader{\theCardID\hfill\dieantwort\hfill}%
+\def\cardRearheader{\theCardID\hfill\dieantwort\hfill}%
 \def\cardtitlefooter{}%
-\def\cardbackfooter{}%
+\def\cardRearfooter{}%
 
 %
 %	Karteikartenumgebung:
@@ -255,7 +322,7 @@
 {% Vor der Umgebung: Vorderseite bauen
  %
 	\def\cardtitleheader{\dasfach{#1}\hfill\theCardID\hfill\derkommentar{#3}}%
-	\def\cardbackheader{\theCardID\hfill\dieantwort\hfill}%
+	\def\cardRearheader{\theCardID\hfill\dieantwort\hfill}%
 	\thispagestyle{cardpagestyle}
  %
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
@@ -265,7 +332,7 @@
 {% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
  % und neue Karteikarte auf ungerader Seite beginnen lassen
  %
-%	\def\cardbackheader{\emph{Achtung:} Rückseite ist zu voll!}%
+%	\def\cardRearheader{\emph{Achtung:} Rückseite ist zu voll!}%
 	\newpage
 }
 \makeatother
@@ -273,9 +340,9 @@
 \AtBeginDocument{%
 \defpagestyle{cardpagestyle}%
 	{(0pt, 0pt)%
-		{\cardbackheader}{\cardtitleheader}{\cardtitleheader}}%
+		{\cardRearheader}{\cardtitleheader}{\cardtitleheader}}%
 	{(0pt, 0pt)%
-		{\cardbackfooter}{\cardtitlefooter}{\cardtitlefooter}}%
+		{\cardRearfooter}{\cardtitlefooter}{\cardtitlefooter}}%
 \pagestyle{cardpagestyle}
 }
 %
@@ -284,3 +351,9 @@
 \antwort{Antwort}
 % using pagestyle
 \setcardpagelayout
+
+%
+% Border Definitions
+%
+\tikzset{front grid/.style={very thin, gray, loosely dashed}}
+\tikzset{rear grid/.style={thin, black, loosely dashed}}
