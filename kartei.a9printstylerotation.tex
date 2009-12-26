@@ -1,0 +1,552 @@
+%
+% Kartei Source Code
+%
+% Last Chance: Kartei 1.8, 2009/12/25
+%
+%
+%
+% A7 printstyle definition 
+%
+
+\pgfpagesdeclarelayout{cardprintA9rotation}
+{%
+	\edef\pgfpageoptionheight{\the\paperheight}%
+	\edef\pgfpageoptionwidth{\the\paperwidth}%
+	\edef\pgfpageoptionborder{1pt}%
+}%
+{
+  \pgfpagesphysicalpageoptions%
+  {%
+    logical pages=64,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+  }%
+%
+% Front (odd pages)
+%
+  \pgfpageslogicalpageoptions{1}% 1st Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.125\pgfpageoptionheight,%
+    original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{3}% 2nd Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.125\pgfpageoptionheight,%
+    original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{5}% 3rd Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.125\pgfpageoptionheight,%
+    original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{7}% 4th Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.125\pgfpageoptionheight,%
+    original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{9}% 5th Card
+  {%
+  	border shrink=\pgfpageoptionborder,%
+  	original width=.125\pgfpageoptionheight,%
+  	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.875\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{11}% 6th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.875\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{13}% 7th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.875\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{15}% 8th Card
+  {%
+  	border shrink=\pgfpageoptionborder,%
+  	original width=.125\pgfpageoptionheight,%
+  	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.875\pgfphysicalheight},%
+  }%
+%
+%
+%
+\pgfpageslogicalpageoptions{17}% 9th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.75\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{19}% 10th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.75\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{21}% 11th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{23}% 12th Card
+{
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.75\pgfphysicalheight},%
+}%
+%
+%
+%
+\pgfpageslogicalpageoptions{25}% 13th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.625\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{27}% 14th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.625\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{29}% 15th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.625\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{31}% 16th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.625\pgfphysicalheight},%
+}%
+%
+%
+%
+%
+\pgfpageslogicalpageoptions{33}% 17th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.5\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{35}% 18th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.5\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{37}% 19th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{39}% 20th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.5\pgfphysicalheight},%
+}%
+%
+%
+%
+\pgfpageslogicalpageoptions{41}% 21st Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.375\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{43}% 22nd Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.375\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{45}% 23rd Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.375\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{47}% 24th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.375\pgfphysicalheight},%
+}%
+%
+%
+%
+\pgfpageslogicalpageoptions{49}% 25th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.25\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{51}% 26th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.25\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{53}% 27th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{55}% 28th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.25\pgfphysicalheight},%
+}%
+%
+%
+%
+\pgfpageslogicalpageoptions{57}% 29th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.125\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{59}% 30th Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.25\pgfphysicalwidth}{.125\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{61}% 31st Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.5\pgfphysicalwidth}{.125\pgfphysicalheight},%
+}%
+\pgfpageslogicalpageoptions{63}% 32nd Card
+{%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	center=\pgfpoint{.75\pgfphysicalwidth}{.125\pgfphysicalheight},%
+}%
+% ---
+%
+% Rearsides (Even Pages)
+%
+% ---
+  \pgfpageslogicalpageoptions{2} % 1st Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.702\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{4} % 2nd Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{.702\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{6} % 3rd Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{.702\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{8} % 4th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{.702\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{10} % 5th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.577\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{12} % 6th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{.577\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{14} % 7th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{.577\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{16} % 8th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{.577\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{18} % 9th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.452\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{20} % 10th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{.452\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{22} % 11th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{.452\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{24} % 12th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{.452\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{26} % 13th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.327\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{28} % 14th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{.327\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{30} % 15th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{.327\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{32} % 16th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{.327\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{34} % 17th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.202\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{36} % 18th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{.202\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{38} % 19th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{.202\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{40} % 20th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{.49125\pgfphysicalwidth}{.202\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{42} % 21st Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{.077\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{44} % 22nd Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{.99125\pgfphysicalwidth}{.077\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{46} % 23rd Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{.74125\pgfphysicalwidth}{.077\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{48} % 24th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{.077\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{50} % 25th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{-.048\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{52} % 26th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{-.048\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{54} % 27th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{-.048\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{56} % 28th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{-.048\pgfphysicalheight},%
+  }%
+  %
+  %
+  %
+  \pgfpageslogicalpageoptions{58} % 29th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{1.24125\pgfphysicalwidth}{-.173\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{60} % 30th Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.99125\pgfphysicalwidth}{-.173\pgfphysicalheight},%
+	}%
+  \pgfpageslogicalpageoptions{62} % 31st Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.74125\pgfphysicalwidth}{-.173\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{64} % 32nd Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.125\pgfpageoptionheight,%
+	original height=.25\pgfpageoptionwidth,%
+	rotation=180,%
+	center=\pgfpoint{0.49125\pgfphysicalwidth}{-.173\pgfphysicalheight},%
+  }%
+}%

@@ -8,7 +8,7 @@
 % A7 printstyle definition 
 %
 
-\pgfpagesdeclarelayout{cardprintA7}
+\pgfpagesdeclarelayout{cardprintA7rotation}
 {%
 	\edef\pgfpageoptionheight{\the\paperheight}%
 	\edef\pgfpageoptionwidth{\the\paperwidth}%
@@ -88,21 +88,24 @@
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{.5\pgfphysicalwidth}{\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{1.2425\pgfphysicalwidth}{.577\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{4} % Second Card
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{0pt}{\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{.7425\pgfphysicalwidth}{.577\pgfphysicalheight},%
 	}%
   \pgfpageslogicalpageoptions{6} % Third Card
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{.5\pgfphysicalwidth}{.75\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{1.2425\pgfphysicalwidth}{.327\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{8} % 1
   {%
@@ -110,33 +113,39 @@
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
 	center=\pgfpoint{0pt}{.75\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{.7425\pgfphysicalwidth}{.327\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{10} % 1
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{1.2425\pgfphysicalwidth}{.077\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{12} % 1
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{0pt}{.5\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{.7425\pgfphysicalwidth}{.077\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{14} % 1
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{.5\pgfphysicalwidth}{.25\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{1.2425\pgfphysicalwidth}{-.173\pgfphysicalheight},%
   }%
   \pgfpageslogicalpageoptions{16} % 1
   {%
 	border shrink=\pgfpageoptionborder,%
 	original width=.25\pgfpageoptionheight,%
 	original height=.5\pgfpageoptionwidth,%
-	center=\pgfpoint{0pt}{.25\pgfphysicalheight},%
+	rotation=180,%
+	center=\pgfpoint{.7425\pgfphysicalwidth}{-0.173\pgfphysicalheight},%
   }%
 }%

@@ -119,6 +119,7 @@
 \RequirePackage{vmargin}
 \RequirePackage{pgfpages,tikz}
 \RequirePackage{eso-pic}
+
 %
 % Seitenformate durchdefinieren
 %
@@ -159,15 +160,27 @@
 		\or
 		%DIN A7 because 1
 			\setpapersize[portrait]{A4}%
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
+			\ifcase \card@Rearsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7rotation}[a4paper, border shrink=0mm]}%
+			\fi
 		\or
 		%DIN A8 because 2
 			\setpapersize[landscape]{A4}%
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
+			\ifcase \card@Rearsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8rotation}[a4paper, landscape, border shrink=0mm]}%
+			\fi
 		\or
 		%DIN A9 because 3
 			\setpapersize[portrait]{A4}%
-			\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
+			\ifcase \card@Rearsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
+			\fi
 	\fi
 	% Border Styles
 	\newcommand\card@RearGridPic{%
@@ -196,12 +209,11 @@
 \input{kartei.a6printstyle}
 \input{kartei.a6printstylerotation}
 \input{kartei.a7printstyle}
-%A7 rotation
+\input{kartei.a7printstylerotation}
 \input{kartei.a8printstyle}
-%A8 rotation
+\input{kartei.a8printstylerotation}
 \input{kartei.a9printstyle}
-%A9 rotation
-
+\input{kartei.a9printstylerotation}
 
 %
 % -----------------
@@ -286,8 +298,15 @@
 %
 % Makro nun neu definieren:
 \def\section{\@ifstar\unnumberedsection\numberedsection} 
-\def\numberedsection#1{\refstepcounter{section}\fach{\thesection.\ #1}}%
-\def\unnumberedsection#1{\fach{#1}}%
+\def\numberedsection#1{%
+	\refstepcounter{section}%
+	\fach{\thesection.\ #1}%
+%	\addcontentsline{toc}{section}{\protect\numberline{\thesubsection}{#1}}}
+}%
+\def\unnumberedsection#1{%
+	\fach{#1}%
+%	\addcontentsline{toc}{section}{#1}}%
+}%
 
 % Subsection wird nun für das Kommentarfeld verwendet
 % Dazu wird zunächst die alte Subsection gesichert
@@ -301,9 +320,12 @@
 	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 	\refstepcounter{subsection}%
 	\kommentar{\thesubsection.\ #1}}%
+%	\addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}{#1}}}
 \def\unnumberedsubsection#1{%
-\renewcommand{\thesubsection}{\arabic{subsection}}
-\kommentar{#1}}%
+	\renewcommand{\thesubsection}{\arabic{subsection}}%
+%	\addcontentsline{toc}{subsection}{#1}}%
+	\kommentar{#1}%
+}%
 %
 % Pagestyle commands
 %
@@ -336,7 +358,9 @@
 	\newpage
 }
 \makeatother
-
+%
+% Init and Endstuff...
+%
 \AtBeginDocument{%
 \defpagestyle{cardpagestyle}%
 	{(0pt, 0pt)%
@@ -351,7 +375,11 @@
 \antwort{Antwort}
 % using pagestyle
 \setcardpagelayout
-
+\AtEndDocument{%
+%
+% TODO Tabelle aller Karten?
+%
+}
 %
 % Border Definitions
 %
