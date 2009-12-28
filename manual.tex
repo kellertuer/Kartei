@@ -1,5 +1,4 @@
-\documentclass[a4paper]{article}
-\usepackage[a4paper]{geometry}
+\documentclass[a4paper,DIV=calc]{scrartcl}
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
 \usepackage[scaled]{helvet}
@@ -7,44 +6,90 @@
 %Menge an Paketen die für vor allem mathematisches und informatisches gut brauchbar ist
 \usepackage{graphicx,hyperref}
 \usepackage{enumerate,subfigure,listings}
-\usepackage{pdfpages}
-\lstloadlanguages{TeX}
-\lstset{language={},frame=none,numbers=left,basicstyle=\sffamily,breaklines=true,tabsize=3, showspaces=false, showtabs=false, columns=fixed}	
-\setlength{\parindent}{0pt} 
-\setlength{\parskip}{1em}	
-\geometry{a4paper,tmargin=2.6cm, bmargin=3.3cm, lmargin=3cm, rmargin=3.5cm, headheight=1em, headsep=1em, footskip=1cm} 
+\usepackage{pdfpages,color}
+\usepackage[pdftex,dvipsnames]{xcolor}
 
+\lstloadlanguages{TeX}
+\lstset{basicstyle={\rmfamily\footnotesize},numbers=left,numberstyle=\tiny\color{maincolor},numbersep=5pt,
+    breaklines=true,
+    captionpos={t},language={},frame=none,numbers=left,tabsize=3, showspaces=false, showtabs=false, columns=fixed}	
+\setlength{\parindent}{1em} 
+\setlength{\parskip}{0em}	
 \setlength{\marginparwidth}{3cm}
+  \colorlet{maincolor}{black!80}
+  \hypersetup{ 
+    pdftitle={Karteikarten in LaTeX}%
+	  ,pdfauthor={Ronny Bergmann}%
+	  ,pdfcreator={LaTeX, hyperref, KOMA-Script, TextMate},
+    pdfkeywords={Cards, Karteikarten, TeX, Paket, Anleitung, Manual}, 
+    pdfdisplaydoctitle,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    bookmarksopenlevel=1,
+    plainpages=false,
+    bookmarksnumbered,
+    pdfborder={0 0 0}
+    }
+
+\addtokomafont{sectioning}{\rmfamily}
+\addtokomafont{descriptionlabel}{\rmfamily\bfseries}
+
 \begin{document}
-\title{Karteikarten in \LaTeX\\{\normalsize Version 1.7}}
+\title{Karteikarten in \LaTeX\\{\large Version 1.8}}
 \author{Ronny Bergmann\\\texttt{mail@darkmoonwolf.de}}
-\date{November 2008}
+\date{Dezember 2009}
 \maketitle
 \section{Einleitung}
 Karteikarten sind zum Lernen hilfreich, sei es in kleinem Format für etwa Vokabeln oder für umfangreichere Themen die man auf größeren Karteikarten stichpunktartig notiert. Zusätzlich zum Lernen am Computer, wo die Karteikarten in einem Dokument vorliegen sollten, möchte man Karteikarten wahrscheinlich auch drucken. Dazu werden mehrere Karteikarten auf eine Seite gesetzt, wobei die zweite Seite „trickreich umsortiert“ wird, damit im Duplex-Druck jeweils die passenden Vorder- und Rückseiten aneinander gedruckt werden. Beide Formate basieren auf dem gleiche Inhalt, so dass hier \LaTeX\ hilfreich sein kann, diese beiden Formate zu produzieren.
 
+Zum Ausprobieren genügt es, die Dateien im gleichen Verzeichnis wie die Hauptdatei der Karteikarten zu hinterlegen. Für umfangreichere Arbeiten sollte man die Dateien in einem speziellen Ordner (\lstinline!/texmf-dist/tex/latex/kartei! als Empfehlung) hinterlegen und \lstinline!sudo texhash! in der Konsole aufrufen.
+
 \section{Dokumentoptionen}
 Für eine gesamte Kartei\marginpar{\textbackslash document-\\class\{kartei\}}, oder auch Ansammlung von Karteikarten lassen sich zunächst die normalen Optionen für einen Artikel selbst angeben, also etwa die Standardschriftgröße. Werden diese nicht angegeben, so wird die Schriftgröße etwa auf \lstinline!10pt! hesetzt. Karteikarten sind stets im Querformat gesetzt.
 \subsection{Kartenformat}
+\marginpar{aXpaper}
 Es gibt die folgenden Karteikartenformate
 \begin{description}
-	\marginpar{a6paper}
 	\item[{\sffamily a6paper}] Im Din A6-Karteikarten-Format $(148$mm$\times 105$mm$)$ sind die Ränder ein wenig größer gewählt, als bei den anderen beiden Formaten. Dieses Format ist der Standard, wenn nichts angegeben wird für das Format.
-	 \marginpar{a7paper} 
+%	 \marginpar{a7paper} 
 	\item[{\sffamily a7paper}] Din A7-Karteikarten $(105$mm$\times 74$mm$)$
-	 \marginpar{a8paper}
+%	 \marginpar{a8paper}
 	\item[{\sffamily a8paper}] Din A8-Karteikarten $(74$mm$\times 52$mm$)$, diese scheinen recht klein, hier wirkt die Standardschriftgröße fast etwas groß.
+%	 \marginpar{a9paper}
+	\item[{\sffamily a9paper}] Din A9-Karteikarten $(52$mm$\times 37$mm$)$, mir persönlch zu klein, aber dank eines Patches nun verfügbar\footnote{Dank an Hagen Fritsch}
 \end{description}
-\subsection{Druck}\marginpar{print}
-Durch Angabe der Dokumentoption \lstinline!print! werden die Karteikarten auf einem DinA4-Blatt angeordnet, um eine einfache Druckversion zu erzeugen. Diese ist randlos und auf einer ungeraden Seite werden Vorderseiten, auf der darauffolgenden geraden Seite die dazugehörigen Karteikartenrückseiten angeordnet. Auf der geraden Seite wird zusätzlich als Schnitthilfe eine Linie um jede Karte gesetzt.
-Beim Druck sollte diese randlose Version so verkleinert werden, dass die Druckränder verbleiben. Dazu bieten die üblichen Druckdialoge die option „auf Seitengröße verkleinern“ an. Im Schnitt sollte der Druckrand ebenso entfernt werden, da die Karten sonst ungleichmäßig aussehen. Einzig auf randlosen Druckern erhält man also die spezifizierten Originalformate.
+\subsection{Varianten im Druck}\marginpar{print}
+\paragraph{Aktivieren der Druckausgabe}
+Durch Angabe der Dokumentoption \lstinline!print! werden die Karteikarten auf einem DinA4-Blatt angeordnet, um eine einfache Druckversion zu erzeugen. Diese wird randlos erzeugt, exakt so gedruckt erhält man obige Karteikartenmaße, sonst sind die Karten ein wenig verkleinert.
+
+Auf ungeraden Seite werden je 4 (beziehungsweise 8,16 oder 32) Vorderseiten, auf der darauffolgenden geraden Seite die dazugehörigen Karteikartenrückseiten so angeordnet, dass im Duplex-Druck automatisch doppelseitig bedruckte Karteikarten entstehen.
 
 Die Anordnung bei Din A6 (4 Karteikarten pro Blatt) bzw. Din A8 (16 pro Blatt) werden die Karten im Querformat gesetzt. Somit wird der Duplex-Druck  \emph{über die kurze Seite geklappt}. Für Din A7 werden die Karteikarten im Hochformat gesetzt, dies ergibt im Duplex-Druck ainso eine Anordnung, bei der die Karten über die \emph{über die lange Seite geklappt}.
+
+\paragraph{Variante der Rückseite} 
+Außerdem läßt sich mit der Option \marginpar{flip}\lstinline!flip! die Rückseite der Karteikarte um $180^{\circ}$ drehen, so dass sie im PDF auf dem Kopf steht. Wendet man dann den Duplexdruck an, sind die Rückseiten überkopf auf den Karteikartem, man dreht (beim Lernen) also nicht mehr auf einer vertikalen Achse, sonder über die horizontale.\footnote{Dank an Suklim Han für die Idee}
+
+\paragraph{Schnittlinien}
+Zum Ausschneiden lassen sich Schnittlinien aktivieren. Dies geschieth durch \marginpar{grid=X} \lstinline!grid=X!, wobei \lstinline!X! einer der folgenden 4 Werte ist:
+\begin{description}
+	\item[none] zeigt keine Schnittlinien
+	\item[rear] erzeugt nur auf den Rückseiten die Schnittlinien
+	\item[front] analog nur auf der Vorderseite
+	\item[both] Schnittlinien auf Vorder- und Rückseite der Karten	
+\end{description}
+Die Linien entlang derer geschnitten werden kann, sind auf der Rückseite mit gestrichelten schwarzen, auf der Vorderseite mit ebenso gestrichelten, aber grauen Linien dargestellt. Da sie in \emph{TikZ} realisiert sind, lassen sich diese Angaben auch durch ändern der entsprechenden Stile ändern. Die beiden Stile lauten:
+\begin{lstlisting}
+	\tikzset{front grid/.style={very thin, gray, loosely dashed}}
+	\tikzset{rear grid/.style={thin, black, loosely dashed}}
+\end{lstlisting}
+Die Linienarten lassen sich also variieren, indem man den jeweiligen Stil umdefiniert.
+\subsection{weitere Dokumentoptionen}
+Alle weiteren Dokumentoptionen werden nicht direkt von der Karteikartenklasse verarbeitet, sondern an \lstinline!scrartcl! weitergegeben. Dadurch läßt sich per \marginpar{Xpt}\lstinline!Xpt! die Schriftgröße verändern, wobei \lstinline!X! ein ganzzahliger Wert sein muss\footnote{Nach einem Vorschlag von Christoph Schramm}. Weieter Dokumentoptionen der Koma-Klasse lassen sich auf diesem Wege auch verändern, diese wurden jedoch nicht getestet.
 
 \subsection{Beispiele}
 \begin{itemize}
 	\item Zum Erstellen von A6-Karteikarten, normal gesetzt \lstinline!\documentclass[a6paper]{kartei}!
-	\item Für A7-Karteikarten im Druckformat \lstinline!\documentclass[a7paper, print]{kartei}!
+	\item Für A7-Karteikarten im Druckformat mit gedrehter Rückseite und Schnittlinien auf beiden Seiten \lstinline!\documentclass[a7paper, print,flip,grid=both]{kartei}!
 \end{itemize}
 %
 %
@@ -68,7 +113,7 @@ Die Vorderseite enthält im Kopf links das Fach, mittig die Nummer der Karte, re
 Die beiden optionalen Werte Fach und Kommentar lassen sich auch global angeben. Eine Angabe bei einer einzelnen Kartei überschreibt allerdings die globale Definition. Die Idee ist dabei, das Fach zu Beginn einmal zu setzen und somit nur bei Ausnahmen eine Einzelangabe bei einer Karte vorzunehmen. Außerdem läßt sich der Antwortterm global neu setzen. Details dazu finden sich im Abschnitt \ref{subsec:Struktur}. Zwei Beispiele für Karteikarten finde sich in den Abbildungen \ref{fig:example} und \ref{fig:completeexample}.
 \begin{figure}
 \subfigure[][Vorderseite]{\fbox{\includegraphics[width=.5\textwidth-2\fboxsep-2\fboxrule,page=1]{manualexample1.pdf}}}
-	\quad	\subfigure[][Rpckseite]{\fbox{\includegraphics[width=.5\textwidth-2\fboxsep-2\fboxrule,page=2]{manualexample1.pdf}}}
+	\quad	\subfigure[][Rückseite]{\fbox{\includegraphics[width=.5\textwidth-2\fboxsep-2\fboxrule,page=2]{manualexample1.pdf}}}
 	\caption{Vorder- und Rückseite der exemplarischen Karte in etwas kleiner als Din A7}\label{fig:example}
 \end{figure}
 \begin{figure}
@@ -79,7 +124,7 @@ Die beiden optionalen Werte Fach und Kommentar lassen sich auch global angeben. 
 
 \subsection{Beispiele}
 \paragraph{exemplarisch gefüllte Karteikarte}
-Mit exemplarisch gefüllten Daten ergibt sich etwa der Code (vgl. Abb. \ref{fig:example})
+Mit den Werten gefüllt, die den Namen der Felder entsprechen, ergibt sich etwa der Code (vgl. Abb. \ref{fig:example})
 	\begin{lstlisting}
 \begin{karte}[Fach]{Frage oder Titel}[Kommentar]
 	Antworttext
@@ -108,7 +153,7 @@ Mit exemplarisch gefüllten Daten ergibt sich etwa der Code (vgl. Abb. \ref{fig:
 \paragraph{Fächer \& Kommentare}
 Neben der Möglichkeit bei einer Karte das Fach und den Kommentar explizit anzugeben lässt sich beides auch global setzen, so dass es bei den darauffolgenden Karten verwendet wird und nicht bei jeder Karte einzeln angegeben werden muss.
 
-Mit \lstinline!\fach! (engl. \lstinline!\subject!\marginpar{\textbackslash fach\\\textbackslash subject}) gefolgt von einem Text in \lstinline!{geschweiften Klammern}! setzt man das Fach für die nachfolgenden Karten. Die Schriftformatierung kann über Neudefinition des Befehl \lstinline!\fachstil! (engl. \lstinline!\subjectstyle!\marginpar{\textbackslash fachstil\\\textbackslash subjectstyle}) vorgenommen werden. Standardmäßig ist der Stil auf \emph{kursiv} gesetzt. Um an einer Stelle den Momentanen Wert Auszugeben, gibt es den Befehl \lstinline!\dasfach{}! (engl. \lstinline!\thesubject!\marginpar{\textbackslash dasfach\\\textbackslash thesubject}). Wird bei einer Karte bei gesetztem Fach trotzdem ein Fach angegeben, so hat das Fach der Karte Vorrang, so kann in einem großen Block auch eine Ausnahmekarte erzeugt werden.
+Mit \lstinline!\fach! (engl. \lstinline!\cardsubject!\marginpar{\textbackslash fach\\\textbackslash subject}) gefolgt von einem Text in \lstinline!{geschweiften Klammern}! setzt man das Fach für die nachfolgenden Karten. Die Schriftformatierung kann über Neudefinition des Befehl \lstinline!\fachstil! (engl. \lstinline!\subjectstyle!\marginpar{\textbackslash fachstil\\\textbackslash subjectstyle}) vorgenommen werden. Standardmäßig ist der Stil auf \emph{kursiv} gesetzt. Um an einer Stelle den Momentanen Wert Auszugeben, gibt es den Befehl \lstinline!\dasfach{}! (engl. \lstinline!\thesubject!\marginpar{\textbackslash dasfach\\\textbackslash thesubject}). Wird bei einer Karte bei gesetztem Fach trotzdem ein Fach angegeben, so hat das Fach der Karte Vorrang, so kann in einem großen Block auch eine Ausnahmekarte erzeugt werden.
 
 Analog lässt sich der Kommentar global setzen mit \lstinline!\kommentar{Kommentartext}! (engl. \lstinline!\comment!\marginpar{\textbackslash kommentar\\\textbackslash comment}), dessen Stil mit \lstinline!\kommentarstil! (engl. \lstinline!\commentstyle!\marginpar{\textbackslash kommentarstil\\\textbackslash commentstyle}), respektive die Ausgabe mit \lstinline!\derkommentar! (engl. \lstinline!\thecomment! \marginpar{\textbackslash derkommentar\\\textbackslash thecomment}). Auch dies wird von einem lokalen Wert, der bei einer Karte angegeben wird überschrieben, so dass in einem Block von Karten mit gleichem Kommentar auch eine einzelne Ausnahme angegeben werden kann
 
@@ -144,31 +189,26 @@ Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird au
 %
 \section{technische Details}
 \subsection{Benötigte Pakete}
-Um dieses Kartenpaket zu verwenden muss man mindestens die Pakete \lstinline!fancyhdr!, \lstinline!vmargin!, \lstinline!xargs!, \lstinline!pgfpages! und \lstinline!tiks! installiert haben. Diese finden sich alle im CTAN.
+Benötigt werden für die verwendung des Karteikartensystems die Pakete
+\begin{itemize}
+	\item \emph{scrartcl}, \emph{typeare}, \emph{scrpage2} sowie deren Abhängigkeiten im \emph{Koma-Skript}-Paket (getestet auf Version 3.01b)
+	\item \emph{TikZ}, \emph{PGFPages} (Version 2.00) sowie \emph{eso-pic} für die Schnittrand-Darstellungen
+	\item \emph{geometry} für die Seitenränder (da diese für die Koma-Skript-Berechnungen zu klein sind)
+	\item \emph{xargs}
+\end{itemize}
+All diese Pakete sollten aber in den heute verbreiteten distributionen von\ \TeX\ enthalten sein. Andernfalls sind sie über CTAN\footnote{http://www.ctan.org/} relativ einfach und schnell zu beziehen.
 \subsection{Die Kartenumgebung}
 Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!article!, und setzt damit die oben beschriebenen Sachen im Kopf für jede Karteikarte. Der Zähler wird dabei inkrementiert. Die gesamte Kartenumgebung ist über zwei Seiten definiert und. Das Layout wird durch den nachfolgenden Code erzeugt.
-\newpage
-\begin{lstlisting}[title=Die Kartenumgebung]
+\begin{lstlisting}[title=Die Kartenumgebung,float=h]
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
-{
-	\pagestyle{fancy}
-	{
-		\fancyhead[LO]{\dasfach{#1}} %\emph{#1}}
-		\fancyhead[RO]{\derkommentar{#3}}
-	}
-	\pagestyle{fancy}{% 
-	}%
-~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
-\refstepcounter{CardID}
-\newpage%
+{  \lohead{\dasfach{#1}}
+   \rohead{\derkommentar{#3}}%
+   ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
+   \refstepcounter{CardID}
+   \newpage%
 }
-{
-	\fancyhead[LO]{\emph{\textbf{Achtung:} Antwortseite der Karte ist zu voll}} %vorlaeufige Loesung
-	\cleardoublepage
-}
+{\newpage}
 \end{lstlisting}
-\subsection{Das Drucklayout}
-Das Drucklayout ist eine Variation der durch \lstinline!pgfpages! aus dem Projekt \lstinline!pgf & tikz!\footnote{\url{http://sourceforge.net/projects/pgf/}} bereitgestellten Befehle zur Anordnung mehrerer Seiten / Präsentationsfolien auf einer einzigen Seite. Diese wurdn modifiziert, so dass alle geraden Seiten (Vorderseiten) auf der ersten und alle ungeraden Seiten (Rückseiten) auf der Rückseite angeordnet werden. Die Rückseite ist außerdem in der Reihenfolge so verändert, dass das Ergebnis Duplex-Druckbar ist. Die Ränder auf der Rückseite werden ebenso damit erzeugt. 
 %
 %
 %
@@ -178,28 +218,29 @@ Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, w
 % _inhalt_der_rückseite_zu_groß_ (end)
 
 \paragraph{Positionierung von Kartennumer, Fach \& Kommentar selbst individuell festlegen}
-Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente Fach, Kommentar und Zählerausgabe festlegen kann, etwa in die Fußzeile o.ä.
+Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente Fach, Kommentar und Zählerausgabe festlegen kann, etwa in die Fußzeile o.ä. - dazu sind einige dieser Felder noch zu direkt implementiert.
 
 \paragraph{Rückseitenformat festlegen} 
 Für die Rückseite könnte man noch ein Format festlegen, etwa zustzliche Felder für eine Bewertung/Lernkontrolle.
 
-\paragraph{Liste der Karteikarten \textbackslash Lernkontrolltabelle} 
+\paragraph{Liste der Karteikarten / eine Lernkontrolltabelle} 
 Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenübersicht als auch eine Lernkontrolle einbinden, auf der man seine Lernfortschirtte verzeichnen kann.
-\newpage
 \section{Lizenz}
-\begin{lstlisting}[basicstyle=\footnotesize\sffamily, numbers=none]
+\begin{lstlisting}[basicstyle=\sffamily, numbers=none]
 *
-* -----------------------------------------------------------------------------------
+* ------------------------------------------------------
 * "THE BEER-WARE LICENSE" (Revision 42/023):
-* Ronny Bergmann <mail@darkmoonwolf.de> wrote this file. As long as you retain 
-* this notice you can do whatever you want with this stuff. If we meet some day,
-* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
-* -----------------------------------------------------------------------------------
+* Ronny Bergmann <mail@darkmoonwolf.de> wrote this file.
+* As long as you retain this notice you can do whatever
+* you want with this stuff. If we meet some day, and you
+* think  this stuff is worth it, you can buy
+* me a beer or a coffee in return. 
+* ------------------------------------------------------
 *
 \end{lstlisting}
-
 \section{Changelog}
 \begin{description}
+	\item[1.8 - 26.12.2009] Umstieg auf die Koma-Skript-Familie und geometry, einstellbare Schnittlinien, sowie umdrehbare Rückseite und Din A9-Karten
 	\item[1.7 - 26.11.2008] Fach \& Kommentartext sind jetzt global setzbar über \lstinline!\section! und \lstinline!\subsection! (und deren \lstinline!*!-Derivate), Druckoptionen verkürzt und Standards eingeführt, Antworttext und Zählerformat veränderbar
 	\item[1.6 - 09.09.2008] A7, A8-Karteikarten und die Druckränder eingefügt. Erste Version mit diesem Manual
 \end{description}

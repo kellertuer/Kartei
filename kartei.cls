@@ -10,7 +10,11 @@
 % Dokumentklasse für Din A6 Karteikarten 
 % -- Version 1.8 --
 %
-% Erklärungen und Ähnliches, siehe manual.pdf
+% Der Code sollte umfassend kommentiert sein, zur Verwendung, Eläuterung der einzelnen
+% Klassenoptionen, siehe manual_de.pdf
+%
+% Working on an english manual, should be available soon.
+
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{kartei}[2009/12/26 Karteikarten in LaTeX, Version 1.8]
 \newcommand{\setcardpagelayout}{}
@@ -43,8 +47,12 @@
 %
 % Gittermaße
 %
-\newlength\card@gridx
-\newlength\card@gridy
+\newlength\card@gridx%
+\newlength\card@gridy%
+\newlength\card@minx%
+\newlength\card@miny%
+\newlength\card@maxx%
+\newlength\card@maxy%
 % Eigenschaften: Gitter vorne / hinten
 \newif\ifcard@usefrontgrid
 %Standard -> vorne kein Gitter
@@ -118,6 +126,7 @@
 % Pakete laden
 %
 \PassOptionsToClass{twoside}{scrartcl}% 
+\PassOptionsToClass{cleardoublepage=scrheadings}{scrartcl}% 
 \LoadClass{scrartcl}
 \RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
@@ -130,32 +139,40 @@
 % Seitenformate durchdefinieren
 %
 \ifcase \card@papersize%
-%			\setpapersize[landscape]{A6}% 
-%			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
-			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 			\setlength{\card@gridx}{\paperwidth}%
-			\setlength{\card@gridy}{\paperheight}%			
+			\setlength{\card@gridy}{\paperheight}%
+			\setlength{\card@minx}{1pt}%
+			\setlength{\card@miny}{-\paperheight+1pt}%
+			\setlength{\card@maxx}{2\paperwidth+2pt}%
+			\setlength{\card@maxy}{\paperheight-1pt}%
+			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 		\or%
 		%DIN A7 because 1
-%			\setpapersize[landscape]{A7}% 
-%			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
+			\setlength{\card@gridx}{\paperwidth+1pt}% 
+			\setlength{\card@gridy}{\paperheight+1pt}%
+			\setlength{\card@minx}{1pt}%
+			\setlength{\card@miny}{-3\paperheight-2pt}%
+			\setlength{\card@maxx}{2\paperwidth-1pt}%
+			\setlength{\card@maxy}{\paperheight-1pt}%
 			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
-			\setlength{\card@gridx}{\paperwidth}% 
-			\setlength{\card@gridy}{\paperheight}%
 		\or%
 		%DIN A8 because 2
-%			\setpapersize[landscape]{A8}% 
-%			\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
-			\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
-			\setlength{\card@gridx}{\paperwidth}%
-			\setlength{\card@gridy}{\paperheight}%
+		\setlength{\card@gridx}{\paperwidth+1pt}%
+		\setlength{\card@gridy}{\paperheight+1pt}%
+		\setlength{\card@minx}{1pt}%
+		\setlength{\card@miny}{-3\paperheight-5pt}%
+		\setlength{\card@maxx}{4\paperwidth+2pt}%
+		\setlength{\card@maxy}{\paperheight-1pt}%
+		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 		\or%
 		%DIN A9 because 3
-%			\setpapersize[landscape]{A9}% 
-%			\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
-			\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
-			\setlength{\card@gridx}{\paperwidth}
-			\setlength{\card@gridy}{\paperheight}%
+		\setlength{\card@gridx}{\paperwidth+1pt}%
+		\setlength{\card@gridy}{\paperheight}%
+		\setlength{\card@minx}{1pt}%
+		\setlength{\card@miny}{-7\paperheight+1pt}%
+		\setlength{\card@maxx}{4\paperwidth+3pt}%
+		\setlength{\card@maxy}{\paperheight-1pt}%
+		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 	\fi%
 %
 \ifcard@useprint%
@@ -191,9 +208,9 @@
 	% Border Styles
 	\newcommand\card@RearGridPic{%
 		\put(0,0){%
-			\parbox[b][21.9cm]{29cm}{%
-				\begin{tikzpicture}
-					\draw[rear grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (21.9cm,29cm);%
+			\parbox[b][\paperheight]{\paperwidth}{%
+				\begin{tikzpicture}[overlay]
+				\draw[rear grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
 				\end{tikzpicture}
 			}%
 		}%
@@ -201,8 +218,8 @@
 	\newcommand\card@FrontGridPic{%
 		\put(0,0){%
 			\parbox[b][\paperheight]{\paperwidth}{%
-				\begin{tikzpicture}
-				\draw[front grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
+				\begin{tikzpicture}[overlay]
+				\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
 				\end{tikzpicture}
 			}%
 		}%
@@ -349,8 +366,10 @@
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {% Vor der Umgebung: Vorderseite bauen
  %
+\cohead{\theCardID}
 \lohead{\dasfach{#1}}
-\rohead{\derkommentar{#3}}%
+\rohead{\derkommentar{#3}}
+\thispagestyle{scrheadings}
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
 \refstepcounter{CardID}
 \newpage%
@@ -358,8 +377,10 @@
 {% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
  % und neue Karteikarte auf ungerader Seite beginnen lassen
  %
-%	\def\cardRearheader{\emph{Achtung:} Rückseite ist zu voll!}%
-	\newpage
+\cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
+\rohead{}%
+\lohead{}%
+	~\cleardoublepage
 }
 \makeatother
 %

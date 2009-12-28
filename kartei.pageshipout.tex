@@ -1,11 +1,9 @@
 %
 % Redefinition for specific shipout of pages in print usage
 %
-
-%
 % redefine page output, so that the odd pages are on first, the even on second, adapted from pgfpages
 %
-% written by Till Tantau, modified by Ronny Bergmann
+% written by Till Tantau (published under GPL within the pgfpages-paket), modified by Ronny Bergmann
 %
 \renewcommand\pgfshipoutphysicalpage{%
   \ifnum\pgf@logicalpages>0\relax%
