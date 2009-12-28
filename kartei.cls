@@ -72,18 +72,22 @@
 %A6 Cards
 \DeclareOption{a6paper}{%
 	\card@papersize=0%
+	\PassOptionsToPackage{paper=a6,pagesize}{typearea}% 
 }
 %A7 Cards
 \DeclareOption{a7paper}{%
 	\card@papersize=1%
+	\PassOptionsToPackage{paper=a7,pagesize}{typearea}% 
 }%
 %A8 Cards
 \DeclareOption{a8paper}{
 	\card@papersize=2%
+	\PassOptionsToPackage{paper=a8,pagesize}{typearea}% 
 }%	
 %A9 Cards
 \DeclareOption{a9paper}{
-\card@papersize=3%
+	\card@papersize=3%
+	\PassOptionsToPackage{paper=a9,pagesize}{typearea}% 
 }
 % Activate both grids
 \DeclareOption{grid=both}{%
@@ -113,10 +117,12 @@
 %
 % Pakete laden
 %
-\LoadClass[twoside]{scrartcl}
-\RequirePackage[headsepline,footsepline]{scrpage2}
+\PassOptionsToClass{twoside}{scrartcl}% 
+\LoadClass{scrartcl}
+\RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
-\RequirePackage{vmargin}
+%\RequirePackage{vmargin}
+\RequirePackage[landscape]{geometry}
 \RequirePackage{pgfpages,tikz}
 \RequirePackage{eso-pic}
 
@@ -124,26 +130,30 @@
 % Seitenformate durchdefinieren
 %
 \ifcase \card@papersize%
-			\setpapersize[landscape]{A6}% 
-			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
+%			\setpapersize[landscape]{A6}% 
+%			\setmarginsrb{7mm}{2mm}{7mm}{4mm}{1.3em}{1em}{0mm}{1em}%
+			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 			\setlength{\card@gridx}{\paperwidth}%
 			\setlength{\card@gridy}{\paperheight}%			
 		\or%
 		%DIN A7 because 1
-			\setpapersize[landscape]{A7}% 
-			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
+%			\setpapersize[landscape]{A7}% 
+%			\setmarginsrb{5mm}{2mm}{5mm}{3mm}{1.3em}{.7em}{0mm}{1em}%
+			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 			\setlength{\card@gridx}{\paperwidth}% 
 			\setlength{\card@gridy}{\paperheight}%
 		\or%
 		%DIN A8 because 2
-			\setpapersize[landscape]{A8}% 
-			\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
+%			\setpapersize[landscape]{A8}% 
+%			\setmarginsrb{3mm}{2mm}{3mm}{2mm}{1.3em}{.3em}{0mm}{1em}%
+			\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 			\setlength{\card@gridx}{\paperwidth}%
 			\setlength{\card@gridy}{\paperheight}%
 		\or%
 		%DIN A9 because 3
-			\setpapersize[landscape]{A9}% 
-			\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
+%			\setpapersize[landscape]{A9}% 
+%			\setmarginsrb{1mm}{2mm}{1mm}{1mm}{1.3em}{.3em}{0mm}{1em}%
+			\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
 			\setlength{\card@gridx}{\paperwidth}
 			\setlength{\card@gridy}{\paperheight}%
 	\fi%
@@ -151,7 +161,6 @@
 \ifcard@useprint%
 	\ifcase \card@papersize%
 	%0 is A6
-			\setpapersize[landscape]{A4}%
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
 			\or %rotate=1
@@ -159,7 +168,6 @@
 			\fi
 		\or
 		%DIN A7 because 1
-			\setpapersize[portrait]{A4}%
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
 			\or %rotate=1
@@ -167,7 +175,6 @@
 			\fi
 		\or
 		%DIN A8 because 2
-			\setpapersize[landscape]{A4}%
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
 			\or %rotate=1
@@ -175,7 +182,6 @@
 			\fi
 		\or
 		%DIN A9 because 3
-			\setpapersize[portrait]{A4}%
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
 			\or %rotate=1
@@ -184,19 +190,19 @@
 	\fi
 	% Border Styles
 	\newcommand\card@RearGridPic{%
-		\put(72.364672364672365,-72.364672364672365){%
-			\parbox[b][\paperheight]{\paperwidth}{%
+		\put(0,0){%
+			\parbox[b][2\the\card@gridx]{8\the\card@gridy}{%
 				\begin{tikzpicture}
-					\draw[rear grid] (1pt,1pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
+					\draw[rear grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (2\the\card@gridx-1pt,4\the\card@gridy-1pt);%
 				\end{tikzpicture}
 			}%
 		}%
 	}%
 	\newcommand\card@FrontGridPic{%
-		\put(72.364672364672365,-72.364672364672365){%
+		\put(0,0){%
 			\parbox[b][\paperheight]{\paperwidth}{%
 				\begin{tikzpicture}
-				\draw[front grid] (1pt,1pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
+				\draw[front grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\paperwidth-1pt,\paperheight-1pt);%
 				\end{tikzpicture}
 			}%
 		}%
@@ -343,10 +349,8 @@
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {% Vor der Umgebung: Vorderseite bauen
  %
-	\def\cardtitleheader{\dasfach{#1}\hfill\theCardID\hfill\derkommentar{#3}}%
-	\def\cardRearheader{\theCardID\hfill\dieantwort\hfill}%
-	\thispagestyle{cardpagestyle}
- %
+\lohead{\dasfach{#1}}
+\rohead{\derkommentar{#3}}%
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
 \refstepcounter{CardID}
 \newpage%
@@ -362,12 +366,6 @@
 % Init and Endstuff...
 %
 \AtBeginDocument{%
-\defpagestyle{cardpagestyle}%
-	{(0pt, 0pt)%
-		{\cardRearheader}{\cardtitleheader}{\cardtitleheader}}%
-	{(0pt, 0pt)%
-		{\cardRearfooter}{\cardtitlefooter}{\cardtitlefooter}}%
-\pagestyle{cardpagestyle}
 }
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
@@ -380,6 +378,14 @@
 % TODO Tabelle aller Karten?
 %
 }
+\pagestyle{scrheadings}
+\clearscrheadings
+\lohead{Kartentitel}
+\cohead{\theCardID}
+\lehead{\theCardID}
+\cehead{\dieantwort}%
+\setheadsepline{.4pt}[\color{black}] 
+
 %
 % Border Definitions
 %
