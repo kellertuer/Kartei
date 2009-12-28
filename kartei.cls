@@ -191,9 +191,9 @@
 	% Border Styles
 	\newcommand\card@RearGridPic{%
 		\put(0,0){%
-			\parbox[b][2\the\card@gridx]{8\the\card@gridy}{%
+			\parbox[b][21.9cm]{29cm}{%
 				\begin{tikzpicture}
-					\draw[rear grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (2\the\card@gridx-1pt,4\the\card@gridy-1pt);%
+					\draw[rear grid] (1pt,0pt) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (21.9cm,29cm);%
 				\end{tikzpicture}
 			}%
 		}%
