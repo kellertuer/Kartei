@@ -10,39 +10,17 @@
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
 % -- Version 1.8 --
 %
-\documentclass[a6paper,14pt,print,grid=both]{kartei}
+\documentclass[a6paper,11pt,print,grid=both]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
-\usepackage[OT1]{fontenc}
-\usepackage[scaled]{helvet}
-\usepackage[ngerman]{babel} % Neue Rechtschreibung
 
 \begin{document}
 	\begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
 	42
-	ich bin allerdings eine Karte die viel zu voll ist 
-	
-	Dann hast Du meine Antwort nicht verstanden, denn man kann auch in diesem
-	Fall Schriftattribute im optionalen Argument von item nutzen und auch dann
-	bei KOMA-Script die Schrift für das Element descriptionlabel ändern. In dem
-	Fall dann eben nicht, um fett dazu zu bekommen, sondern im fett los zu
-	werden.
-	
-	Ronny Bergmann <mail@darkmoonwolf.de> wrote this file. As long as you retain 
-	 this notice you can do whatever you want with this stuff. If we meet some day,
-	 and you think  this stuff is worth it, you can buy me a beer or a coffee in return.
-	
-	Und noch ein Absatz.
-	
-	Und dann muss diese Karte doch endlich einmal voll sein...
-	
-	Die zweite Lösung (die mit report also ohne KOMA-Script) ist bereits eine,
-	die temporär arbeitet. Wie man im ersten Fall ebenfalls temporär arbeitet,
-	habe ich ebenfalls bereits erwähnt.
 	\end{karte}
 %	
-	\begin{karte}[Zahlenkunde]{Was ist der Unterschied in der Verwendung von Drölf und $n$ bei „Ihnen“ ?}
-	$n$ wird verwendet für Zahlen bis hin zu „verdammt groß“, Drölf nur bis hin zu verdammt.
+	\begin{karte}[Zahlenkunde]{Was ist der Unterschied in der Verwendung von Drölf und $n$ bei Ihnen?}
+	$n$ wird verwendet für Zahlen bis hin zu verdammt groß, Drölf nur bis hin zu verdammt.
 	\end{karte}
 %
 	\section*{Informatik}
@@ -56,8 +34,5 @@
 %
 	\begin{karte}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}
 	\label{karte:frage}		Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
-	\end{karte}
-	\begin{karte}{nocheine}
-		AB
 	\end{karte}
 \end{document}

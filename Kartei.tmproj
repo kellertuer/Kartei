@@ -3,70 +3,70 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>karteikarte2.tex</string>
+	<string>kartei.cls</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a6printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:02:23Z</date>
+			<date>2009-12-28T21:48:35Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a6printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:05:04Z</date>
+			<date>2009-12-28T21:47:40Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a7printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:02:13Z</date>
+			<date>2009-12-28T21:48:57Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a8printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:21:43Z</date>
+			<date>2009-12-28T21:48:59Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a8printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:10:34Z</date>
+			<date>2009-12-28T21:49:07Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a9printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:11:05Z</date>
+			<date>2009-12-28T21:49:16Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a9printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:21:41Z</date>
+			<date>2009-12-28T21:49:26Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.cls</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:20:42Z</date>
+			<date>2010-01-09T21:25:42Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.pageshipout.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:17:18Z</date>
+			<date>2009-12-28T21:48:34Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
-			<string>karteikarte2.tex</string>
+			<string>beispiel.tex</string>
 			<key>lastUsed</key>
-			<date>2009-12-28T11:21:43Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2010-01-09T21:24:24Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -77,54 +77,39 @@
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
+		<key>beispiel.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>15</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>1</integer>
+		</dict>
 		<key>kartei.cls</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>30</integer>
+				<integer>50</integer>
 				<key>line</key>
-				<integer>195</integer>
+				<integer>128</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>179</integer>
-		</dict>
-		<key>kartei.pageshipout.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>0</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-		</dict>
-		<key>karteikarte2.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>25</integer>
-				<key>line</key>
-				<integer>12</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>5</integer>
+			<integer>99</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
 		<string>kartei.cls</string>
-		<string>kartei.pageshipout.tex</string>
-		<string>karteikarte2.tex</string>
+		<string>beispiel.tex</string>
 	</array>
 	<key>shellVariables</key>
 	<array>
@@ -132,7 +117,7 @@
 			<key>enabled</key>
 			<true/>
 			<key>value</key>
-			<string>/Users/ronny/LaTeX/Kartei/karteikarte2.tex</string>
+			<string>/Users/ronny/LaTeX/Kartei/beispiel.tex</string>
 			<key>variable</key>
 			<string>TM_LATEX_MASTER</string>
 		</dict>
@@ -140,6 +125,6 @@
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{7, 28}, {1040, 736}}</string>
+	<string>{{52, -316}, {1040, 736}}</string>
 </dict>
 </plist>

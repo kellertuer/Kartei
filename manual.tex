@@ -183,7 +183,7 @@ Die Nummerierung der Karten ist standardmäßig definiert mit \marginpar{\textba
 \begin{lstlisting}
 	\renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
 \end{lstlisting}
-Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird auf der Vorderseite mittig im Kopf gesetzt und auf der Rückseite im Kopf links wiedergegeben. Ebenso wird dieses Format bei Verweisen ausgegeben. Durch Neudefinition des Befehls läßt sich das Format eben dieses Kartenzählers verändern.
+Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird auf der Vorderseite mittig im Kopf gesetzt und auf der Rückseite im Kopf links wiedergegeben. Ebenso wird dieses Format bei Verweisen ausgegeben. Durch Neudefinition des Befehls lässt sich das Format eben dieses Kartenzählers verändern.
 %
 %
 %
@@ -198,7 +198,7 @@ Benötigt werden für die verwendung des Karteikartensystems die Pakete
 \end{itemize}
 All diese Pakete sollten aber in den heute verbreiteten distributionen von\ \TeX\ enthalten sein. Andernfalls sind sie über CTAN\footnote{http://www.ctan.org/} relativ einfach und schnell zu beziehen.
 \subsection{Die Kartenumgebung}
-Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!article!, und setzt damit die oben beschriebenen Sachen im Kopf für jede Karteikarte. Der Zähler wird dabei inkrementiert. Die gesamte Kartenumgebung ist über zwei Seiten definiert und. Das Layout wird durch den nachfolgenden Code erzeugt.
+Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!scrartcl!, und setzt damit die oben beschriebenen Sachen im Kopf für jede Karteikarte. Der Zähler wird dabei inkrementiert. Die gesamte Kartenumgebung ist über zwei Seiten definiert und. Das Layout wird durch den nachfolgenden Code erzeugt.
 \begin{lstlisting}[title=Die Kartenumgebung,float=h]
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {  \lohead{\dasfach{#1}}
@@ -214,14 +214,14 @@ Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!ar
 %
 \section{bekannte Probleme \& weitere Ideen}
 \paragraph{„Inhalt der Rückseite zu umfangreich“} % (fold)
-Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, was die Aufteilung der Vorder- und Rückseiten im doppelseitigen Layout zerstört. Vorläufige Lösung ist ein Hinweis in der Kopfzeile der einen zu vollen Seite. Die darauffolgende Karteikarte beginnt wieder korrekt auf einer ungeraden Seite. ebenso ist die Nummerierung nicht betroffen. Gelöst wird dies vorherst durch ein \lstinline!~\cleardoublepage!, 
+Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, was die Aufteilung der Vorder- und Rückseiten im doppelseitigen Layout zerstört. Vorläufige Lösung ist ein Hinweis in der Kopfzeile der einen zu vollen Seite. Die darauffolgende Karteikarte beginnt wieder korrekt auf einer ungeraden Seite. ebenso ist die Nummerierung nicht betroffen. Gelöst wird dies vorerst durch ein \lstinline!~\cleardoublepage!, 
 % _inhalt_der_rückseite_zu_groß_ (end)
 
-\paragraph{Positionierung von Kartennumer, Fach \& Kommentar selbst individuell festlegen}
+\paragraph{Positionierung von Kartennummer, Fach \& Kommentar selbst individuell festlegen}
 Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente Fach, Kommentar und Zählerausgabe festlegen kann, etwa in die Fußzeile o.ä. - dazu sind einige dieser Felder noch zu direkt implementiert.
 
 \paragraph{Rückseitenformat festlegen} 
-Für die Rückseite könnte man noch ein Format festlegen, etwa zustzliche Felder für eine Bewertung/Lernkontrolle.
+Für die Rückseite könnte man noch ein Format festlegen, etwa zusätzliche Felder für eine Bewertung/Lernkontrolle.
 
 \paragraph{Liste der Karteikarten / eine Lernkontrolltabelle} 
 Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenübersicht als auch eine Lernkontrolle einbinden, auf der man seine Lernfortschirtte verzeichnen kann.
@@ -240,7 +240,7 @@ Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenü
 \end{lstlisting}
 \section{Changelog}
 \begin{description}
-	\item[1.8 - 26.12.2009] Umstieg auf die Koma-Skript-Familie und geometry, einstellbare Schnittlinien, sowie umdrehbare Rückseite und Din A9-Karten
+	\item[1.8 - 26.12.2009] Umstieg auf die Koma-Skript-Familie und das geometry-Paket, einstellbare Schnittlinien, sowie umdrehbare Rückseite und Din A9-Karten
 	\item[1.7 - 26.11.2008] Fach \& Kommentartext sind jetzt global setzbar über \lstinline!\section! und \lstinline!\subsection! (und deren \lstinline!*!-Derivate), Druckoptionen verkürzt und Standards eingeführt, Antworttext und Zählerformat veränderbar
 	\item[1.6 - 09.09.2008] A7, A8-Karteikarten und die Druckränder eingefügt. Erste Version mit diesem Manual
 \end{description}

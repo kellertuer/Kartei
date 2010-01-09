@@ -16,7 +16,7 @@
 % Working on an english manual, should be available soon.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2009/12/26 Karteikarten in LaTeX, Version 1.8]
+\ProvidesClass{kartei}[2010/01/09 Karteikarten in LaTeX, Version 1.8a]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
@@ -126,7 +126,7 @@
 % Pakete laden
 %
 \PassOptionsToClass{twoside}{scrartcl}% 
-\PassOptionsToClass{cleardoublepage=scrheadings}{scrartcl}% 
+\PassOptionsToClass{cleardoublepage=plain,DIV=calc}{scrartcl}% 
 \LoadClass{scrartcl}
 \RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
@@ -139,13 +139,13 @@
 % Seitenformate durchdefinieren
 %
 \ifcase \card@papersize%
-			\setlength{\card@gridx}{\paperwidth}%
+			\setlength{\card@gridx}{\paperwidth+2pt}%
 			\setlength{\card@gridy}{\paperheight}%
 			\setlength{\card@minx}{1pt}%
 			\setlength{\card@miny}{-\paperheight+1pt}%
 			\setlength{\card@maxx}{2\paperwidth+2pt}%
 			\setlength{\card@maxy}{\paperheight-1pt}%
-			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
+			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
 		%DIN A7 because 1
 			\setlength{\card@gridx}{\paperwidth+1pt}% 
@@ -154,7 +154,7 @@
 			\setlength{\card@miny}{-3\paperheight-2pt}%
 			\setlength{\card@maxx}{2\paperwidth-1pt}%
 			\setlength{\card@maxy}{\paperheight-1pt}%
-			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
+			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
 		%DIN A8 because 2
 		\setlength{\card@gridx}{\paperwidth+1pt}%
@@ -163,7 +163,7 @@
 		\setlength{\card@miny}{-3\paperheight-5pt}%
 		\setlength{\card@maxx}{4\paperwidth+2pt}%
 		\setlength{\card@maxy}{\paperheight-1pt}%
-		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
+		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
 		%DIN A9 because 3
 		\setlength{\card@gridx}{\paperwidth+1pt}%
@@ -172,7 +172,7 @@
 		\setlength{\card@miny}{-7\paperheight+1pt}%
 		\setlength{\card@maxx}{4\paperwidth+3pt}%
 		\setlength{\card@maxy}{\paperheight-1pt}%
-		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3em, headsep=.7em,bottom,footskip=1em}%
+		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\fi%
 %
 \ifcard@useprint%
