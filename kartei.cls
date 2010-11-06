@@ -16,7 +16,7 @@
 % Working on an english manual, should be available soon.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2010/01/09 Karteikarten in LaTeX, Version 1.8a]
+\ProvidesClass{kartei}[2010/11/07 Karteikarten in LaTeX, Version 1.8b]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
@@ -29,13 +29,14 @@
 \card@useprintfalse%
 
 % Card Sizes
-% 0 = DIN A6
-% 1 = DIN A7
-% 2 = DIN A8
-% 3 = DIN A9
+% 0 = DIN A5
+% 1 = DIN A6
+% 2 = DIN A7
+% 3 = DIN A8
+% 4 = DIN A9
 \newcount\card@papersize
 %Standard: A6 
-\card@papersize=0%
+\card@papersize=1%
 
 % Rotation der Rückseite
 % 0 = nicht gedreht
@@ -78,23 +79,28 @@
 	\card@useprinttrue
 }%
 %A6 Cards
-\DeclareOption{a6paper}{%
+\DeclareOption{a5paper}{%
 	\card@papersize=0%
+	\PassOptionsToPackage{paper=a5,pagesize}{typearea}% 
+}
+%A6 Cards
+\DeclareOption{a6paper}{%
+	\card@papersize=1%
 	\PassOptionsToPackage{paper=a6,pagesize}{typearea}% 
 }
 %A7 Cards
 \DeclareOption{a7paper}{%
-	\card@papersize=1%
+	\card@papersize=2%
 	\PassOptionsToPackage{paper=a7,pagesize}{typearea}% 
 }%
 %A8 Cards
 \DeclareOption{a8paper}{
-	\card@papersize=2%
+	\card@papersize=3%
 	\PassOptionsToPackage{paper=a8,pagesize}{typearea}% 
 }%	
 %A9 Cards
 \DeclareOption{a9paper}{
-	\card@papersize=3%
+	\card@papersize=4%
 	\PassOptionsToPackage{paper=a9,pagesize}{typearea}% 
 }
 % Activate both grids
@@ -112,7 +118,7 @@
 	\card@usefrontgridfalse%
 	\card@useReargridtrue%
 }
-% Activate both grids
+% Activate no grid
 \DeclareOption{grid=none}{%
 	\card@usefrontgridfalse%
 	\card@useReargridfalse%
@@ -139,15 +145,23 @@
 % Seitenformate durchdefinieren
 %
 \ifcase \card@papersize%
-			\setlength{\card@gridx}{\paperwidth+2pt}%
-			\setlength{\card@gridy}{\paperheight}%
-			\setlength{\card@minx}{1pt}%
-			\setlength{\card@miny}{-\paperheight+1pt}%
-			\setlength{\card@maxx}{2\paperwidth+2pt}%
-			\setlength{\card@maxy}{\paperheight-1pt}%
-			\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
-		\or%
-		%DIN A7 because 1
+	\setlength{\card@gridx}{\paperwidth+2pt}%
+	\setlength{\card@gridy}{\paperheight}%
+	\setlength{\card@minx}{1pt}%
+	\setlength{\card@miny}{-\paperheight+1pt}%
+	\setlength{\card@maxx}{2\paperwidth+2pt}%
+	\setlength{\card@maxy}{\paperheight-1pt}%
+	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+\or% DIN A6 because after or we are at 1
+	\setlength{\card@gridx}{\paperwidth+2pt}%
+	\setlength{\card@gridy}{\paperheight}%
+	\setlength{\card@minx}{1pt}%
+	\setlength{\card@miny}{-\paperheight+1pt}%
+	\setlength{\card@maxx}{2\paperwidth+2pt}%
+	\setlength{\card@maxy}{\paperheight-1pt}%
+	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+\or%
+		%DIN A7 because 2
 			\setlength{\card@gridx}{\paperwidth+1pt}% 
 			\setlength{\card@gridy}{\paperheight+1pt}%
 			\setlength{\card@minx}{1pt}%
@@ -156,7 +170,7 @@
 			\setlength{\card@maxy}{\paperheight-1pt}%
 			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
-		%DIN A8 because 2
+		%DIN A8 because 3
 		\setlength{\card@gridx}{\paperwidth+1pt}%
 		\setlength{\card@gridy}{\paperheight+1pt}%
 		\setlength{\card@minx}{1pt}%
@@ -165,7 +179,7 @@
 		\setlength{\card@maxy}{\paperheight-1pt}%
 		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
-		%DIN A9 because 3
+		%DIN A9 because 4
 		\setlength{\card@gridx}{\paperwidth+1pt}%
 		\setlength{\card@gridy}{\paperheight}%
 		\setlength{\card@minx}{1pt}%
@@ -179,33 +193,45 @@
 	\ifcase \card@papersize%
 	%0 is A6
 			\ifcase \card@Rearsiderotation% no rotation =0
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5}[a4paper, border shrink=0mm]}%
+			\or %rotate=1
+				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5rotation}[a4paper, border shrink=0mm]}%
+			\fi
+		\or
+	%1 is A6
+			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
 			\or %rotate=1
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
 			\fi
 		\or
-		%DIN A7 because 1
+	%DIN A7 because 2
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
 			\or %rotate=1
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7rotation}[a4paper, border shrink=0mm]}%
 			\fi
 		\or
-		%DIN A8 because 2
+		%DIN A8 because 3
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
 			\or %rotate=1
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8rotation}[a4paper, landscape, border shrink=0mm]}%
 			\fi
 		\or
-		%DIN A9 because 3
+		%DIN A9 because 4
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
 			\or %rotate=1
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
 			\fi
 	\fi
-	% Border Styles
+	
+%
+%
+%	Define Border Styles
+%
+%
 	\newcommand\card@RearGridPic{%
 		\put(0,0){%
 			\parbox[b][\paperheight]{\paperwidth}{%
@@ -229,6 +255,8 @@
 \fi
 \input{kartei.pageshipout.tex}
 
+\input{kartei.a5printstyle}
+\input{kartei.a5printstylerotation}
 \input{kartei.a6printstyle}
 \input{kartei.a6printstylerotation}
 \input{kartei.a7printstyle}

@@ -8,6 +8,7 @@
 \renewcommand\pgfshipoutphysicalpage{%
   \ifnum\pgf@logicalpages>0\relax%
 	\ifcard@usefrontgrid%
+		%from eso-pic to add border
 		\AddToShipoutPicture{\card@FrontGridPic}%
 	\fi%
     \pgfpages@buildshipoutoddbox%
@@ -17,13 +18,14 @@
   \fi%
   \ifnum\pgf@logicalpages>0\relax% 
 	\ifcard@useReargrid%
+	%from eso-pic to add border
 		\AddToShipoutPicture{\card@RearGridPic}
 	\fi%
     \pgfpages@buildshipoutevenbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performevencopying%
     \global\pgfphysicalpageemptytrue%
-    \global\pgf@holdingphysicalpagefalse%  
+    \global\pgf@holdingphysicalpagefalse%
 	\ClearShipoutPicture
   \fi%
 }

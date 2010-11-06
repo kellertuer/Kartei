@@ -1,0 +1,66 @@
+%
+%		* ----------------------------------------------------------------------------
+%		* "THE BEER-WARE LICENSE" (Revision 42/023):
+%		* Ronny Bergmann <mail@darkmoonwolf.de> wrote this file. As long as you retain 
+%		* this notice you can do whatever you want with this stuff. If we meet some day,
+%		* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
+%		* ----------------------------------------------------------------------------
+%
+%
+% Kartei Source Code
+%
+% Last Chance: Kartei 1.8.1, 2010/11/07
+%
+%
+%
+% A5 printstyle definition 
+%
+\pgfpagesdeclarelayout{cardprintA5}
+{%
+	\edef\pgfpageoptionheight{\the\paperheight}%
+	\edef\pgfpageoptionwidth{\the\paperwidth}%
+	\edef\pgfpageoptionborder{1pt}%
+}%
+{
+  \pgfpagesphysicalpageoptions%
+  {%
+    logical pages=4,%
+    physical height=\pgfpageoptionheight,%
+    physical width=\pgfpageoptionwidth,%
+  }%
+%
+% Front (odd pages)
+%
+  \pgfpageslogicalpageoptions{1}% First Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.5\pgfpageoptionheight,%
+    original height=\pgfpageoptionwidth,%
+	%i can't figure out why this is how it is, ... ?!
+	center=\pgfpoint{0\pgfphysicalwidth}{.625\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{3}% Second Card
+  {%
+    border shrink=\pgfpageoptionborder,%
+    original width=.5\pgfpageoptionheight,%
+    original height=\pgfpageoptionwidth,%
+	center=\pgfpoint{0\pgfphysicalwidth}{.125\pgfphysicalheight},%
+  }%
+%
+% Rearsides (Even Pages)
+%
+  \pgfpageslogicalpageoptions{2} % First Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.5\pgfpageoptionheight,%
+	original height=\pgfpageoptionwidth,%
+	center=\pgfpoint{0\pgfphysicalwidth}{.625\pgfphysicalheight},%
+  }%
+  \pgfpageslogicalpageoptions{4} % Second Card
+  {%
+	border shrink=\pgfpageoptionborder,%
+	original width=.5\pgfpageoptionheight,%
+	original height=\pgfpageoptionwidth,%
+	center=\pgfpoint{0pt}{.125\pgfphysicalheight},%
+	}%
+}%
