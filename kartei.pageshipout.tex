@@ -5,33 +5,27 @@
 %
 % written by Till Tantau (published under GPL within the pgfpages-paket), modified by Ronny Bergmann
 %
+\makeatletter
 \renewcommand\pgfshipoutphysicalpage{%
   \ifnum\pgf@logicalpages>0\relax%
-	\ifcard@usefrontgrid%
-		%from eso-pic to add border
-		\AddToShipoutPicture{\card@FrontGridPic}%
-	\fi%
+    %Ship out odd (front) pages
     \pgfpages@buildshipoutoddbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performoddcopying%
-	\ClearShipoutPicture
+    \global\pgfphysicalpageemptytrue%
+    \global\pgf@holdingphysicalpagefalse%
   \fi%
   \ifnum\pgf@logicalpages>0\relax% 
-	\ifcard@useReargrid%
-	%from eso-pic to add border
-		\AddToShipoutPicture{\card@RearGridPic}
-	\fi%
+    %Ship out even (back) pages
     \pgfpages@buildshipoutevenbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performevencopying%
     \global\pgfphysicalpageemptytrue%
     \global\pgf@holdingphysicalpagefalse%
-	\ClearShipoutPicture
   \fi%
 }
 
 \newbox\pgfpages@shipoutbox
-
 \def\pgfpages@buildshipoutoddbox{% (fold)	
   \setbox\pgfpages@shipoutbox=\vbox{{%
     \set@typeset@protect%
@@ -122,7 +116,6 @@
 } %(end)
 
 \newbox\pgfpages@shipoutbox
-
 \def\pgfpages@buildshipoutevenbox{% (fold)
   \setbox\pgfpages@shipoutbox=\vbox{{%
     \set@typeset@protect%

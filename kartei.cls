@@ -55,9 +55,9 @@
 \newlength\card@maxx%
 \newlength\card@maxy%
 % Eigenschaften: Gitter vorne / hinten
-\newif\ifcard@usefrontgrid
+\newif\ifcard@useFrontgrid
 %Standard -> vorne kein Gitter
-\card@usefrontgridfalse%
+\card@useFrontgridfalse%
 % Eigenschaften: Gitter vorne / hinten
 \newif\ifcard@useReargrid
 %Standard -> vorne kein Gitter
@@ -105,22 +105,22 @@
 }
 % Activate both grids
 \DeclareOption{grid=both}{%
-	\card@usefrontgridtrue%
+	\card@useFrontgridtrue%
 	\card@useReargridtrue%
 }
 % Activate front grid only
 \DeclareOption{grid=front}{%
-	\card@usefrontgridtrue%
+	\card@useFrontgridtrue%
 	\card@useReargridfalse%
 }
 % Activate Rearsidegrid only (Standard)
 \DeclareOption{grid=rear}{%
-	\card@usefrontgridfalse%
+	\card@useFrontgridfalse%
 	\card@useReargridtrue%
 }
 % Activate no grid
 \DeclareOption{grid=none}{%
-	\card@usefrontgridfalse%
+	\card@useFrontgridfalse%
 	\card@useReargridfalse%
 }
 %All unknown Options to article
@@ -139,8 +139,8 @@
 %\RequirePackage{vmargin}
 \RequirePackage[landscape]{geometry}
 \RequirePackage{pgfpages,tikz}
-\RequirePackage{eso-pic}
-
+%\RequirePackage[texcoord]{eso-pic}
+\RequirePackage{watermark}
 %
 % Seitenformate durchdefinieren
 %
@@ -153,12 +153,12 @@
 	\setlength{\card@maxy}{\paperheight-1pt}%
 	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 \or% DIN A6 because after or we are at 1
-	\setlength{\card@gridx}{\paperwidth+2pt}%
+	\setlength{\card@gridx}{\paperwidth}%
 	\setlength{\card@gridy}{\paperheight}%
-	\setlength{\card@minx}{1pt}%
-	\setlength{\card@miny}{-\paperheight+1pt}%
-	\setlength{\card@maxx}{2\paperwidth+2pt}%
-	\setlength{\card@maxy}{\paperheight-1pt}%
+	\setlength{\card@minx}{.1pt}%
+	\setlength{\card@miny}{-\paperheight}%
+	\setlength{\card@maxx}{\paperwidth}%
+	\setlength{\card@maxy}{\paperheight}%
 	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 \or%
 		%DIN A7 because 2
@@ -189,9 +189,15 @@
 		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\fi%
 %
+%
+% Empty Styles
+%
+\newcommand{\cardRearGrid}{}
+\newcommand{\cardFrontGrid}{}
+%
 \ifcard@useprint%
 	\ifcase \card@papersize%
-	%0 is A6
+	%0 is A5
 			\ifcase \card@Rearsiderotation% no rotation =0
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5}[a4paper, border shrink=0mm]}%
 			\or %rotate=1
@@ -226,34 +232,28 @@
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
 			\fi
 	\fi
-	
+	\ifcard@useFrontgrid
+		\renewcommand{\cardFrontGrid}{%
+		\put(0,0){\mbox{}%
+		\vspace{-5em}%
+		\hspace{-2em}%
+		\mbox{}%
+		\begin{tikzpicture}[overlay]
+			\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
+			\end{tikzpicture}
+			}
+	}
+	\fi
+	%\newcommand{\card@RearGrid}{}
 %
 %
 %	Define Border Styles
 %
 %
-	\newcommand\card@RearGridPic{%
-		\put(0,0){%
-			\parbox[b][\paperheight]{\paperwidth}{%
-				\begin{tikzpicture}[overlay]
-				\draw[rear grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
-				\end{tikzpicture}
-			}%
-		}%
-	}%
-	\newcommand\card@FrontGridPic{%
-		\put(0,0){%
-			\parbox[b][\paperheight]{\paperwidth}{%
-				\begin{tikzpicture}[overlay]
-				\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
-				\end{tikzpicture}
-			}%
-		}%
-	}%
-\else
+\else%
 	\renewcommand{\setcardpagelayout}{} % no print
-\fi
-\input{kartei.pageshipout.tex}
+\fi%
+\input{kartei.pageshipout}
 
 \input{kartei.a5printstyle}
 \input{kartei.a5printstylerotation}
@@ -414,7 +414,11 @@
 %
 % Init and Endstuff...
 %
-\AtBeginDocument{%
+\AtBeginDocument{
+%	\ifcard@useprint%
+\leftwatermark{ABC}%
+\rightwatermark{\cardFrontGrid}%
+%	\fi%
 }
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
@@ -438,5 +442,5 @@
 %
 % Border Definitions
 %
-\tikzset{front grid/.style={very thin, gray, loosely dashed}}
+\tikzset{front grid/.style={very thin, red, loosely dashed}}
 \tikzset{rear grid/.style={thin, black, loosely dashed}}
