@@ -21,6 +21,8 @@
 
 \makeatletter
 %
+\maxdeadcycles=1000
+%
 % lokale Variablen und Optionsträger 
 %
 %Print Version oder nicht ?
@@ -139,52 +141,51 @@
 %\RequirePackage{vmargin}
 \RequirePackage[landscape]{geometry}
 \RequirePackage{pgfpages,tikz}
-%\RequirePackage[texcoord]{eso-pic}
-\RequirePackage{watermark}
+\RequirePackage{eso-pic}
 %
 % Seitenformate durchdefinieren
 %
-\ifcase \card@papersize%
+\ifcase \card@papersize% Din A5
 	\setlength{\card@gridx}{\paperwidth+2pt}%
 	\setlength{\card@gridy}{\paperheight}%
-	\setlength{\card@minx}{1pt}%
+	\setlength{\card@minx}{0}%
 	\setlength{\card@miny}{-\paperheight+1pt}%
-	\setlength{\card@maxx}{2\paperwidth+2pt}%
+	\setlength{\card@maxx}{\paperwidth}%
 	\setlength{\card@maxy}{\paperheight-1pt}%
 	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 \or% DIN A6 because after or we are at 1
-	\setlength{\card@gridx}{\paperwidth}%
+	\setlength{\card@gridx}{\paperwidth+2pt}% omit first line
 	\setlength{\card@gridy}{\paperheight}%
-	\setlength{\card@minx}{.1pt}%
-	\setlength{\card@miny}{-\paperheight}%
+	\setlength{\card@minx}{-\paperwidth}%
+	\setlength{\card@miny}{-\paperheight+1pt}%
 	\setlength{\card@maxx}{\paperwidth}%
 	\setlength{\card@maxy}{\paperheight}%
 	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 \or%
 		%DIN A7 because 2
 			\setlength{\card@gridx}{\paperwidth+1pt}% 
-			\setlength{\card@gridy}{\paperheight+1pt}%
-			\setlength{\card@minx}{1pt}%
+			\setlength{\card@gridy}{\paperheight+.75pt}%
+			\setlength{\card@minx}{-\paperwidth}%
 			\setlength{\card@miny}{-3\paperheight-2pt}%
-			\setlength{\card@maxx}{2\paperwidth-1pt}%
+			\setlength{\card@maxx}{\paperwidth-1pt}%
 			\setlength{\card@maxy}{\paperheight-1pt}%
 			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
 		%DIN A8 because 3
 		\setlength{\card@gridx}{\paperwidth+1pt}%
 		\setlength{\card@gridy}{\paperheight+1pt}%
-		\setlength{\card@minx}{1pt}%
-		\setlength{\card@miny}{-3\paperheight-5pt}%
-		\setlength{\card@maxx}{4\paperwidth+2pt}%
+		\setlength{\card@minx}{-3\paperwidth-1pt}%
+		\setlength{\card@miny}{-3\paperheight}%
+		\setlength{\card@maxx}{\paperwidth-1pt}%
 		\setlength{\card@maxy}{\paperheight-1pt}%
 		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 		\or%
 		%DIN A9 because 4
-		\setlength{\card@gridx}{\paperwidth+1pt}%
-		\setlength{\card@gridy}{\paperheight}%
-		\setlength{\card@minx}{1pt}%
-		\setlength{\card@miny}{-7\paperheight+1pt}%
-		\setlength{\card@maxx}{4\paperwidth+3pt}%
+		\setlength{\card@gridx}{\paperwidth+1.75pt}%
+		\setlength{\card@gridy}{\paperheight+.33pt}%
+		\setlength{\card@minx}{-3\paperwidth+1pt}%Start early
+		\setlength{\card@miny}{-7\paperheight}%
+		\setlength{\card@maxx}{\paperwidth-1pt}%
 		\setlength{\card@maxy}{\paperheight-1pt}%
 		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\fi%
@@ -192,8 +193,19 @@
 %
 % Empty Styles
 %
-\newcommand{\cardRearGrid}{}
-\newcommand{\cardFrontGrid}{}
+\newcommand{\card@FrontGrid}{%
+	\put(0,0){
+	\begin{tikzpicture}[overlay]
+	\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
+		\end{tikzpicture}
+		}
+}
+\newcommand{\card@RearGrid}{%
+	\put(0,0){\begin{tikzpicture}[overlay]
+		\draw[rear grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
+		\end{tikzpicture}
+		}
+}
 %
 \ifcard@useprint%
 	\ifcase \card@papersize%
@@ -231,18 +243,6 @@
 			\or %rotate=1
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
 			\fi
-	\fi
-	\ifcard@useFrontgrid
-		\renewcommand{\cardFrontGrid}{%
-		\put(0,0){\mbox{}%
-		\vspace{-5em}%
-		\hspace{-2em}%
-		\mbox{}%
-		\begin{tikzpicture}[overlay]
-			\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
-			\end{tikzpicture}
-			}
-	}
 	\fi
 	%\newcommand{\card@RearGrid}{}
 %
@@ -410,16 +410,15 @@
 \lohead{}%
 	~\cleardoublepage
 }
-\makeatother
 %
 % Init and Endstuff...
 %
 \AtBeginDocument{
-%	\ifcard@useprint%
-\leftwatermark{ABC}%
-\rightwatermark{\cardFrontGrid}%
-%	\fi%
+%\ifcard@useReargrid%
+%   \AddToShipoutPictureBG*{\card@RearGrid}
+%\fi
 }
+\makeatother
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
