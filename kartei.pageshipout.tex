@@ -7,16 +7,20 @@
 %
 \makeatletter
 \renewcommand\pgfshipoutphysicalpage{%
+    \ifcard@useFrontgrid%
+%        \AddToShipoutPictureBG*{\card@FrontGrid}
+    \fi%Ship out odd (front) pages
   \ifnum\pgf@logicalpages>0\relax%
-    %Ship out odd (front) pages
     \pgfpages@buildshipoutoddbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performoddcopying%
     \global\pgfphysicalpageemptytrue%
     \global\pgf@holdingphysicalpagefalse%
   \fi%
+  \ifcard@useReargrid%
+      \AddToShipoutPictureBG*{\card@RearGrid}
+  \fi%Ship out even (back) pages
   \ifnum\pgf@logicalpages>0\relax% 
-    %Ship out even (back) pages
     \pgfpages@buildshipoutevenbox%
     \pgfpages@shipoutshipoutbox%
     \pgfpages@performevencopying%

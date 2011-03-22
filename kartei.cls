@@ -414,9 +414,6 @@
 % Init and Endstuff...
 %
 \AtBeginDocument{
-%\ifcard@useReargrid%
-%   \AddToShipoutPictureBG*{\card@RearGrid}
-%\fi
 }
 \makeatother
 %
