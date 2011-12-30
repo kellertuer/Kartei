@@ -7,16 +7,16 @@
 %		* ----------------------------------------------------------------------------
 %
 %
-% Dokumentklasse für Din A6 Karteikarten 
-% -- Version 1.8 --
+% Dokumentklasse für Karteikarten im Format DinA5 bis DinA9
+% -- Version 1.8b --
 %
 % Der Code sollte umfassend kommentiert sein, zur Verwendung, Eläuterung der einzelnen
-% Klassenoptionen, siehe manual_de.pdf
+% Klassenoptionen, siehe manual.pdf
 %
 % Working on an english manual, should be available soon.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2010/11/07 Karteikarten in LaTeX, Version 1.8b]
+\ProvidesClass{kartei}[2010/11/07 Karteikarten in LaTeX, Version 1.8c]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
@@ -50,12 +50,6 @@
 %
 % Gittermaße
 %
-\newlength\card@gridx%
-\newlength\card@gridy%
-\newlength\card@minx%
-\newlength\card@miny%
-\newlength\card@maxx%
-\newlength\card@maxy%
 % Eigenschaften: Gitter vorne / hinten
 \newif\ifcard@useFrontgrid
 %Standard -> vorne kein Gitter
@@ -138,74 +132,55 @@
 \LoadClass{scrartcl}
 \RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
-%\RequirePackage{vmargin}
 \RequirePackage[landscape]{geometry}
 \RequirePackage{pgfpages,tikz}
-\RequirePackage{eso-pic}
+\RequirePackage{ifthen}
+\RequirePackage{atbegshi}
 %
-% Seitenformate durchdefinieren
+% Defining page style and margins
 %
 \ifcase \card@papersize% Din A5
-	\setlength{\card@gridx}{\paperwidth+2pt}%
-	\setlength{\card@gridy}{\paperheight}%
-	\setlength{\card@minx}{0}%
-	\setlength{\card@miny}{-\paperheight+1pt}%
-	\setlength{\card@maxx}{\paperwidth}%
-	\setlength{\card@maxy}{\paperheight-1pt}%
-	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
-\or% DIN A6 because after or we are at 1
-	\setlength{\card@gridx}{\paperwidth+2pt}% omit first line
-	\setlength{\card@gridy}{\paperheight}%
-	\setlength{\card@minx}{-\paperwidth}%
-	\setlength{\card@miny}{-\paperheight+1pt}%
-	\setlength{\card@maxx}{\paperwidth}%
-	\setlength{\card@maxy}{\paperheight}%
-	\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
-\or%
-		%DIN A7 because 2
-			\setlength{\card@gridx}{\paperwidth+1pt}% 
-			\setlength{\card@gridy}{\paperheight+.75pt}%
-			\setlength{\card@minx}{-\paperwidth}%
-			\setlength{\card@miny}{-3\paperheight-2pt}%
-			\setlength{\card@maxx}{\paperwidth-1pt}%
-			\setlength{\card@maxy}{\paperheight-1pt}%
-			\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
-		\or%
-		%DIN A8 because 3
-		\setlength{\card@gridx}{\paperwidth+1pt}%
-		\setlength{\card@gridy}{\paperheight+1pt}%
-		\setlength{\card@minx}{-3\paperwidth-1pt}%
-		\setlength{\card@miny}{-3\paperheight}%
-		\setlength{\card@maxx}{\paperwidth-1pt}%
-		\setlength{\card@maxy}{\paperheight-1pt}%
+		\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+	\or% DIN A6 because after or we are at 1
+		\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+	\or% DIN A7 because 2
+		\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+	\or% %DIN A8 because 3
 		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
-		\or%
-		%DIN A9 because 4
-		\setlength{\card@gridx}{\paperwidth+1.75pt}%
-		\setlength{\card@gridy}{\paperheight+.33pt}%
-		\setlength{\card@minx}{-3\paperwidth+1pt}%Start early
-		\setlength{\card@miny}{-7\paperheight}%
-		\setlength{\card@maxx}{\paperwidth-1pt}%
-		\setlength{\card@maxy}{\paperheight-1pt}%
+	\or% DIN A9 because 4
 		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\fi%
 %
 %
-% Empty Styles
+% grids
 %
-\newcommand{\card@FrontGrid}{%
-	\put(0,0){
-	\begin{tikzpicture}[overlay]
-	\draw[front grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
-		\end{tikzpicture}
-		}
-}
-\newcommand{\card@RearGrid}{%
-	\put(0,0){\begin{tikzpicture}[overlay]
-		\draw[rear grid] (\the\card@minx,\the\card@miny) grid [xstep=\the\card@gridx,ystep=\the\card@gridy] (\the\card@maxx,\the\card@maxy);%
-		\end{tikzpicture}
-		}
-}
+%
+\AtBeginShipout{%
+\setbox\AtBeginShipoutBox\hbox{
+	\ifthenelse{\isodd{\thepage}}%
+	{%
+		\begin{tikzpicture}[remember picture,yshift=-3in]%
+			\path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
+			\ifcard@useFrontgrid%
+				%vertical lines
+				\draw[front grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
+				% horizontal lines
+				\draw[front grid] (-.5\paperwidth-.5in,-.5\paperheight+.515in) -- (.5\paperwidth-.5in,-.5\paperheight+.515in);%
+			\fi%
+		\end{tikzpicture}%
+	}%
+	{%
+		\begin{tikzpicture}[remember picture]%
+			\path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
+			\ifcard@useReargrid%
+				% vertical lines
+				\draw[rear grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
+				% horizontal lines
+				\draw[rear grid] (-.5\paperwidth-.5in,-.5\paperheight+.5225in) -- (.5\paperwidth-.5in,-.5\paperheight+.5225in);%
+			\fi%
+		\end{tikzpicture}%
+	}%
+}}
 %
 \ifcard@useprint%
 	\ifcase \card@papersize%
@@ -244,12 +219,6 @@
 				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
 			\fi
 	\fi
-	%\newcommand{\card@RearGrid}{}
-%
-%
-%	Define Border Styles
-%
-%
 \else%
 	\renewcommand{\setcardpagelayout}{} % no print
 \fi%
@@ -371,10 +340,8 @@
 	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
 	\refstepcounter{subsection}%
 	\kommentar{\thesubsection.\ #1}}%
-%	\addcontentsline{toc}{subsection}{\protect\numberline{\thesubsection}{#1}}}
-\def\unnumberedsubsection#1{%
+	\def\unnumberedsubsection#1{%
 	\renewcommand{\thesubsection}{\arabic{subsection}}%
-%	\addcontentsline{toc}{subsection}{#1}}%
 	\kommentar{#1}%
 }%
 %
@@ -438,5 +405,5 @@
 %
 % Border Definitions
 %
-\tikzset{front grid/.style={very thin, red, loosely dashed}}
+\tikzset{front grid/.style={very thin, gray}}
 \tikzset{rear grid/.style={thin, black, loosely dashed}}

@@ -2,15 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>currentDocument</key>
+	<string>manual.tex</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
-			<string>beispiel.tex</string>
-		</dict>
-		<dict>
-			<key>filename</key>
 			<string>kartei.a5printstyle.tex</string>
+			<key>lastUsed</key>
+			<date>2011-10-21T08:20:27Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -35,6 +35,8 @@
 		<dict>
 			<key>filename</key>
 			<string>kartei.a8printstyle.tex</string>
+			<key>lastUsed</key>
+			<date>2011-09-06T17:31:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -43,6 +45,8 @@
 		<dict>
 			<key>filename</key>
 			<string>kartei.a9printstyle.tex</string>
+			<key>lastUsed</key>
+			<date>2011-09-06T17:31:54Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
@@ -51,27 +55,105 @@
 		<dict>
 			<key>filename</key>
 			<string>kartei.cls</string>
+			<key>lastUsed</key>
+			<date>2011-10-21T19:32:33Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.pageshipout.tex</string>
+			<key>lastUsed</key>
+			<date>2011-09-10T10:24:59Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>manual.tex</string>
+			<key>lastUsed</key>
+			<date>2011-10-21T19:32:33Z</date>
+			<key>selected</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>manualexample1.tex</string>
 		</dict>
+		<dict>
+			<key>filename</key>
+			<string>beispiel.tex</string>
+			<key>lastUsed</key>
+			<date>2011-09-06T17:31:53Z</date>
+		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
-	<dict/>
+	<dict>
+		<key>kartei.a5printstyle.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>34</integer>
+		</dict>
+		<key>kartei.cls</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>0</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>0</integer>
+		</dict>
+		<key>kartei.pageshipout.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>0</integer>
+				<key>line</key>
+				<integer>22</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>40</integer>
+		</dict>
+		<key>manual.tex</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>38</integer>
+				<key>line</key>
+				<integer>197</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>191</integer>
+		</dict>
+	</dict>
+	<key>openDocuments</key>
+	<array>
+		<string>kartei.cls</string>
+		<string>manual.tex</string>
+		<string>kartei.a5printstyle.tex</string>
+		<string>kartei.pageshipout.tex</string>
+	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{256, 149}, {928, 629}}</string>
+	<string>{{256, 208}, {897, 570}}</string>
 </dict>
 </plist>

@@ -7,7 +7,7 @@
 \usepackage{graphicx,hyperref}
 \usepackage{enumerate,subfigure,listings}
 \usepackage{pdfpages,color}
-\usepackage[pdftex,dvipsnames]{xcolor}
+%\usepackage[pdftex,dvipsnames]{xcolor}
 %\usepackage[light]{kpfonts}
 
 \lstloadlanguages{TeX}
@@ -34,11 +34,11 @@
 \addtokomafont{sectioning}{\rmfamily}
 \setkomafont{descriptionlabel}{\rmfamily\bfseries}
 \newcommand{\befehl}[1]{%
-\marginpar{\textsf{#1}}%
+\marginpar{\footnotesize\textsf{#1}}%
 }
 
 \begin{document}
-\title{Karteikarten in \LaTeX\\{\large Version 1.8a}}
+\title{Karteikarten in \LaTeX\\{\large Version 1.8b}}
 \author{Ronny Bergmann\\\emph{mail@rbergmann.info}}
 \date{Januar 2010}
 \maketitle
@@ -176,14 +176,14 @@ Um also den Antworttext auf Esperanto anzugeben, also auf „respondo“ zu setz
 	\renewcommand{\antwortstil}{\textsc}
 \end{lstlisting}
 
-\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! \marginpar{\textbackslash section\\\textbackslash section*\\\textbackslash subsection\\\textbackslash subsection*} setzt. Möchte man die Nummerierung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden.
+\paragraph{Section \& Subsection} Zusätzlich kann man eine automatische Nummerierung der Fächer vornehmen, indem man diese mittels \lstinline!\section! \befehl{\textbackslash section\\\textbackslash section*\\\textbackslash subsection\\\textbackslash subsection*} setzt. Möchte man die Nummerierung für ein Fach zwischendrin aussetzen, so kann man \lstinline!\section*! verwenden.
 
 Verwendet man also vor der ersten Karteikarte den Befehl \lstinline!\section{Philosopie}!, so werden alle Karten, beginnend ab der ersten, mit dem Fach {\sffamily 1. Philosophie} gesetzt. Setzt man dies später zwischen zwei Karteien mittels \lstinline!\section*{Zahlenkunde}!, so erhalten alle Karten das Fach {\sffamily Zahlenkunde}. Die Zählung wird bei darauf"|folgenden \lstinline!\section!-Befehlen mit 2 fortgesetzt.
 
 Analog läßt sich mit den Befehlen \lstinline!\subsection! bzw. \lstinline!\subsection*!. Ein Kommentar setzen. Im ersten Fall werden diese ebenso durchnummeriert, durch den Befehl mit \lstinline!*! wird die Zählung ausgesetzt.
 
 \subsection{Kartennummerierung}
-Die Nummerierung der Karten ist standardmäßig definiert mit \marginpar{\textbackslash theCardID}
+Die Nummerierung der Karten ist standardmäßig definiert mit \befehl{\textbackslash theCardID}
 \begin{lstlisting}
 	\renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
 \end{lstlisting}
@@ -195,23 +195,32 @@ Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird au
 \subsection{Benötigte Pakete}
 Benötigt werden für die Verwendung des Karteikartensystems die Pakete
 \begin{itemize}
-	\item \emph{scrartcl}, \emph{typearea}, \emph{scrpage2} sowie deren Abhängigkeiten im \emph{KOMA-Skript}-Paket (getestet auf Version 3.01b)
-	\item \emph{TikZ}, \emph{PGFPages} (Version 2.00) sowie \emph{eso-pic} für die Schnittrand-Darstellungen
-	\item \emph{geometry} für die Seitenränder (da diese für die KOMA-Skript-Berechnungen zu klein sind)
-	\item \emph{xargs}
+	\item Das \emph{KOMA-Skript}-Paket (getestet auf Version 3.06, insbesondere \emph{typearea}
+	\item \emph{TikZ}, \emph{PGFPages} (Version 2.00)
+	\item \emph{geometry} (Version 5.5)
+	\item \emph{xargs} (Version 1.1)
+	\item \emph{ifthen} (Version 1.1c)
+	\item \emph{atbegshi} (Version 1.12)
 \end{itemize}
 All diese Pakete sollten aber in den heute verbreiteten Distributionen von\ \TeX\ enthalten sein. Andernfalls sind sie über CTAN\footnote{http://www.ctan.org/} relativ einfach und schnell zu beziehen.
 \subsection{Die Kartenumgebung}
 Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!scrartcl!, und setzt damit die oben beschriebenen Sachen im Kopf für jede Karteikarte. Der Zähler wird dabei inkrementiert. Die gesamte Kartenumgebung ist über zwei Seiten definiert. Das Layout wird durch den nachfolgenden Code erzeugt.
 \begin{lstlisting}[title=Die Kartenumgebung,float=h]
-\newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
-{  \lohead{\dasfach{#1}}
-  \rohead{\derkommentar{#3}}%
-  ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
-  \refstepcounter{CardID}
-  \newpage%
+\newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]{%
+	\cohead{\theCardID}
+	\lohead{\dasfach{#1}}
+	\rohead{\derkommentar{#3}}
+	\thispagestyle{scrheadings}
+	~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
+	\refstepcounter{CardID}
+	\newpage%
 }
-{\newpage}
+{
+	\cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
+	\rohead{}%
+	\lohead{}%
+	~\cleardoublepage
+}
 \end{lstlisting}
 %
 %
@@ -242,8 +251,9 @@ Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenü
 * ------------------------------------------------------
 *
 \end{lstlisting}
-\section{Changelog}
+\newpage\section{Changelog}
 \begin{description}
+	\item[1.8b - 30.12.2011] Korrektur der Schnittmarken, Paketwechsel von \emph{eso-pic} auf ein unabhängiges Ausliefern der Schnittmarken mit \emph{atbegshi}. Tippfehler im Manual korrigiert.
 	\item[1.8a - 29.01.2010] Zwei kleine Bugfixes in der Hauptklasse und Korrekturen an diesem Dokument, Danke geht an Philipp Pilhofer und Frederik St.
 	\item[1.8 - 26.12.2009] Umstieg auf die KOMA-Skript-Familie und das geometry-Paket, einstellbare Schnittlinien, sowie umdrehbare Rückseite und DIN-A9-Karten
 	\item[1.7 - 26.11.2008] Fach \& Kommentartext sind jetzt global setzbar über \lstinline!\section! und \lstinline!\subsection! (und deren \lstinline!*!-Derivate), Druckoptionen verkürzt und Standards eingeführt, Antworttext und Zählerformat veränderbar
