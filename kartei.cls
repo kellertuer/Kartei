@@ -16,7 +16,7 @@
 % Working on an english manual, should be available soon.
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2010/11/07 Karteikarten in LaTeX, Version 1.8c]
+\ProvidesClass{kartei}[2011/12/31 Karteikarten in LaTeX, Version 1.8b2]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
