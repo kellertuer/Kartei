@@ -1,0 +1,78 @@
+%
+%		* ----------------------------------------------------------------------------
+%		* "THE BEER-WARE LICENSE" (Revision 42/023):
+%		* Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as you retain
+%		* this notice you can do whatever you want with this stuff. If we meet some day,
+%		* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
+%		* ----------------------------------------------------------------------------
+%
+%
+% Part of the Kartei-Class providing all commands for the production of a table of contents
+% -- Version 1.9 --
+%
+% Last Change: Kartei 1.9, 2012/01/02
+
+\makeatletter
+%
+\newcounter{card@toccount}
+\setcounter{card@toccount}{0}
+\newcommand{\card@tochead}{
+\begin{longtable}{>{\raggedleft}m{.05\textwidth}b{.83\textwidth-6\tabcolsep}p{.1\textwidth}}%
+\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
+\endfirsthead%
+\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
+\endhead%
+\bottomrule%
+\endfoot%
+}
+\newcommand{\card@longtochead}[1]{
+\begin{longtable}{>{\raggedleft}m{.05\textwidth}b{.83\textwidth-6\tabcolsep}p{.1\textwidth}}%
+\multicolumn{3}{l}{#1}\\%
+\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
+\endfirsthead%
+\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
+\endhead%
+\bottomrule%
+\endfoot%
+}
+\newcommand{\card@tocfoot}{\end{longtable}}
+\newcommand{\cardrow}[2]{%
+\ifnum\value{card@toccount}=0%
+  \card@tochead%
+  \setcounter{card@toccount}{1}%
+  #1&#2&%
+\else%
+  \addtocounter{card@toccount}{1}%
+  \ifnum\value{card@toccount}>5% section started
+    \setcounter{card@toccount}{1}% Don't midrule nor end line after section
+  \else
+    \ifnum\value{card@toccount}>4%
+      \\\midrule%
+      \setcounter{card@toccount}{1}%
+    \else%
+      \\%
+    \fi%
+  \fi
+  #1&#2&%
+\fi%
+}
+\newcommand{\sectionrow}[1]{%
+\ifnum\value{card@toccount}=0%
+  \setcounter{card@toccount}{5}% force no new line
+  \card@longtochead{#1}
+\else%
+  \setcounter{card@toccount}{5}%
+  \card@tocfoot%
+  \card@longtochead{#1}%
+\fi
+}
+\newcommand{\subsectionrow}[1]{%
+\ifnum\value{card@toccount}=0%
+  \card@tochead%
+\else%
+\relax%
+\fi%
+\setcounter{card@toccount}{4}%
+\\&#1&%
+}
+\makeatother
