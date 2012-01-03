@@ -10,7 +10,8 @@
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
 % -- Version 1.8b --
 %
-\documentclass[a6paper,11pt,print,grid=front]{kartei}
+\documentclass[a6paper,11pt,% print,grid=front
+, toc]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
 
@@ -29,6 +30,7 @@
 	\label{karte:antwort} Siehe Karte \ref{karte:frage}
 	\end{karte}
 	\begin{karte}{Was ist die Antwort auf Karte \ref{karte:antwort} ?}
-	\label{karte:frage}		Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
+	\label{karte:frage}
+	  Hier kommt man eigentlich gar nicht hin. Hier gibt es also nichts zu sehen, bitte blättern sie unauffällig weiter.
 	\end{karte}
 \end{document}

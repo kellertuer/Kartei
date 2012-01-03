@@ -30,6 +30,11 @@
 %Standard: Kein Print
 \card@useprintfalse%
 
+%TOC Version oder nicht ?
+\newif\ifcard@useTOC%
+%Standard: Kein Print
+\card@useTOCfalse%
+
 % Card Sizes
 % 0 = DIN A5
 % 1 = DIN A6
@@ -73,6 +78,10 @@
 %Print output
 \DeclareOption{print}{%
 	\card@useprinttrue
+}%
+%TOC output
+\DeclareOption{toc}{%
+	\card@useTOCtrue
 }%
 %A6 Cards
 \DeclareOption{a5paper}{%
@@ -133,9 +142,23 @@
 \RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
 \RequirePackage[landscape]{geometry}
+%
+% Packages rewquired for the print option
+%
 \RequirePackage{pgfpages,tikz}
 \RequirePackage{ifthen}
 \RequirePackage{atbegshi}
+%
+% Packages required for the TOC option
+%
+\RequirePackage{longtable}
+\RequirePackage{array}
+\RequirePackage{booktabs}
+\RequirePackage{calc}
+%
+% Load TOC Commands
+%
+\input{kartei.tableofcontents}
 %
 % Defining page style and margins
 %
@@ -306,35 +329,28 @@
 \newcommand{\commentstyle}{}
 \let\commentstyle=\kommentarstil
 
-
+% Card Counter
 \newcounter{CardID}
 \renewcommand{\theCardID}{\emph{\# \arabic{CardID}}}
 
 \makeatletter
-% Section wird nun für Fächer verwendet
-% Dazu wird zunächst die alte Section gesichert
+% redefine section
 \newcommand{\origsection}{}
 \let\origsection=\section
-%
-% Makro nun neu definieren:
 \def\section{\@ifstar\unnumberedsection\numberedsection} 
 \def\numberedsection#1{%
 	\refstepcounter{section}%
 	\fach{\thesection.\ #1}%
-%	\addcontentsline{toc}{section}{\protect\numberline{\thesubsection}{#1}}}
 }%
 \def\unnumberedsection#1{%
 	\fach{#1}%
 %	\addcontentsline{toc}{section}{#1}}%
 }%
 
-% Subsection wird nun für das Kommentarfeld verwendet
-% Dazu wird zunächst die alte Subsection gesichert
+% redefine subsectiom
 \newcommand{\origsubsection}{}
 \let\origsubsection=\subsection
-% Zähler nur auf subseciton setzen
 %
-% Makro nun neu definieren:
 \def\subsection{\@ifstar\unnumberedsubsection\numberedsubsection} 
 \def\numberedsubsection#1{%
 	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
@@ -344,23 +360,20 @@
 	\renewcommand{\thesubsection}{\arabic{subsection}}%
 	\kommentar{#1}%
 }%
-%
-% Pagestyle commands
-%
-\def\cardtitleheader{}%
-\def\cardRearheader{\theCardID\hfill\dieantwort\hfill}%
-\def\cardtitlefooter{}%
-\def\cardRearfooter{}%
 
-%
-%	Karteikartenumgebung:
-%	#1 (optional) Kopfzeile vorne Links : Fach
-% 	#2 Titel der Vorderseite  	
-% 	#3 (optional) Kopfzeile vorne rechts : Kommentar
+%    Karteikartenumgebung:
+%  #1 (optional) Kopfzeile vorne Links : Fach
+%  #2 Titel der Vorderseite  	
+%  #3 (optional) Kopfzeile vorne rechts : Kommentar
 %
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
-{% Vor der Umgebung: Vorderseite bauen
- %
+{%
+  % Add a TOC-line if active
+  \ifcard@useTOC% only include these if toc is active
+    \card@add{\value{CardID}}{#2}%
+  \fi%
+  % Build Cover page before starting environment
+  %
 \cohead{\theCardID}
 \lohead{\dasfach{#1}}
 \rohead{\derkommentar{#3}}
@@ -368,10 +381,9 @@
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
 \refstepcounter{CardID}
 \newpage%
-}% Ende Vor der Umgebung
-{% Nach Umgebung: Warnung im Kaop (bis TODO gelöst) 
- % und neue Karteikarte auf ungerader Seite beginnen lassen
- %
+}% Start os usual content block
+{% Build a warning if the page is too full (forcing a pagebreak)
+ % assure the next card starts on an odd page by doublepagebreak
 \cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
 \rohead{}%
 \lohead{}%
@@ -382,18 +394,25 @@
 %
 \AtBeginDocument{
 }
-\makeatother
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
-\antwort{Antwort}
-% using pagestyle
-\setcardpagelayout
 \AtEndDocument{%
-%
-% TODO Tabelle aller Karten?
-%
+\ifcard@useTOC% only include these if toc is active
+%change page format
+  \KOMAoptions{paper=a4,DIV=13}
+  \recalctypearea
+  \newpage
+  \thispagestyle{empty}
+  \card@makeTOC
+\fi
 }
+\makeatother
+%
+% Std pagestyle and set pgfpageslayout if print is set
+%
+\setcardpagelayout
+\antwort{Antwort}
 \pagestyle{scrheadings}
 \clearscrheadings
 \lohead{Kartentitel}

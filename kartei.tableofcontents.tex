@@ -13,18 +13,24 @@
 % Last Change: Kartei 1.9, 2012/01/02
 
 \makeatletter
-%
+% Collect the entries
+\newcommand{\card@tocinner}{}
+% count for midrules
 \newcounter{card@toccount}
-\setcounter{card@toccount}{0}
+\setcounter{card@toccount}{0} % zero for noninitialized
+% general head used in the first line
 \newcommand{\card@tochead}{
-\begin{longtable}{>{\raggedleft}m{.05\textwidth}b{.83\textwidth-6\tabcolsep}p{.1\textwidth}}%
+\begin{longtable}{>{\raggedleft}m{3em}b{.83\textwidth-6\tabcolsep-10em}p{7em}}%
 \toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
 \endfirsthead%
 \toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
 \endhead%
 \bottomrule%
-\endfoot%
+\endfoot
 }
+% head used by every section
+%
+% Parameter 1: Title of the section
 \newcommand{\card@longtochead}[1]{
 \begin{longtable}{>{\raggedleft}m{.05\textwidth}b{.83\textwidth-6\tabcolsep}p{.1\textwidth}}%
 \multicolumn{3}{l}{#1}\\%
@@ -35,44 +41,92 @@
 \bottomrule%
 \endfoot%
 }
+% foot used by every section and at the end of the TOC
 \newcommand{\card@tocfoot}{\end{longtable}}
-\newcommand{\cardrow}[2]{%
-\ifnum\value{card@toccount}=0%
-  \card@tochead%
-  \setcounter{card@toccount}{1}%
-  #1&#2&%
-\else%
-  \addtocounter{card@toccount}{1}%
-  \ifnum\value{card@toccount}>5% section started
-    \setcounter{card@toccount}{1}% Don't midrule nor end line after section
-  \else
-    \ifnum\value{card@toccount}>4%
-      \\\midrule%
+% Command building one TOC line for a card
+% (and starting the toc if neccessary)
+%
+% only for internal use
+%
+% Parameter 1: Numer of the card
+% Parameter 2: Title of the card
+\newcommand{\card@row}[2]{%
+    \ifnum\value{card@toccount}=0%
+      \card@tochead%
       \setcounter{card@toccount}{1}%
+      #1&#2&%
     \else%
-      \\%
+      \addtocounter{card@toccount}{1}%
+      \ifnum\value{card@toccount}>6% section started
+        \setcounter{card@toccount}{1}% Don't midrule nor end line after section
+      \else
+        \ifnum\value{card@toccount}>5%
+          \\\cmidrule{2-3}%
+          \setcounter{card@toccount}{1}%
+        \else%
+          \\%
+        \fi%
+      \fi
+      #1&#2&%
     \fi%
-  \fi
-  #1&#2&%
-\fi%
 }
-\newcommand{\sectionrow}[1]{%
+% Command building one TOC line of a section
+% (and starting the toc if neccessary)
+%
+% only for internal use
+%
+% Parameter 1: section title
+\newcommand{\card@secrow}[1]{%
 \ifnum\value{card@toccount}=0%
-  \setcounter{card@toccount}{5}% force no new line
+  \setcounter{card@toccount}{6}% force no new line
   \card@longtochead{#1}
 \else%
-  \setcounter{card@toccount}{5}%
+  \setcounter{card@toccount}{6}%
   \card@tocfoot%
   \card@longtochead{#1}%
 \fi
 }
-\newcommand{\subsectionrow}[1]{%
+% Command building one TOC line of a subsection
+% (and starting the toc if neccessary)
+%
+% only for internal use
+%
+% Parameter 1: subsection title
+\newcommand{\card@subsecrow}[1]{%
 \ifnum\value{card@toccount}=0%
+  \setcounter{card@toccount}{5}%
   \card@tochead%
+  &&\\%
 \else%
-\relax%
+  \ifnum\value{card@toccount}<6%
+    \\&&\\%
+  \else
+    \\
+  \fi%
+  \setcounter{card@toccount}{5}%
 \fi%
-\setcounter{card@toccount}{4}%
-\\&#1&%
+&#1&%
 }
-\makeatother
+% Add one Card (line of TOC) to the complete TOC
+% Call this for adding a line.
+%
+% Parameter 1: Number of the card
+% Parameter 2: Title of the card
+\newcommand{\card@add}[2]{\g@addto@macro\card@tocinner{\card@row{#1}{#2}}}
+% Add one section entry to the complete TOC
+% Call this for adding a line.
+%
+% Parameter 1: section title
+\newcommand{\card@addsec}[1]{\g@addto@macro\card@tocinner{\card@secrow{#1}}}
+% Add one subsection entry to the complete TOC
+% Call this for adding a line.
+%
+% Parameter 1: subsection title
+\newcommand{\card@addsubsec}[1]{\g@addto@macro\card@tocinner{\card@subsecrow{#1}}}
+% Output function for the complete TOC.
+%
+\newcommand{\card@makeTOC}{
+{\large Kartenübersicht}
+	\card@tocinner
+\end{longtable}
+}
