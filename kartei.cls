@@ -175,75 +175,75 @@
 	\fi%
 %
 %
-% grids
+% grids and stuff if print
 %
 %
-\AtBeginShipout{%
-\setbox\AtBeginShipoutBox\hbox{
-	\ifthenelse{\isodd{\thepage}}%
-	{%
-		\begin{tikzpicture}[remember picture,yshift=-3in]%
-			\path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
-			\ifcard@useFrontgrid%
-				%vertical lines
-				\draw[front grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
-				% horizontal lines
-				\draw[front grid] (-.5\paperwidth-.5in,-.5\paperheight+.515in) -- (.5\paperwidth-.5in,-.5\paperheight+.515in);%
-			\fi%
-		\end{tikzpicture}%
-	}%
-	{%
-		\begin{tikzpicture}[remember picture]%
-			\path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
-			\ifcard@useReargrid%
-				% vertical lines
-				\draw[rear grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
-				% horizontal lines
-				\draw[rear grid] (-.5\paperwidth-.5in,-.5\paperheight+.5225in) -- (.5\paperwidth-.5in,-.5\paperheight+.5225in);%
-			\fi%
-		\end{tikzpicture}%
-	}%
-}}
 %
 \ifcard@useprint%
-	\ifcase \card@papersize%
-	%0 is A5
-			\ifcase \card@Rearsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5}[a4paper, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5rotation}[a4paper, border shrink=0mm]}%
-			\fi
-		\or
-	%1 is A6
-			\ifcase \card@Rearsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
-			\fi
-		\or
-	%DIN A7 because 2
-			\ifcase \card@Rearsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7rotation}[a4paper, border shrink=0mm]}%
-			\fi
-		\or
-		%DIN A8 because 3
-			\ifcase \card@Rearsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8rotation}[a4paper, landscape, border shrink=0mm]}%
-			\fi
-		\or
-		%DIN A9 because 4
-			\ifcase \card@Rearsiderotation% no rotation =0
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
-			\or %rotate=1
-				\renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
-			\fi
-	\fi
-\else%
-	\renewcommand{\setcardpagelayout}{} % no print
+  \AtBeginShipout{%
+  \setbox\AtBeginShipoutBox\hbox{
+    \ifthenelse{\isodd{\thepage}}%
+    {%
+      \begin{tikzpicture}[remember picture,yshift=-3in]%
+      \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
+      \ifcard@useFrontgrid%
+        %vertical lines
+        \draw[front grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
+        % horizontal lines
+        \draw[front grid] (-.5\paperwidth-.5in,-.5\paperheight+.515in) -- (.5\paperwidth-.5in,-.5\paperheight+.515in);%
+      \fi%
+    \end{tikzpicture}%
+    }%
+    {%
+      \begin{tikzpicture}[remember picture]%
+        \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
+        \ifcard@useReargrid%
+          % vertical lines
+          \draw[rear grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
+          % horizontal lines
+          \draw[rear grid] (-.5\paperwidth-.5in,-.5\paperheight+.5225in) -- (.5\paperwidth-.5in,-.5\paperheight+.5225in);%
+        \fi%
+      \end{tikzpicture}%
+    }%
+  }}
+  \ifcase \card@papersize%
+  %0 is A5
+      \ifcase \card@Rearsiderotation% no rotation =0
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5}[a4paper, border shrink=0mm]}%
+      \or %rotate=1
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5rotation}[a4paper, border shrink=0mm]}%
+      \fi
+    \or
+  %1 is A6
+      \ifcase \card@Rearsiderotation% no rotation =0
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
+      \or %rotate=1
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
+      \fi
+    \or
+  %DIN A7 because 2
+      \ifcase \card@Rearsiderotation% no rotation =0
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
+      \or %rotate=1
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7rotation}[a4paper, border shrink=0mm]}%
+      \fi
+    \or
+    %DIN A8 because 3
+      \ifcase \card@Rearsiderotation% no rotation =0
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
+      \or %rotate=1
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8rotation}[a4paper, landscape, border shrink=0mm]}%
+      \fi
+    \or
+    %DIN A9 because 4
+      \ifcase \card@Rearsiderotation% no rotation =0
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
+      \or %rotate=1
+        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
+      \fi
+  \fi
+\else% no print
+  \renewcommand{\setcardpagelayout}{}
 \fi%
 \input{kartei.pageshipout}
 
@@ -337,10 +337,19 @@
 % redefine section
 \newcommand{\origsection}{}
 \let\origsection=\section
-\def\section{\@ifstar\unnumberedsection\numberedsection} 
-\def\numberedsection#1{%
+\def\section{\@ifstar\card@unnumberedsection\card@numberedsection} 
+\def\card@unnumberedsection#1{%
+	\fach{#1}%
+  \ifcard@useTOC% only include these if toc is active
+	\card@addsec{#1}
+  \fi%
+}%
+\def\card@numberedsection#1{%
 	\refstepcounter{section}%
 	\fach{\thesection.\ #1}%
+  \ifcard@useTOC% only include these if toc is active
+	\card@addsec{\thesection.\ #1}
+  \fi%
 }%
 \def\unnumberedsection#1{%
 	\fach{#1}%
@@ -351,16 +360,22 @@
 \newcommand{\origsubsection}{}
 \let\origsubsection=\subsection
 %
-\def\subsection{\@ifstar\unnumberedsubsection\numberedsubsection} 
-\def\numberedsubsection#1{%
-	\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
-	\refstepcounter{subsection}%
-	\kommentar{\thesubsection.\ #1}}%
-	\def\unnumberedsubsection#1{%
-	\renewcommand{\thesubsection}{\arabic{subsection}}%
-	\kommentar{#1}%
+\def\subsection{\@ifstar\card@unnumberedsubsection\card@numberedsubsection}
+\def\card@numberedsubsection#1{%
+  \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+  \refstepcounter{subsection}%
+  \kommentar{\thesubsection.\ #1}
+  \ifcard@useTOC% only include these if toc is active
+    \card@addsubsec{\thesubsection.\ #1}
+  \fi%
 }%
-
+\def\card@unnumberedsubsection#1{%
+  \renewcommand{\thesubsection}{\arabic{subsection}}%
+  \kommentar{#1}%
+  \ifcard@useTOC% only include these if toc is active
+    \card@addsubsec{#1}
+  \fi%
+}
 %    Karteikartenumgebung:
 %  #1 (optional) Kopfzeile vorne Links : Fach
 %  #2 Titel der Vorderseite  	
@@ -368,9 +383,10 @@
 %
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
 {%
+\refstepcounter{CardID}
   % Add a TOC-line if active
   \ifcard@useTOC% only include these if toc is active
-    \card@add{\value{CardID}}{#2}%
+    \card@add{\arabic{CardID}}{#2}%
   \fi%
   % Build Cover page before starting environment
   %
@@ -379,7 +395,6 @@
 \rohead{\derkommentar{#3}}
 \thispagestyle{scrheadings}
 ~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
-\refstepcounter{CardID}
 \newpage%
 }% Start os usual content block
 {% Build a warning if the page is too full (forcing a pagebreak)
@@ -392,13 +407,12 @@
 %
 % Init and Endstuff...
 %
-\AtBeginDocument{
-}
+\AtBeginDocument{}
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
 \AtEndDocument{%
-\ifcard@useTOC% only include these if toc is active
+\ifcard@useTOC % only include these if toc is active
 %change page format
   \KOMAoptions{paper=a4,DIV=13}
   \recalctypearea

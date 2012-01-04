@@ -10,21 +10,21 @@
 % Beispiel zur Dokumentvorlage für Din A6 Karteikarten 
 % -- Version 1.8b --
 %
-\documentclass[a6paper,11pt,% print,grid=front
-, toc]{kartei}
+\documentclass[a6paper,11pt % print,grid=front
+,toc]{kartei}
 
 \usepackage[utf8]{inputenc} %UTF8
 
 \begin{document}
-	\begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
+  \begin{karte}[Lebensphilosophie]{Wie lautet die Antwort auf die Frage nach dem Leben dem Universum und dem Ganzen Rest ?}[prüfungsrelevant]
 	42
 	\end{karte}
 	\begin{karte}[Zahlenkunde]{Was ist der Unterschied in der Verwendung von Drölf und $n$ bei Ihnen?}
 	$n$ wird verwendet für Zahlen bis hin zu verdammt groß, Drölf nur bis hin zu verdammt.
 	\end{karte}
-	\section*{Informatik}
-	\subsection*{Spaß mit Verweisen}
-	%Den Kommentar im Stil ändern
+	\section{Informatik}
+	\subsection{Spaß mit Verweisen}
+%	%Den Kommentar im Stil ändern
 	\renewcommand{\kommentarstil}{\textsc}
 	\begin{karte}{Was ist verschränkte Rekursion ?}[ein Beispiel für Label]
 	\label{karte:antwort} Siehe Karte \ref{karte:frage}
