@@ -158,10 +158,6 @@
 \RequirePackage{booktabs}
 \RequirePackage{calc}
 %
-% Load TOC Commands
-%
-\input{kartei.tableofcontents}
-%
 % Defining page style and margins
 %
 \ifcase \card@papersize% Din A5
@@ -176,105 +172,31 @@
 		\geometry{left=.5em,top=2em,right=.5em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\fi%
 %
+% Load toc Commands
 %
-% grids and stuff if print
+\ifcard@useTOC
+  \input{kartei.tableofcontents}
+\fi
 %
-%
-%
+% Load print Commands
 \ifcard@useprint%
-  \AtBeginShipout{%
-  \setbox\AtBeginShipoutBox\hbox{
-    \ifthenelse{\isodd{\thepage}}%
-    {%
-      \begin{tikzpicture}[remember picture,yshift=-3in]%
-      \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
-      \ifcard@useFrontgrid%
-        %vertical lines
-        \draw[front grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
-        % horizontal lines
-        \draw[front grid] (-.5\paperwidth-.5in,-.5\paperheight+.515in) -- (.5\paperwidth-.5in,-.5\paperheight+.515in);%
-      \fi%
-    \end{tikzpicture}%
-    }%
-    {%
-      \begin{tikzpicture}[remember picture]%
-        \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
-        \ifcard@useReargrid%
-          % vertical lines
-          \draw[rear grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
-          % horizontal lines
-          \draw[rear grid] (-.5\paperwidth-.5in,-.5\paperheight+.5225in) -- (.5\paperwidth-.5in,-.5\paperheight+.5225in);%
-        \fi%
-      \end{tikzpicture}%
-    }%
-  }}
-  \ifcase \card@papersize%
-  %0 is A5
-      \ifcase \card@Rearsiderotation% no rotation =0
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5}[a4paper, border shrink=0mm]}%
-      \or %rotate=1
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA5rotation}[a4paper, border shrink=0mm]}%
-      \fi
-    \or
-  %1 is A6
-      \ifcase \card@Rearsiderotation% no rotation =0
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6}[a4paper, landscape, border shrink=0mm]}%
-      \or %rotate=1
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA6rotation}[a4paper, landscape, border shrink=0mm]}%
-      \fi
-    \or
-  %DIN A7 because 2
-      \ifcase \card@Rearsiderotation% no rotation =0
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7}[a4paper, border shrink=0mm]}%
-      \or %rotate=1
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA7rotation}[a4paper, border shrink=0mm]}%
-      \fi
-    \or
-    %DIN A8 because 3
-      \ifcase \card@Rearsiderotation% no rotation =0
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8}[a4paper, landscape, border shrink=0mm]}%
-      \or %rotate=1
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA8rotation}[a4paper, landscape, border shrink=0mm]}%
-      \fi
-    \or
-    %DIN A9 because 4
-      \ifcase \card@Rearsiderotation% no rotation =0
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9}[a4paper, border shrink=0mm]}%
-      \or %rotate=1
-        \renewcommand{\setcardpagelayout}{\pgfpagesuselayout{cardprintA9rotation}[a4paper, border shrink=0mm]}%
-      \fi
-  \fi
-\else% no print
-  \renewcommand{\setcardpagelayout}{}
+  \input{kartei.print}
 \fi%
-\input{kartei.pageshipout}
-
-\input{kartei.a5printstyle}
-\input{kartei.a5printstylerotation}
-\input{kartei.a6printstyle}
-\input{kartei.a6printstylerotation}
-\input{kartei.a7printstyle}
-\input{kartei.a7printstylerotation}
-\input{kartei.a8printstyle}
-\input{kartei.a8printstylerotation}
-\input{kartei.a9printstyle}
-\input{kartei.a9printstylerotation}
 
 %
 % -----------------
-% Eigene Felder und Befehler
+% Main Commands 
 % -----------------
 %
 
 %
-% Antwort (Standard Rückseite Mitte
+% Antwort
 % Answer
 \newcommand{\dieantwort}{%
 \antwortstil{\card@antwort}\relax%
 }
 \newcommand{\antwort}[1]{\def\card@antwort{#1}}%
 \newcommand{\antwortstil}{}
-%Expliziter Standard: leer (Antwort wird am Ende des Dokumentes gesetzt
 \global\let\card@antwort\@empty
 
 %english names
@@ -286,7 +208,7 @@
 \let\answerstyle=\antwortstil
 
 %
-% Fach (Standard vorne links)
+% Fach
 % CardSubject
 \newcommand{\dasfach}[1]{%
 \ifx\@empty#1%
@@ -297,7 +219,6 @@
 }
 \newcommand{\fach}[1]{\def\card@fach{#1}}%
 \newcommand{\fachstil}{\emph}
-%Expliziter Standard: leer
 \global\let\card@fach\@empty
 
 %english names
@@ -309,7 +230,7 @@
 \let\subjectstyle=\fachstil
 
 %
-% Kommentar (Standard vorne rechts)
+% Kommentar
 % Comment
 \newcommand{\derkommentar}[1]{%
 \ifx\@empty#1%
@@ -320,7 +241,6 @@
 }
 \newcommand{\kommentar}[1]{\def\card@kommentar{#1}}%
 \newcommand{\kommentarstil}{\emph}
-% Expluiziter Standard : leer
 \global\let\card@kommentar\@empty
 
 %english names
