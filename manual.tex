@@ -1,3 +1,17 @@
+%
+%    * ----------------------------------------------------------------
+%    * "THE BEER-WARE LICENSE" (Revision 42/023):
+%    * Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as
+%    * you retain this notice you can do whatever you want with this
+%    * stuff. If we meet some day and you think this stuff is worth it,
+%    * you can buy me a beer or a coffee in return.
+%    * ----------------------------------------------------------------
+%
+%
+% Kartei Source Code of the german manual
+%
+% Last Change: Kartei 1.9, 2012/01/04
+%
 \documentclass[a4paper,DIV=calc]{scrartcl}
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
@@ -12,16 +26,16 @@
 
 \lstloadlanguages{TeX}
 \lstset{basicstyle={\rmfamily\footnotesize},numbers=left,numberstyle=\tiny\color{maincolor},numbersep=5pt, breaklines=true, captionpos={t},language={},frame=none,numbers=left,tabsize=3, showspaces=false, showtabs=false, columns=fixed}	
-\setlength{\parindent}{1em} 
+\setlength{\parindent}{1em}
 \setlength{\parskip}{0em}	
 \setlength{\marginparwidth}{3cm}
 \colorlet{maincolor}{black!80}
 
-\hypersetup{ 
+\hypersetup{
    pdftitle={Karteikarten in LaTeX}%
 	  ,pdfauthor={Ronny Bergmann}%
 	  ,pdfcreator={LaTeX, hyperref, KOMA-Script, TextMate},
-   pdfkeywords={Cards, Karteikarten, TeX, Paket, Anleitung, Manual}, 
+   pdfkeywords={Cards, Karteikarten, TeX, Paket, Anleitung, Manual},
    pdfdisplaydoctitle,
    bookmarksnumbered=true,
    bookmarksopen=true,
@@ -55,7 +69,7 @@ Es gibt die folgenden Karteikartenformate
 \begin{description}
 	\item[a5paper] Karteikarten im DIN-A5-Format $(210$m$\times 148$mm$)$\footnote{Dank an Merlin Wolf für die Idee}
 	\item[a6paper] Im DIN-A6-Karteikarten-Format $(148$mm$\times 105$mm$)$ sind die Ränder ein wenig größer gewählt als bei den anderen beiden Formaten. Dieses Format ist der Standard, wenn nichts angegeben wird für das Format.
-%	 \befehl{a7paper} 
+%	 \befehl{a7paper}
 	\item[a7paper] DIN-A7-Karteikarten $(105$mm$\times 74$mm$)$
 %	 \befehl{a8paper}
 	\item[a8paper] DIN-A8-Karteikarten $(74$mm$\times 52$mm$)$, diese scheinen recht klein, hier wirkt die Standardschriftgröße fast etwas groß.
@@ -70,7 +84,7 @@ Auf ungeraden Seite werden je 4 (beziehungsweise 8, 16 oder 32) Vorderseiten, au
 
 Die Anordnung bei DIN-A6 (4 Karteikarten pro Blatt) bzw. DIN-A8 (16 pro Blatt) werden die Karten im Querformat gesetzt. Somit wird der Duplex-Druck  \emph{über die kurze Seite geklappt}. Für DIN-A7 werden die Karteikarten im Hochformat gesetzt, dies ergibt im Duplex-Druck also eine Anordnung, bei der die Karten \emph{über die lange Seite geklappt} werden.
 
-\paragraph{Variante der Rückseite} 
+\paragraph{Variante der Rückseite}
 Außerdem läßt sich mit der Option \befehl{flip}\lstinline!flip! die Rückseite der Karteikarte um $180^{\circ}$ drehen, so dass sie im PDF auf dem Kopf steht. Wendet man dann den Duplexdruck an, sind die Rückseiten überkopf auf den Karteikartem, man dreht (beim Lernen) also nicht mehr auf einer vertikalen Achse, sonder über die horizontale.\footnote{Dank an Suklim Han für die Idee}
 
 \paragraph{Schnittlinien}
@@ -133,7 +147,7 @@ Mit den Werten gefüllt, die den Namen der Felder entsprechen, ergibt sich etwa 
 \begin{karte}[Fach]{Frage oder Titel}[Kommentar]
 	Antworttext
 \end{karte}
-	\end{lstlisting} 
+	\end{lstlisting}
 
 \paragraph{Karteikarte mit einer wichtigen Frage}
 	Ein wenig mehr gefüllt ist etwa das folgende Beispiel (vgl. Abb. \ref{fig:completeexample}).
@@ -227,16 +241,16 @@ Die Kartenumgebung beruht auf der \lstinline!twoside!-Variante des \lstinline!sc
 %
 \section{Bekannte Probleme \& weitere Ideen}
 \paragraph{„Inhalt der Rückseite zu umfangreich“} % (fold)
-Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, was die Aufteilung der Vorder- und Rückseiten im doppelseitigen Layout zerstört. Vorläufige Lösung ist ein Hinweis in der Kopfzeile der einen zu vollen Seite. Die darauf"|folgende Karteikarte beginnt wieder korrekt auf einer ungeraden Seite. Ebenso ist die Nummerierung nicht betroffen. Gelöst wird dies vorerst durch ein \lstinline!~\cleardoublepage!, 
+Ist die Antwort zu lang oder zu umfangreich, so wird eine neue Seite begonnen, was die Aufteilung der Vorder- und Rückseiten im doppelseitigen Layout zerstört. Vorläufige Lösung ist ein Hinweis in der Kopfzeile der einen zu vollen Seite. Die darauf"|folgende Karteikarte beginnt wieder korrekt auf einer ungeraden Seite. Ebenso ist die Nummerierung nicht betroffen. Gelöst wird dies vorerst durch ein \lstinline!~\cleardoublepage!,
 % _inhalt_der_rückseite_zu_groß_ (end)
 
 \paragraph{Positionierung von Kartennummer, Fach \& Kommentar selbst individuell festlegen}
 Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente Fach, Kommentar und Zählerausgabe festlegen kann, etwa in die Fußzeile o.ä. -- dazu sind einige dieser Felder noch zu direkt implementiert.
 
-\paragraph{Rückseitenformat festlegen} 
+\paragraph{Rückseitenformat festlegen}
 Für die Rückseite könnte man noch ein Format festlegen, etwa zusätzliche Felder für eine Bewertung/Lernkontrolle.
 
-\paragraph{Liste der Karteikarten / eine Lernkontrolltabelle} 
+\paragraph{Liste der Karteikarten / eine Lernkontrolltabelle}
 Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenübersicht als auch eine Lernkontrolle einbinden, auf der man seine Lernfortschirtte verzeichnen kann.
 \section{Lizenz}
 \begin{lstlisting}[basicstyle=\sffamily, numbers=none]
@@ -247,7 +261,7 @@ Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenü
 * As long as you retainthis notice you can do whatever
 * you want with this stuff. If we meet some day, and you
 * think  this stuff is worth it, you can buy
-* me a beer or a coffee in return. 
+* me a beer or a coffee in return.
 * ------------------------------------------------------
 *
 \end{lstlisting}

@@ -1,29 +1,31 @@
 %
-%		* ----------------------------------------------------------------------------
-%		* "THE BEER-WARE LICENSE" (Revision 42/023):
-%		* Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as you retain
-%		* this notice you can do whatever you want with this stuff. If we meet some day,
-%		* and you think  this stuff is worth it, you can buy me a beer or a coffee in return. 
-%		* ----------------------------------------------------------------------------
+%    * ----------------------------------------------------------------
+%    * "THE BEER-WARE LICENSE" (Revision 42/023):
+%    * Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as
+%    * you retain this notice you can do whatever you want with this
+%    * stuff. If we meet some day and you think this stuff is worth it,
+%    * you can buy me a beer or a coffee in return.
+%    * ----------------------------------------------------------------
 %
 %
-% Dokumentklasse für Karteikarten im Format DinA5 bis DinA9
-% -- Version 1.8b --
+% Kartei Source Code of A5 page style definition without rotation
 %
-% Der Code sollte umfassend kommentiert sein, zur Verwendung, Eläuterung der einzelnen
-% Klassenoptionen, siehe manual.pdf
+%   -- Version 1.9 --
 %
-% Working on an english manual, should be available soon.
-
+% Last Change: Kartei 1.9, 2012/01/04
+%
+% An english manual will be available soon, up to that, at least all
+% comments are in english
+%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{kartei}[2011/12/31 Karteikarten in LaTeX, Version 1.8b2]
+\ProvidesClass{kartei}[2012/01/04 Karteikarten in LaTeX, Version 1.9]
 \newcommand{\setcardpagelayout}{}
 
 \makeatletter
 %
 \maxdeadcycles=1000
 %
-% lokale Variablen und Optionsträger 
+% lokale Variablen und Optionsträger
 %
 %Print Version oder nicht ?
 \newif\ifcard@useprint%
@@ -42,14 +44,14 @@
 % 3 = DIN A8
 % 4 = DIN A9
 \newcount\card@papersize
-%Standard: A6 
+%Standard: A6
 \card@papersize=1%
 
 % Rotation der Rückseite
 % 0 = nicht gedreht
 % 1 = 180° gedreht (überkopf)
 \newcount\card@Rearsiderotation
-%Standard: 0 Degree, nicht überkopf 
+%Standard: 0 Degree, nicht überkopf
 \card@Rearsiderotation=0%
 
 %
@@ -86,27 +88,27 @@
 %A6 Cards
 \DeclareOption{a5paper}{%
 	\card@papersize=0%
-	\PassOptionsToPackage{paper=a5,pagesize}{typearea}% 
+	\PassOptionsToPackage{paper=a5,pagesize}{typearea}%
 }
 %A6 Cards
 \DeclareOption{a6paper}{%
 	\card@papersize=1%
-	\PassOptionsToPackage{paper=a6,pagesize}{typearea}% 
+	\PassOptionsToPackage{paper=a6,pagesize}{typearea}%
 }
 %A7 Cards
 \DeclareOption{a7paper}{%
 	\card@papersize=2%
-	\PassOptionsToPackage{paper=a7,pagesize}{typearea}% 
+	\PassOptionsToPackage{paper=a7,pagesize}{typearea}%
 }%
 %A8 Cards
 \DeclareOption{a8paper}{
 	\card@papersize=3%
-	\PassOptionsToPackage{paper=a8,pagesize}{typearea}% 
+	\PassOptionsToPackage{paper=a8,pagesize}{typearea}%
 }%	
 %A9 Cards
 \DeclareOption{a9paper}{
 	\card@papersize=4%
-	\PassOptionsToPackage{paper=a9,pagesize}{typearea}% 
+	\PassOptionsToPackage{paper=a9,pagesize}{typearea}%
 }
 % Activate both grids
 \DeclareOption{grid=both}{%
@@ -130,14 +132,14 @@
 }
 %All unknown Options to article
 \DeclareOption*{%
-\PassOptionsToClass{\CurrentOption}{scrartcl}% 
+\PassOptionsToClass{\CurrentOption}{scrartcl}%
 }
 \ProcessOptions\relax
 %
 % Pakete laden
 %
-\PassOptionsToClass{twoside}{scrartcl}% 
-\PassOptionsToClass{cleardoublepage=plain,DIV=calc}{scrartcl}% 
+\PassOptionsToClass{twoside}{scrartcl}%
+\PassOptionsToClass{cleardoublepage=plain,DIV=calc}{scrartcl}%
 \LoadClass{scrartcl}
 \RequirePackage[headsepline]{scrpage2}
 \RequirePackage{xargs}
@@ -337,7 +339,7 @@
 % redefine section
 \newcommand{\origsection}{}
 \let\origsection=\section
-\def\section{\@ifstar\card@unnumberedsection\card@numberedsection} 
+\def\section{\@ifstar\card@unnumberedsection\card@numberedsection}
 \def\card@unnumberedsection#1{%
 	\fach{#1}%
   \ifcard@useTOC% only include these if toc is active
@@ -378,7 +380,7 @@
 }
 %    Karteikartenumgebung:
 %  #1 (optional) Kopfzeile vorne Links : Fach
-%  #2 Titel der Vorderseite  	
+%  #2 Titel der Vorderseite
 %  #3 (optional) Kopfzeile vorne rechts : Kommentar
 %
 \newenvironmentx{karte}[3][1=\card@fach,3=\card@kommentar]
@@ -422,6 +424,8 @@
 \fi
 }
 \makeatother
+
+
 %
 % Std pagestyle and set pgfpageslayout if print is set
 %
@@ -433,7 +437,7 @@
 \cohead{\theCardID}
 \lehead{\theCardID}
 \cehead{\dieantwort}%
-\setheadsepline{.4pt}[\color{black}] 
+\setheadsepline{.4pt}[\color{black}]
 
 %
 % Border Definitions
