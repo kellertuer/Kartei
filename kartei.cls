@@ -188,7 +188,7 @@
 % Main Commands 
 % -----------------
 %
-
+\makeatletter
 %
 % Antwort
 % Answer

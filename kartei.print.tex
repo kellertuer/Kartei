@@ -20,21 +20,6 @@
 %
 \RequirePackage{ifthen,pgfpages,atbegshi}
 \makeatletter
-\ifundefined\card@useFrontgrid
-  \PackageError{Front Grid Variable not defined. Please do not use Kartei.print directly, instead use the Kartei class.}
-\fi
-\ifundefined\card@useReargrid
-\PackageError{Rear Grid Variable not defined. Please do not use Kartei.print directly, instead use the Kartei class.}
-\fi
-\ifundefined\card@papersize
-  \PackageError{papersize Variable not defined. Please do not use Kartei.print directly, instead use the Kartei class.}
-\fi
-\ifundefined\card@Rearsiderotation
-  \PackageError{Orientation of rearside Variable not defined. Please do not use Kartei.print directly, instead use the Kartei class.}
-\fi
-\ifundefined\setcardpagelayout
-  \PackageError{card page layout command not defined. Please do not use Kartei.print directly, instead use the Kartei class.}
-\fi
 \AtBeginShipout{%
 \setbox\AtBeginShipoutBox\hbox{
   \ifthenelse{\isodd{\thepage}}%
