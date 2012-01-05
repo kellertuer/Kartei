@@ -92,16 +92,13 @@
 \newcommand{\card@addsec}[2]{%
   \ifnum\value{card@toccount}=0%
     \setcounter{card@toccount}{6}% force no new line
-    \protected@edef\@tempb{#1}
-    \expandafter\g@addto@macro\expandafter\card@tocinner\expandafter{\card@longtochead{\@tempb \unexpanded{#2}}}%
-%    \g@addto@macro\card@tocinner{\card@longtochead{#1}}
   \else%
     \setcounter{card@toccount}{6}%
     \g@addto@macro\card@tocinner{\card@tocfoot}%
-    \protected@edef\@tempb{#1}%
-    \expandafter\g@addto@macro\expandafter\card@tocinner\expandafter{\card@longtochead{\@tempb \unexpanded{#2}}}%
-%    \g@addto@macro\card@tocinner{\card@tocfoot\card@longtochead{#1}}
   \fi
+  \protected@edef\@tempb{{\Large #1 \noexpand{#2}}}
+  \expandafter\g@addto@macro\expandafter\card@tocinner\expandafter{\@tempb}%
+  \g@addto@macro\card@tocinner{\card@tochead}
 }
 % Command building one TOC line of a subsection
 % (and starting the toc if neccessary)
@@ -122,13 +119,13 @@
   \fi%
   \setcounter{card@toccount}{5}%
 \fi%
-\protected@edef\@tempc{#1}
-\expandafter\g@addto@macro\expandafter\card@tocinner{\expandafter\@tempc \unexpanded{#2}&}%
+\protected@edef\@tempc{& #1 \noexpand{#2}&}
+\expandafter\g@addto@macro\expandafter\card@tocinner\expandafter{\@tempc}%
 %\g@addto@macro\card@tocinner{&#1&}
 }
 
 \newcommand{\card@makeTOC}{
-  {\centering\Large Karten\"ubersicht}
+  {\centering\Large\textsc{Karten\"ubersicht}}
   \ifnum\value{card@toccount}>0%
 	\card@tocinner
     \end{longtable}
