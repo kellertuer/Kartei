@@ -263,19 +263,19 @@
 \def\card@unnumberedsection#1{%
 	\fach{#1}%
   \ifcard@useTOC% only include these if toc is active
-	\card@addsec{#1}
+	\card@addsec{}{#1}
   \fi%
 }%
 \def\card@numberedsection#1{%
 	\refstepcounter{section}%
 	\fach{\thesection.\ #1}%
   \ifcard@useTOC% only include these if toc is active
-	\card@addsec{\thesection.\ #1}
+	\card@addsec{\thesection.}{#1}
   \fi%
 }%
 \def\unnumberedsection#1{%
 	\fach{#1}%
-%	\addcontentsline{toc}{section}{#1}}%
+	\card@addsec{}{#1}
 }%
 
 % redefine subsectiom
@@ -286,9 +286,9 @@
 \def\card@numberedsubsection#1{%
   \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
   \refstepcounter{subsection}%
-  \kommentar{\thesubsection.\ #1}
+  \kommentar{\thesubsection.}{#1}
   \ifcard@useTOC% only include these if toc is active
-    \card@addsubsec{\thesubsection.\ #1}
+    \card@addsubsec{\thesubsection.}{#1}
   \fi%
 }%
 \def\card@unnumberedsubsection#1{%
