@@ -18,30 +18,33 @@
 % An english manual will be available soon, up to that, at least all
 % comments are in english
 %
-\RequirePackage{ifthen,pgfpages,atbegshi}
 \makeatletter
 \AtBeginShipout{%
 \setbox\AtBeginShipoutBox\hbox{
   \ifthenelse{\isodd{\thepage}}%
   {%
     \begin{tikzpicture}[remember picture,yshift=-3in]%
-    \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
-    \ifcard@useFrontgrid%
-      %vertical lines
-      \draw[front grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
-      % horizontal lines
-      \draw[front grid] (-.5\paperwidth-.5in,-.5\paperheight+.515in) -- (.5\paperwidth-.5in,-.5\paperheight+.515in);%
-    \fi%
-  \end{tikzpicture}%
+      \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
+      \ifcard@useFrontgrid%
+        %vertical lines
+        \draw[front grid] (\card@hoffset-.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset-.499\paperwidth,\card@voffset+.4975\paperheight);%
+        \draw[front grid] (\card@hoffset+.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset+.4975\paperheight);%
+        % horizontal lines
+        \draw[front grid] (\card@hoffset-.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset-.4975\paperheight);%
+        \draw[front grid] (\card@hoffset-.499\paperwidth,\card@voffset+.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset+.4975\paperheight);%
+      \fi%
+    \end{tikzpicture}%
   }%
   {%
     \begin{tikzpicture}[remember picture]%
       \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
       \ifcard@useReargrid%
-        % vertical lines
-        \draw[rear grid] (-.5in-.5\paperwidth,-.5\paperheight+.5225in) -- (-.5in-.5\paperwidth,.5\paperheight+.5225in);%
+        %vertical lines
+        \draw[rear grid] (\card@hoffset-.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset-.499\paperwidth,\card@voffset+.4975\paperheight);%
+        \draw[rear grid] (\card@hoffset+.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset+.4975\paperheight);%
         % horizontal lines
-        \draw[rear grid] (-.5\paperwidth-.5in,-.5\paperheight+.5225in) -- (.5\paperwidth-.5in,-.5\paperheight+.5225in);%
+        \draw[rear grid] (\card@hoffset-.499\paperwidth,\card@voffset-.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset-.4975\paperheight);%
+        \draw[rear grid] (\card@hoffset-.499\paperwidth,\card@voffset+.4975\paperheight) -- (\card@hoffset+.499\paperwidth,\card@voffset+.4975\paperheight);%
       \fi%
     \end{tikzpicture}%
   }%

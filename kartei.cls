@@ -65,7 +65,11 @@
 \newif\ifcard@useReargrid
 %Standard -> vorne kein Gitter
 \card@useReargridtrue%
-
+% Offsets
+\newlength{\card@hoffset}
+\newlength{\card@voffset}
+\setlength{\card@hoffset}{0pt}
+\setlength{\card@voffset}{0pt}
 %
 %-----------------
 %
@@ -89,26 +93,31 @@
 \DeclareOption{a5paper}{%
 	\card@papersize=0%
 	\PassOptionsToPackage{paper=a5,pagesize}{typearea}%
+	\setlength{\card@hoffset}{-28pt}\setlength{\card@voffset}{55pt}%
 }
 %A6 Cards
 \DeclareOption{a6paper}{%
 	\card@papersize=1%
 	\PassOptionsToPackage{paper=a6,pagesize}{typearea}%
+	\setlength{\card@hoffset}{-28pt}\setlength{\card@voffset}{37.5pt}%
 }
 %A7 Cards
 \DeclareOption{a7paper}{%
 	\card@papersize=2%
 	\PassOptionsToPackage{paper=a7,pagesize}{typearea}%
+	\setlength{\card@hoffset}{-33.75pt}\setlength{\card@voffset}{37pt}%
 }%
 %A8 Cards
 \DeclareOption{a8paper}{
 	\card@papersize=3%
 	\PassOptionsToPackage{paper=a8,pagesize}{typearea}%
+	\setlength{\card@hoffset}{-33.75pt}\setlength{\card@voffset}{37pt}%
 }%	
 %A9 Cards
 \DeclareOption{a9paper}{
 	\card@papersize=4%
 	\PassOptionsToPackage{paper=a9,pagesize}{typearea}%
+	\setlength{\card@hoffset}{-36pt}\setlength{\card@voffset}{36.5pt}%
 }
 % Activate both grids
 \DeclareOption{grid=both}{%
@@ -335,12 +344,18 @@
 %
 \AtEndDocument{%
 \ifcard@useTOC % only include these if toc is active
-%change page format
-  \KOMAoptions{paper=a4,DIV=13}
-  \recalctypearea
-  \newpage
-  \thispagestyle{empty}
-  \card@makeTOC
+  \ifcard@useprint
+    \tikzset{front grid/.style={white}}
+    \tikzset{rear grid/.style={white}}
+    \card@makeTOC
+    \pgfpagesuselayout{resize to}[a4paper]
+  \else
+    \KOMAoptions{paper=a4,DIV=13}
+    \recalctypearea
+    \newpage
+    \thispagestyle{empty}
+    \card@makeTOC
+  \fi
 \fi
 }
 \makeatother
