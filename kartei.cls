@@ -286,7 +286,7 @@
 \def\card@numberedsubsection#1{%
   \renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
   \refstepcounter{subsection}%
-  \kommentar{\thesubsection.}{#1}
+  \kommentar{\thesubsection. #1}
   \ifcard@useTOC% only include these if toc is active
     \card@addsubsec{\thesubsection.}{#1}
   \fi%
