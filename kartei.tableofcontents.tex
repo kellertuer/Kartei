@@ -25,29 +25,28 @@
 \setcounter{card@toccount}{0} % zero for noninitialized
 % general head used in the first line
 \newcommand{\card@tochead}{
-\begin{longtable}{>{\raggedleft}m{2.5em}b{\textwidth-6\tabcolsep-8em}p{5.5em}}%
+\begin{longtable}{>{\raggedleft}m{2.5em}m{\textwidth-6\tabcolsep-8em}m{5.5em}}%
 \toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
 \endfirsthead%
 \toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
 \endhead%
-\bottomrule%
+\addlinespace[3\cmidrulesep]\bottomrule%
 \endfoot
-}
-% head used by every section
-%
-% Parameter 1: Title of the section
-\newcommand{\card@longtochead}[1]{
-\begin{longtable}{>{\raggedleft}m{2.5em}b{\textwidth-6\tabcolsep-8em}p{5.5em}}%
-\multicolumn{3}{l}{#1}\\%
-\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
-\endfirsthead%
-\toprule\textbf{\#}&\textbf{Karte}&\textbf{Notizen}\\\midrule%
-\endhead%
-\bottomrule%
-\endfoot%
 }
 % foot used by every section and at the end of the TOC
 \newcommand{\card@tocfoot}{\end{longtable}}
+%
+% Internal command to fix the layout of the cells, such that the first cell stays vertically middle.
+%
+\newcommand{\card@titlecell}[1]{%
+    \begingroup\sbox0{\begin{minipage}{\textwidth-6\tabcolsep-8em}\raggedright#1\end{minipage}}%
+        \xdef\finalheight{\the\dimexpr\ht0+\dp0%+\smallskipamount
+            \relax}%
+    \endgroup
+%    \vspace{1.5\cmidrulesep}
+    \begin{minipage}[t][\finalheight][t]{\textwidth-6\tabcolsep-8em}\raggedright#1\end{minipage}%&
+%    \vspace{\cmidrulesep}
+    }
 % Add one Card (line of TOC) to the complete TOC
 % Call this for adding a line.
 %
@@ -59,9 +58,8 @@
 %  \noexpand\card@tocinner{\the\card@tocinner%
 %   #1 & \unexpanded{#2} &}}\x%
 %}
-
 \newcommand\card@addentry[2]{%
-  \protected@edef\@tempa{#1 & \unexpanded{#2} &}%
+  \protected@edef\@tempa{#1 & \unexpanded{\card@titlecell{#2}} &}%
   \expandafter\g@addto@macro\expandafter\card@tocinner\expandafter{\@tempa}%
 }
 \newcommand{\card@add}[2]{%
@@ -76,10 +74,10 @@
         \setcounter{card@toccount}{1}% Don't midrule nor end line after section
       \else
         \ifnum\value{card@toccount}>5%
-	    \g@addto@macro\card@tocinner{\\\cmidrule{2-3}}%
+	    \g@addto@macro\card@tocinner{\\\addlinespace[3\cmidrulesep]\cmidrule{2-3}}%
           \setcounter{card@toccount}{1}%
         \else%
-        \g@addto@macro\card@tocinner{\\}%
+        \g@addto@macro\card@tocinner{\\\addlinespace[3\cmidrulesep]}%
         \fi%
       \fi
     \card@addentry{#1}{#2}%
