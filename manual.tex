@@ -15,7 +15,7 @@
 \documentclass[a4paper,DIV=calc]{scrartcl}
 \usepackage[utf8]{inputenc} %UTF8
 \usepackage[OT1]{fontenc}
-\usepackage[scaled]{helvet}
+%\usepackage[scaled]{helvet}
 \usepackage[ngerman]{babel} % Neue Rechtschreibung
 %Menge an Paketen die für vor allem mathematisches und informatisches gut brauchbar ist
 \usepackage{graphicx,hyperref}
@@ -52,9 +52,9 @@
 }
 
 \begin{document}
-\title{Karteikarten in \LaTeX\\{\large Version 1.8b}}
+\title{Karteikarten in \LaTeX\\{\large Version 1.9}}
 \author{Ronny Bergmann\\\emph{mail@rbergmann.info}}
-\date{Januar 2010}
+\date{\today}
 \maketitle
 \section{Einleitung}
 Karteikarten sind zum Lernen hilfreich, sei es etwa in kleinem Format für Vokabeln oder für umfangreichere Themen, die man auf größeren Karteikarten stichpunktartig notiert. Zusätzlich zum Lernen am Computer, wo die Karteikarten in einem Dokument vorliegen sollten, möchte man Karteikarten wahrscheinlich auch drucken. Dazu werden mehrere Karteikarten auf eine Seite gesetzt, wobei die zweite Seite „trickreich umsortiert“ wird, damit im Duplex-Druck jeweils die passenden Vorder- und Rückseiten aneinander gedruckt werden. Beide Formate basieren auf dem gleiche Inhalt, so dass hier \LaTeX\ hilfreich sein kann, diese beiden Formate zu produzieren.
@@ -67,14 +67,14 @@ Für eine gesamte Kartei \befehl{\textbackslash document-\\class\{kartei\}}, ode
 \befehl{aXpaper}
 Es gibt die folgenden Karteikartenformate
 \begin{description}
-	\item[a5paper] Karteikarten im DIN-A5-Format $(210$m$\times 148$mm$)$\footnote{Dank an Merlin Wolf für die Idee}
+	\item[a5paper] Karteikarten im DIN-A5-Format $(210$m$\times 148$mm$)$\footnote{Dank an M. Wolf für die Idee}
 	\item[a6paper] Im DIN-A6-Karteikarten-Format $(148$mm$\times 105$mm$)$ sind die Ränder ein wenig größer gewählt als bei den anderen beiden Formaten. Dieses Format ist der Standard, wenn nichts angegeben wird für das Format.
 %	 \befehl{a7paper}
 	\item[a7paper] DIN-A7-Karteikarten $(105$mm$\times 74$mm$)$
 %	 \befehl{a8paper}
-	\item[a8paper] DIN-A8-Karteikarten $(74$mm$\times 52$mm$)$, diese scheinen recht klein, hier wirkt die Standardschriftgröße fast etwas groß.
+	\item[a8paper] DIN-A8-Karteikarten $(74$mm$\times 52$mm$)$, ab hier sollte man die Schriftart kleine als 10\,pt setzen
 %	 \befehl{a9paper}
-	\item[a9paper] DIN-A9-Karteikarten $(52$mm$\times 37$mm$)$, mir persönlch zu klein, aber dank eines Patches nun verfügbar\footnote{Dank an Hagen Fritsch}
+	\item[a9paper] DIN-A9-Karteikarten $(52$mm$\times 37$mm$)$\footnote{Dank an H. Fritsch für den Patch}
 \end{description}
 \subsection{Varianten im Druck}\befehl{print}
 \paragraph{Aktivieren der Druckausgabe}
@@ -85,10 +85,10 @@ Auf ungeraden Seite werden je 4 (beziehungsweise 8, 16 oder 32) Vorderseiten, au
 Die Anordnung bei DIN-A6 (4 Karteikarten pro Blatt) bzw. DIN-A8 (16 pro Blatt) werden die Karten im Querformat gesetzt. Somit wird der Duplex-Druck  \emph{über die kurze Seite geklappt}. Für DIN-A7 werden die Karteikarten im Hochformat gesetzt, dies ergibt im Duplex-Druck also eine Anordnung, bei der die Karten \emph{über die lange Seite geklappt} werden.
 
 \paragraph{Variante der Rückseite}
-Außerdem läßt sich mit der Option \befehl{flip}\lstinline!flip! die Rückseite der Karteikarte um $180^{\circ}$ drehen, so dass sie im PDF auf dem Kopf steht. Wendet man dann den Duplexdruck an, sind die Rückseiten überkopf auf den Karteikartem, man dreht (beim Lernen) also nicht mehr auf einer vertikalen Achse, sonder über die horizontale.\footnote{Dank an Suklim Han für die Idee}
+Außerdem lässt sich mit der Option \befehl{flip}\lstinline!flip! die Rückseite der Karteikarte um $180^{\circ}$ drehen, so dass sie im PDF auf dem Kopf steht. Wendet man dann den Duplexdruck an, sind die Rückseiten überkopf auf den Karteikartem, man dreht (beim Lernen) also nicht mehr auf einer vertikalen Achse, sonder über die horizontale.\footnote{Dank an S. Han für die Idee}
 
 \paragraph{Schnittlinien}
-Zum Ausschneiden lassen sich Schnittlinien aktivieren. Dies geschieth durch \befehl{grid=X} \lstinline!grid=X!, wobei \lstinline!X! einer der folgenden 4 Werte ist:
+Zum Ausschneiden lassen sich Schnittlinien aktivieren. Dies geschieht durch \befehl{grid=X} \lstinline!grid=X!, wobei \lstinline!X! einer der folgenden 4 Werte ist:
 \begin{description}
 	\item[none] zeigt keine Schnittlinien
 	\item[rear] erzeugt nur auf den Rückseiten die Schnittlinien
@@ -101,20 +101,24 @@ Die Linien, entlang derer geschnitten werden kann, sind auf der Rückseite mit g
 	\tikzset{rear grid/.style={thin, black, loosely dashed}}
 \end{lstlisting}
 Die Linienarten lassen sich also variieren, indem man den jeweiligen Stil umdefiniert.
+\subsection{Eine Übersicht}
+Die Dokumentoption \befehl{toc}\lstinline!toc! erzeugt im Anschluss an die Karteikarten eine Übersicht über alle Karteikarten\footnote{Dank an W. Erdmann für die Idee und hilfreiche Tipps}. Dazu werden die Kartennummern und Titel/Fragen (siehe Abschnitt \ref{def:Karte}) aufgelistet und durch eine Spalte für Notizen ergänzt. In der aktuellen Version (Stand 11. Januar 2011) funktioniert diese Option nur, wenn \lstinline!print! \emph{nicht} gesetzt ist. Andernfalls verhindert \lstinline!pgfpages! noch die Ausgabe.
+
 \subsection{weitere Dokumentoptionen}
-Alle weiteren Dokumentoptionen werden nicht direkt von der Karteikartenklasse verarbeitet, sondern an \lstinline!scrartcl! weitergegeben. Dadurch läßt sich per \befehl{Xpt}\lstinline!Xpt! die Schriftgröße verändern, wobei \lstinline!X! ein ganzzahliger Wert sein muss\footnote{Nach einem Vorschlag von Christoph Schramm}. Weitere Dokumentoptionen der KOMA-Klasse lassen sich auf diesem Wege auch verändern, diese wurden jedoch nicht getestet.
+Alle weiteren Dokumentoptionen werden nicht direkt von der Karteikartenklasse verarbeitet, sondern an \lstinline!scrartcl! weitergegeben. Dadurch läßt sich per \befehl{Xpt}\lstinline!Xpt! die Schriftgröße verändern, wobei \lstinline!X! ein ganzzahliger Wert sein muss\footnote{Nach einem Vorschlag von C. Schramm}. Weitere Dokumentoptionen der KOMA-Script-Klasse lassen sich auf diesem Wege auch verändern, diese wurden jedoch nicht getestet.
 
 \subsection{Beispiele}
 \begin{itemize}
 	\item Zum Erstellen von A6-Karteikarten, normal gesetzt \lstinline!\documentclass[a6paper]{kartei}!
 	\item Für A7-Karteikarten im Druckformat mit gedrehter Rückseite und Schnittlinien auf beiden Seiten \lstinline!\documentclass[a7paper, print,flip,grid=both]{kartei}!
+	\item um etwa die Schriftgröße zu variieren kann die Option der Koma-Script-Klasse genutzt werden \lstinline!\documentclass[a7paper,9pt]{kartei}!.
 \end{itemize}
 %
 %
 %
 \section{Die Karten}
 
-\subsection{Definition einer Karte}\befehl{\textbackslash begin\{karte\}}
+\subsection{Definition einer Karte}\label{def:Karte}\befehl{\textbackslash begin\{karte\}}
 
 Innerhalb des Dokumentes lassen sich nun einzelne Karteikarten definieren. Dazu gibt es die Umgebung \lstinline!karte!. Karten werden automatisch durchnummeriert und es ist möglich, per \lstinline!\ref{}! auf Karten zu verweisen, die \lstinline!\label{}! enthalten.
 Die Umgebung \lstinline!karte! benötigt 3 Parameter, von denen 2 optional sind. Die Parameter und ihre Reihenfolge sind:
@@ -207,14 +211,17 @@ Also einem führenden \# gefolgt von der Nummer der Karte. Diese Anzeige wird au
 %
 \section{Technische Details}
 \subsection{Benötigte Pakete}
-Benötigt werden für die Verwendung des Karteikartensystems die Pakete
+Benötigt werden für die Verwendung des Karteikartensystems die folgenden Pakete. Dabei ist stets angegeben auf welcher Paketversion der aktuelle Code des Paketes entwickelt worden ist. Alle neuren Versionen sollten also funktionieren. Über Hinweise zur Kompatibilität zu alten Paketen würde ich mich freuen.
 \begin{itemize}
-	\item Das \emph{KOMA-Skript}-Paket (getestet auf Version 3.06, insbesondere \emph{typearea}
-	\item \emph{TikZ}, \emph{PGFPages} (Version 2.00)
-	\item \emph{geometry} (Version 5.5)
-	\item \emph{xargs} (Version 1.1)
-	\item \emph{ifthen} (Version 1.1c)
+	\item \emph{array} (Version 2.4c)
 	\item \emph{atbegshi} (Version 1.12)
+	\item \emph{booktabs} (Version 1.61803)
+	\item \emph{geometry} (Version 5.5)
+	\item \emph{ifthen} (Version 1.1c)
+	\item Das \emph{KOMA-Skript}-Paket (Version 3.06)
+	\item \emph{longtable} (Version 4.11)
+	\item \emph{TikZ}, \emph{PGFPages} (Version 2.00)
+	\item \emph{xargs} (Version 1.1)
 \end{itemize}
 All diese Pakete sollten aber in den heute verbreiteten Distributionen von\ \TeX\ enthalten sein. Andernfalls sind sie über CTAN\footnote{http://www.ctan.org/} relativ einfach und schnell zu beziehen.
 \subsection{Die Kartenumgebung}
@@ -250,8 +257,6 @@ Eine Erweiterungsidee ist, dass man selbst die Positionierung der Elemente Fach,
 \paragraph{Rückseitenformat festlegen}
 Für die Rückseite könnte man noch ein Format festlegen, etwa zusätzliche Felder für eine Bewertung/Lernkontrolle.
 
-\paragraph{Liste der Karteikarten / eine Lernkontrolltabelle}
-Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenübersicht als auch eine Lernkontrolle einbinden, auf der man seine Lernfortschirtte verzeichnen kann.
 \section{Lizenz}
 \begin{lstlisting}[basicstyle=\sffamily, numbers=none]
 *
@@ -267,6 +272,7 @@ Im Druck-Modus könnte man mit einem Index der Karteikarten sowohl eine Themenü
 \end{lstlisting}
 \newpage\section{Changelog}
 \begin{description}
+	\item[1.9 - in Arbeit] Lernkontrolle bzw. Kartenübersicht implementiert.
 	\item[1.8b - 30.12.2011] Korrektur der Schnittmarken, Paketwechsel von \emph{eso-pic} auf ein unabhängiges Ausliefern der Schnittmarken mit \emph{atbegshi}. Tippfehler im Manual korrigiert.
 	\item[1.8a - 29.01.2010] Zwei kleine Bugfixes in der Hauptklasse und Korrekturen an diesem Dokument, Danke geht an Philipp Pilhofer und Frederik St.
 	\item[1.8 - 26.12.2009] Umstieg auf die KOMA-Skript-Familie und das geometry-Paket, einstellbare Schnittlinien, sowie umdrehbare Rückseite und DIN-A9-Karten

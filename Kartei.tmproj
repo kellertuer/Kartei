@@ -10,103 +10,103 @@
 			<key>filename</key>
 			<string>kartei.a5printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:01Z</date>
+			<date>2012-01-04T16:41:55Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a5printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:33:59Z</date>
+			<date>2012-01-04T16:41:33Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a6printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:33:56Z</date>
+			<date>2012-01-04T16:41:51Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a6printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:33:52Z</date>
+			<date>2012-01-04T16:55:48Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a7printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-03T15:48:06Z</date>
+			<date>2012-01-04T17:00:53Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a7printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:11Z</date>
+			<date>2012-01-04T16:43:09Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a8printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:12Z</date>
+			<date>2012-01-04T16:43:09Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a8printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:13Z</date>
+			<date>2012-01-04T16:42:58Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a9printstyle.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:14Z</date>
+			<date>2012-01-04T16:43:14Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.a9printstylerotation.tex</string>
 			<key>lastUsed</key>
-			<date>2011-12-30T12:34:14Z</date>
+			<date>2012-01-04T16:43:39Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.tableofcontents.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-04T11:06:30Z</date>
+			<date>2012-01-11T08:38:32Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.print.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-04T10:59:28Z</date>
+			<date>2012-01-07T00:23:25Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.cls</string>
 			<key>lastUsed</key>
-			<date>2012-01-04T11:05:54Z</date>
+			<date>2012-01-07T00:18:03Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>kartei.pageshipout.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-03T15:40:53Z</date>
+			<date>2012-01-04T16:45:46Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>manual.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-03T15:03:40Z</date>
+			<date>2012-01-05T20:39:13Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>manualexample1.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-04T10:48:57Z</date>
+			<date>2012-01-06T23:15:10Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>beispiel.tex</string>
 			<key>lastUsed</key>
-			<date>2012-01-04T11:06:30Z</date>
+			<date>2012-01-11T08:38:32Z</date>
 			<key>selected</key>
 			<true/>
 		</dict>
@@ -120,130 +120,70 @@
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1</integer>
+				<integer>53</integer>
 				<key>line</key>
-				<integer>19</integer>
+				<integer>25</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>14</integer>
-		</dict>
-		<key>kartei.a7printstyle.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>4</integer>
-			</dict>
-			<key>columnSelection</key>
-			<false/>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>3</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>4</integer>
-			</dict>
+			<integer>16</integer>
 		</dict>
 		<key>kartei.cls</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>68</integer>
 				<key>line</key>
-				<integer>396</integer>
+				<integer>107</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>393</integer>
-		</dict>
-		<key>kartei.pageshipout.tex</key>
-		<dict>
-			<key>caret</key>
-			<dict>
-				<key>column</key>
-				<integer>0</integer>
-				<key>line</key>
-				<integer>22</integer>
-			</dict>
-			<key>firstVisibleColumn</key>
-			<integer>0</integer>
-			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>100</integer>
 		</dict>
 		<key>kartei.print.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>1</integer>
+				<integer>23</integer>
 				<key>line</key>
-				<integer>10</integer>
+				<integer>41</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>0</integer>
+			<integer>29</integer>
 		</dict>
 		<key>kartei.tableofcontents.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>0</integer>
+				<integer>51</integer>
 				<key>line</key>
-				<integer>55</integer>
+				<integer>76</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>52</integer>
+			<integer>66</integer>
 		</dict>
 		<key>manualexample1.tex</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>25</integer>
+				<integer>0</integer>
 				<key>line</key>
-				<integer>11</integer>
+				<integer>10</integer>
 			</dict>
-			<key>columnSelection</key>
-			<false/>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>8</integer>
-			<key>selectFrom</key>
-			<dict>
-				<key>column</key>
-				<integer>22</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
-			<key>selectTo</key>
-			<dict>
-				<key>column</key>
-				<integer>25</integer>
-				<key>line</key>
-				<integer>11</integer>
-			</dict>
+			<integer>9</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
@@ -252,13 +192,11 @@
 		<string>kartei.cls</string>
 		<string>kartei.print.tex</string>
 		<string>kartei.tableofcontents.tex</string>
-		<string>kartei.pageshipout.tex</string>
-		<string>kartei.a7printstyle.tex</string>
 		<string>beispiel.tex</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{229, 269}, {1024, 509}}</string>
+	<string>{{214, 267}, {1051, 511}}</string>
 </dict>
 </plist>
