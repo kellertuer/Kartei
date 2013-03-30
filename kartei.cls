@@ -191,7 +191,6 @@
 \ifcard@useprint%
   \input{kartei.print}
 \fi%
-
 %
 % -----------------
 % Main Commands 
@@ -335,36 +334,36 @@
 \lohead{}%
 	~\cleardoublepage
 }
+\newcommand{\card@printTOC}{
+\ifcard@useTOC % only include these if toc is active
+  \ifcard@useprint
+%    \pgfshipoutphysicalpage
+    \pgfpagesuselayout{resize to}[a4paper]
+	\newpage
+    \KOMAoptions{paper=a4,DIV=13}
+	\setlength{\pdfpagewidth}{21cm}
+	\setlength{\textwidth}{17.5cm}
+	\setlength{\pdfpageheight}{29.7cm}
+  \else
+    \KOMAoptions{paper=a4,DIV=13}
+  \fi
+  \thispagestyle{empty}
+  \card@makeTOC
+\fi
+}
+
 %
 % Init and Endstuff...
 %
-\AtBeginDocument{}
+\AtBeginDocument{\setcardpagelayout}
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
 %
-\AtEndDocument{%
-\ifcard@useTOC % only include these if toc is active
-  \ifcard@useprint
-    \tikzset{front grid/.style={white}}
-    \tikzset{rear grid/.style={white}}
-    \card@makeTOC
-    \pgfpagesuselayout{resize to}[a4paper]
-  \else
-    \KOMAoptions{paper=a4,DIV=13}
-    \recalctypearea
-    \newpage
-    \thispagestyle{empty}
-    \card@makeTOC
-  \fi
-\fi
-}
+\AtEndDocument{\card@printTOC}
 \makeatother
-
-
 %
-% Std pagestyle and set pgfpageslayout if print is set
 %
-\setcardpagelayout
+% Init
 \antwort{Antwort}
 \pagestyle{scrheadings}
 \clearscrheadings
@@ -373,9 +372,10 @@
 \lehead{\theCardID}
 \cehead{\dieantwort}%
 \setheadsepline{.4pt}[\color{black}]
-
 %
 % Border Definitions
 %
 \tikzset{front grid/.style={very thin, gray}}
 \tikzset{rear grid/.style={thin, black, loosely dashed}}
+%
+\setcardpagelayout

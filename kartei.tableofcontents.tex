@@ -123,9 +123,10 @@
 }
 
 \newcommand{\card@makeTOC}{
-  {\centering\Large\textsc{Karten\"ubersicht}}
+  {\centering\Large%\textsc
+      {Karten\"ubersicht}}
   \ifnum\value{card@toccount}>0%
-	\card@tocinner
+    \card@tocinner
     \end{longtable}
   \else
     {\emph{Es liegen keine Karten vor.}}

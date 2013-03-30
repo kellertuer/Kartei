@@ -6,6 +6,7 @@
 % written by Till Tantau (published under GPL within the pgfpages-paket), modified by Ronny Bergmann
 %
 \makeatletter
+\let\oldpgfshipoutphysicalpage\pgfshipoutphysicalpage
 \renewcommand\pgfshipoutphysicalpage{%
 %Ship out odd (front) pages
   \ifnum\pgf@logicalpages>0\relax%
