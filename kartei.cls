@@ -329,7 +329,7 @@
 }% Start os usual content block
 {% Build a warning if the page is too full (forcing a pagebreak)
  % assure the next card starts on an odd page by doublepagebreak
-\cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
+\cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.\ClassError{kartei}{The text does not fit on the card. Use less text or a smaller text size}{Use less text or a smaller text size}}%
 \rohead{}%
 \lohead{}%
 	~\cleardoublepage
