@@ -17,7 +17,7 @@ Eine Anleitung befindet sich in der Eine Auslistung aller Optionen findet sich i
 	% ------------------------------------------------------
 	% "THE BEER-WARE LICENSE" (Revision 42/023):
 	% Ronny Bergmann <mail@rbergmann.info> wrote this file.
-	% As long as you retainthis notice you can do whatever
+	% As long as you retain this notice you can do whatever
 	% you want with this stuff. If we meet some day, and you
 	% think  this stuff is worth it, you can buy
 	% me a beer or a coffee in return. 
