@@ -1,0 +1,42 @@
+%%
+%    * ----------------------------------------------------------------
+%    * "THE BEER-WARE LICENSE" (Revision 42/023):
+%    * Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as
+%    * you retain this notice you can do whatever you want with this
+%    * stuff. If we meet some day and you think this stuff is worth it,
+%    * you can buy me a beer or a coffee in return.
+%    * ----------------------------------------------------------------
+%
+%
+% An English example using the Kartei.cls - including print and toc as
+% options, hence all pages are Din A4.
+%
+% Last Change: Kartei 1.9, 2012/01/04
+%
+\documentclass[a6paper,10pt,grid=front%
+,toc
+%,print
+]{kartei}
+\usepackage[utf8]{inputenc} %UTF8
+\usepackage{hyperref}
+\begin{document}
+  \setcardpagelayout
+  \begin{karte}[The Philosophy of Life]{What is the Answer to the Ultimate Question of Life, the Universe, and Everything}[Super-relevant]
+  42
+  \end{karte}
+  \begin{karte}[Numerology]{What is the difference between $n$ and n in LaTeX?}
+  $n$ gives you a variable in Math mode, n is just a letter.
+  \end{karte}
+%  \section{Computer Science}
+%  \subsection{Fun with References}
+%  %Change the commentstyle with \kommentarstil
+  \renewcommand{\kommentarstil}{\textsc}
+  \begin{karte}{What is cross-recursion?}[An example label]
+  \label{karte:answer} See card\ref{karte:question}
+  \end{karte}
+%  \subsection{Fun with References II}
+  \begin{karte}{What is the answer to \ref{karte:answer}?}
+   \label{karte:question}
+    Nothing to see here, move along.
+  \end{karte}
+\end{document}
