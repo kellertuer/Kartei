@@ -105,14 +105,14 @@
 \DeclareOption{a7paper}{%
 	\card@papersize=2%
 	\PassOptionsToPackage{paper=a7,pagesize}{typearea}%
-	\setlength{\card@hoffset}{-33.75pt}\setlength{\card@voffset}{37pt}%
+	\setlength{\card@hoffset}{-27pt}\setlength{\card@voffset}{42.5pt}%
 }%
 %A8 Cards
 \DeclareOption{a8paper}{
 	\card@papersize=3%
 	\PassOptionsToPackage{paper=a8,pagesize}{typearea}%
 	\setlength{\card@hoffset}{-33.75pt}\setlength{\card@voffset}{37pt}%
-}%	
+}%
 %A9 Cards
 \DeclareOption{a9paper}{
 	\card@papersize=4%
@@ -150,7 +150,7 @@
 \PassOptionsToClass{twoside}{scrartcl}%
 \PassOptionsToClass{cleardoublepage=plain,DIV=calc}{scrartcl}%
 \LoadClass{scrartcl}
-\RequirePackage[headsepline]{scrpage2}
+\RequirePackage{scrlayer-scrpage}
 \RequirePackage{xargs}
 \RequirePackage[landscape]{geometry}
 %
@@ -174,7 +174,7 @@
 	\or% DIN A6 because after or we are at 1
 		\geometry{left=2em,top=3em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\or% DIN A7 because 2
-		\geometry{left=1em,top=2.5em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
+		\geometry{left=2em,top=2.5em,right=2em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=2em}%
 	\or% %DIN A8 because 3
 		\geometry{left=1em,top=2em,right=1em,bottom=1em,head=1.3\baselineskip, headsep=.7\baselineskip,footskip=1em}%
 	\or% DIN A9 because 4
@@ -193,7 +193,7 @@
 \fi%
 %
 % -----------------
-% Main Commands 
+% Main Commands
 % -----------------
 %
 \makeatletter
@@ -306,6 +306,13 @@
     \card@addsubsec{#1}
   \fi%
 }
+\colorlet{CardHead}{blue!80!black!50}
+
+% CardHooks
+\newcommand{\card@fronthook}{\CardFrontImg}
+\newcommand{\CardFrontImg}{}
+\newcommand{\card@backhook}{\CardBackImg}
+\newcommand{\CardBackImg}{}
 %    Karteikartenumgebung:
 %  #1 (optional) Kopfzeile vorne Links : Fach
 %  #2 Titel der Vorderseite
@@ -320,18 +327,21 @@
   \fi%
   % Build Cover page before starting environment
   %
-\cohead{\theCardID}
-\lohead{\dasfach{#1}}
-\rohead{\derkommentar{#3}}
+\cohead{\color{CardHead}\theCardID}
+\lohead{\color{CardHead}\dasfach{#1}}
+\rohead{\color{CardHead}\derkommentar{#3}}
 \thispagestyle{scrheadings}
-~\vfill{~\hfill \parbox[t]{.9\textwidth}{\centering \Large #2}\hfill~}\vfill~
+~\vspace{2\baselineskip}\par{~\hfill \parbox[t]{.9\textwidth}{\centering \large #2}\hfill~}\vfill~
+\card@fronthook
 \newpage%
 }% Start os usual content block
-{% Build a warning if the page is too full (forcing a pagebreak)
+{
+\card@backhook
+% Build a warning if the page is too full (forcing a pagebreak)
  % assure the next card starts on an odd page by doublepagebreak
-\cohead{{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
-\rohead{}%
-\lohead{}%
+\cohead{\color{CardHead}{\bfseries Achtung:} R\"uckseite von \theCardID\ ist zu voll.}%
+\rohead{\color{CardHead}}%
+\lohead{\color{CardHead}}%
 	~\cleardoublepage
 }
 \newcommand{\card@printTOC}{
@@ -351,10 +361,10 @@
   \card@makeTOC
 \fi
 }
-
 %
 % Init and Endstuff...
 %
+\setcardpagelayout
 \AtBeginDocument{\setcardpagelayout}
 %
 % finally set the layout, if print was given this sets to the just defined 8on2
@@ -367,15 +377,12 @@
 \antwort{Antwort}
 \pagestyle{scrheadings}
 \clearscrheadings
-\lohead{Kartentitel}
-\cohead{\theCardID}
-\lehead{\theCardID}
-\cehead{\dieantwort}%
-\setheadsepline{.4pt}[\color{black}]
+\lohead{\color{CardHead}Kartentitel}
+\cohead{\color{CardHead}\theCardID}
+\lehead{\color{CardHead}\theCardID}
+\cehead{\color{CardHead}\dieantwort}%
 %
 % Border Definitions
 %
-\tikzset{front grid/.style={very thin, gray}}
+\tikzset{front grid/.style={thin, gray}}
 \tikzset{rear grid/.style={thin, black, loosely dashed}}
-%
-\setcardpagelayout
