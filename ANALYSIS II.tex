@@ -1,0 +1,490 @@
+%%
+%    * ----------------------------------------------------------------
+%    * "THE BEER-WARE LICENSE" (Revision 42/023):
+%    * Ronny Bergmann <mail@rbergmann.info> wrote this file. As long as
+%    * you retain this notice you can do whatever you want with this
+%    * stuff. If we meet some day and you think this stuff is worth it,
+%    * you can buy me a beer or a coffee in return.
+%    * ----------------------------------------------------------------
+%
+%
+% A german example using the Kartei.cls - including print and toc as
+% options, hence all pages are Din A4.
+%
+% Last Change: Kartei 1.9, 2012/01/04
+%
+\documentclass[a6paper
+	,10pt
+	,grid=none
+	%,toc
+	%,print
+]{kartei}
+
+\usepackage[utf8]{inputenc} %UTF8
+%\usepackage{hyperref}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+
+\usepackage	[pdftex,
+pdfauthor={Bernd Schulze Elfringhoff},
+pdftitle={Karteikarten ANALYSIS},
+pdfsubject={Karteikarten ANALYSIS}]{hyperref}
+
+
+\begin{document}
+  \setcardpagelayout
+  \setlength{\parindent}{0em} 
+
+
+
+
+%  \section{Analysis II}
+
+%
+%%
+%%%%
+%%%%%
+%%%%%%
+%%%%%%%
+%%%%%%%%
+%%%%%%%%%
+%%%%%%%%%%
+%%%%%%%%%% \subsection{Grundlagen und Wiederholung}
+%%%%%%%%%%
+%%%%%%%%%
+%%%%%%%%
+%%%%%%%
+%%%%%%
+%%%%%
+%%%%
+%%
+%
+
+
+\begin{karte}
+	[SIN/COS Rechenregeln]
+	{
+		Wie lauten die Additionstheoreme für Sinus und Cosinus? 
+		\newline
+		\textit{Hinweis: $ \sin(a+b) = ... $}
+	}
+	[Basics]
+	{
+		$ \sin(a+b) = \sin a \cos b + \cos a \sin b$ \newline\newline
+		$ \cos(a+b) = \cos a \cos b - \sin a \sin b$ \newline\newline
+		$ \sin(a-b) = \sin a \cos b - \cos a \sin b$ \newline\newline
+		$ \cos(a-b) = \cos a \cos b + \sin a \sin b$
+	}
+\end{karte}
+
+\begin{karte}
+	[Exp und Log]
+	{
+		(1) Wie lässt sich $log_{a}(x)$ durch ln ausdrücken?\newline\newline\newline
+		(2) $log_a(x+y) = log_a(x)*log_a(y)$ - wahr oder falsch?\newline\newline\newline
+		(3) $log_a(u^v) = ...$\newline\newline\newline
+		(4) $log_a(u)-log_a(v) = ...$\newline\newline\newline
+		(5) $ln(x)' = ...$\newline\newline\newline
+		(6) $f:I\rightarrow \mathbb{R}, x\rightarrow f(x):=ln(x) $. Wie ist die Stammfunktion definiert?
+	}
+	[Basics]
+	{
+		(1) $log_{a}(x) = \frac{ln(x)}{ln(a)}$\newline\newline\newline
+		(2) falsch, aber: $log_a(x \cdot y) = log_a(x)+log_a(y)$\newline\newline\newline
+		(3) $log_a(u^v) = v \cdot log_a(u)$\newline\newline\newline
+		(4) $log_a(u)-log_a(v) = log_a(\frac{u}{v})$\newline\newline\newline
+		(5) $ln(x)' = \frac{1}{x}$\newline\newline\newline
+		(6) $F:I\rightarrow \mathbb{R}, x\rightarrow F(x):=xln(x)-x +c $
+	}
+\end{karte}
+
+\begin{karte}
+	[Betrag - Dreiecksungleichung]
+	{
+		Beweise die Dreiecksungleichungen für den Betrag bei reellen Zahlen.
+	}
+	[Basics]
+	{
+		Dreiecksungleichung für reelle Zahlen: $\vert a+b \vert \leq \vert a \vert + \vert b \vert$ mit $a,b \in \mathbb{R}$
+		\newline\newline
+		$\vert a + b \vert = \sqrt{\vert a + b \vert^2} = \sqrt{\vert a^2 + 2ab + b^2 \vert} \leq \sqrt{\vert a^2 + \vert 2ab \vert + b^2 \vert} = \sqrt{(\vert a \vert + \vert b \vert )^2} = \vert a \vert + \vert b \vert$
+	}
+\end{karte}
+
+\begin{karte}
+	[Injektiv, Surjektiv, Bijektiv]
+	{
+		Sei $f:M\rightarrow N$ eine Funktion.
+		\textit{(Zur Beantwortung der Fragen sollen möglichst nur Quantoren verwendet werden.)}
+		\newline\newline
+		Wie lautet die Definition für Injektivität? \newline\newline\newline\newline\newline
+		Wie lautet die Definition für Surjektivität? \newline\newline\newline\newline\newline
+		Wie lautet die Definition für Bijektivität? \newline\newline\newline\newline\newline
+	}
+	[Basics]
+	{
+		Sei $f:M\rightarrow N$ eine Funktion 
+		\newline\newline
+		\underline{Injektivität} \newline $\forall x_1, x_2 \in M: f(x_1)=f(x_2) \Rightarrow x_1=x_2$
+		\newline\newline\newline
+		\underline{Surjektivität} \newline $\forall y\in N \ \exists x \in M: y=f(x)$
+		\newline\newline\newline
+		\underline{Bijektivität} \newline
+		f ist surjektiv und injektiv
+	}
+\end{karte}
+
+\begin{karte}
+	[Wichtige Reihen und deren Grenzwerte]
+	{
+		Wie sind die folgenden Reihen definiert, konvergieren diese und gegen welchen Grenzwert (falls sie konvergieren)?
+		\newline\newline
+		\underline{Harmonische Reihe:} \newline\newline\newline\newline
+		\underline{Allgemeine harmonische Reihe:} \newline\newline\newline\newline
+		\underline{Alternierende harmonische Reihe:} \newline\newline\newline\newline
+		\underline{Geometrische Reihe:}
+	}
+	[Basics]
+	{
+		\underline{Harmonische Reihe}:\newline
+		$\displaystyle \sum_{n=1}^{\infty} \frac{1}{n} = \infty$\newline\newline
+		\underline{Allgemeine harmonische Reihe}:\newline
+		$\displaystyle \sum_{n=1}^{\infty} \frac{1}{n^\alpha}$ konvergiert für $\alpha \in (1,\infty)$\newline\newline
+		\underline{Alternierende harmonische Reihe}:\newline
+		$\displaystyle \sum_{n=1}^{\infty} \frac{(-1)^{n+1}}{n} = ln(2)$\newline\newline
+		\underline{Geometrische Reihe}:\newline
+		$\displaystyle \sum_{n=0}^{\infty} x^n = \frac{1}{1-x}$ konvergiert für $|x|<1$
+	}
+\end{karte}
+
+\begin{karte}
+	[Wichtige Folgen und deren Grenzwerte]
+	{
+		Gegen welchen Grenzwert konvergieren die Folgen (falls sie konvergieren)?
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \frac{a}{n} = $
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} a^n = $
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} n^{\frac{1}{n}} = $ 
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1+ \frac{1}{n} \Big)^n = $
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1- \frac{1}{n} \Big)^n = $
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1+ \frac{k}{n} \Big)^n = $
+	}
+	[Basics]
+	{
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \frac{a}{n} = 0$ für $a\in\mathbb{R}$
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} a^n = 0$ für $ \vert a \vert <1$
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} n^{\frac{1}{n}} = 1$ für $a\in \mathbb{R}^+$
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1+ \frac{1}{n} \Big)^n = e$
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1- \frac{1}{n} \Big)^n = \frac{1}{e}$
+		\newline\newline
+		$\displaystyle \lim\limits_{k\rightarrow \infty} \Big( 1+ \frac{k}{n} \Big)^n = e^k$
+	}
+\end{karte}
+%
+%%
+%%%%
+%%%%%
+%%%%%%
+%%%%%%%
+%%%%%%%%
+%%%%%%%%%
+%%%%%%%%%%
+%%%%%%%%%% \subsection{Kurseinheit 1}
+%%%%%%%%%%
+%%%%%%%%%
+%%%%%%%%
+%%%%%%%
+%%%%%%
+%%%%%
+%%%%
+%%
+%
+
+\begin{karte}
+	[Cauchy-Schwarz / Minkowski]
+	{
+		Wie lautet die Cauchy-Schwarz Ungleichung? \newline\newline\newline\newline\newline\newline\newline\newline\newline\newline
+		Wie lautet die Minkowskische Ungleichung?
+	}
+	[KE1.1]
+	{
+		\underline{Cauchy-Schwarz Ungleichung:}
+		\begin{equation}
+			\begin{split}
+				\vert \sum_{k=1}^{n} x_k y_k \vert &\leq \sqrt{\sum_{k=1}^{n}x^2_k} \sqrt{\sum_{k=1}^{n}y^2_k} \\
+				\vert \langle x,y\rangle \vert^2 &\leq \langle x,x\rangle \cdot \langle y,y\rangle \\
+				\vert \langle x,y\rangle \vert &\leq \Vert x \Vert \cdot \Vert y \Vert
+			\notag\end{split}
+		\end{equation}
+		\underline{Minkowskische Ungleichung:}
+		\begin{equation}
+			\begin{split}
+				\sqrt{\sum_{k=1}^{n} (x_k + y_k)^2} &\leq \sqrt{\sum_{k=1}^{n}x^2_k} \sqrt{\sum_{k=1}^{n}y^2_k} \\
+				\Vert x+y \Vert &\leq \Vert x \Vert \cdot \Vert y \Vert
+			\notag\end{split}
+		\end{equation}
+	}
+\end{karte}
+
+\begin{karte}
+	[Vektorraum]
+	{
+		Wie ist ein reeller Vektorraum definiert
+	}
+	[KE1 - 1.3]
+	{
+		Sei X eine nicht leere Menge,  $x,y \in X, \alpha\in \mathbb{R}$. Dann heißt X ein reeller Vektorraum oder linearer Vektorraum über $\mathbb{R}$, wenn folgende Kriterien erfüllt sind \newline\newline
+		\underline{Addition:} Auf X sei eine Addition erklärt, so dass x, y ein eindeutiges Element $x+y \in X$ zugeordnet ist mit:
+		\newline
+		- $Add_1$ (Assoziativität): $\forall x, y, z \in X: (x+y)+z =x+(y+z)$ \newline
+		- $Add_2$ (Neutrales Element): $\exists \ (neutr.\ Element)\ 0 \in X$ mit $x+0=0+x=x\ \forall x\in X$\newline
+		- $Add_3$ (Inverses): $\forall x\in X \ \exists (-x)\in X: x+(-x) =(-x)+x = 0\ (\forall x \in X)$\newline
+		- $Add_4$ (Kommutativität): $\forall x, y \in X:\ x+y = y+x$
+		\newline\newline
+		\underline{Skalare Multiplikation:} Für $\alpha\in\mathbb{R}, x\in X$ ist eindeutig ein Element $\alpha x \in X$ zugeordnet mit:
+		\newline
+		- $Mult_1$ (Assoziativität): $\forall \alpha, \beta \in \mathbb{R}, x\in X: \ \alpha (\beta x) = (\alpha\beta)x$ \newline
+		- $Mult_2$ (Distributivität): $\forall x, y \in X, \alpha, \beta \in \mathbb{R}: \ \alpha(x+y)=\alpha x + \alpha x,\ (\alpha + \beta)x=\alpha x + \beta x$
+		- $Mult_3$ (Neutrales Element): $\forall x\in X: 1x=x$		
+	}
+\end{karte}
+
+\begin{karte}
+	[Normen - Äquivalenz]
+	{
+		Seien $\Vert \Vert$ und $\Vert \Vert^*$ zwei Normen auf $\mathbb{R}^n, a= ^t(a_1, ..., a_n)\in \mathbb{R}^n, U \subseteq \mathbb{R}^n, (x_k)_{k\in\mathbb{N}}$ mit $x_k = ^t(x_{k1}, ..., x_{kn})$ eine Folge in $\mathbb{R}^n$. Was kann man bzgl. der Äquivalenz der Normen in $\mathbb{R}^n$ hinsichtlich Umgebungsbegriff und Konvergenz sagen?
+		\newline\newline
+		(i) U ist Umgebung... 
+		\newline\newline\newline\newline\newline\newline\newline\newline
+		(ii)$(x_k)$ ist konvergent (gegen a) ...
+	}
+	[KE1.4]
+	{
+		Seien $\Vert\Vert$ und $\Vert\Vert^*$ zwei Normen auf $\mathbb{R}^n, a= ^t(a_1, ..., a_n)\in \mathbb{R}^n, U \subseteq \mathbb{R}^n, (x_k)_{k\in\mathbb{N}}$ mit $x_k = ^t(x_{k1}, ..., x_{kn})$ eine Folge in $\mathbb{R}^n$. Dann gilt:
+		\newline\newline\newline
+		(i) U ist Umgebung von a in $(\mathbb{R}^n, \Vert\Vert) \Leftrightarrow$ U ist Umgebung von a in $(\mathbb{R}^n, \Vert\Vert^*)$ 
+		\newline\newline\newline\newline\newline\newline\newline\newline
+		(ii)$(x_k)$ ist konvergent (gegen a) in $(\mathbb{R}^n, \Vert\Vert)$ \newline
+		$\Leftrightarrow (x_k)$ ist konvergent (gegen a) in $(\mathbb{R}^n, \Vert\Vert^*)$ \newline
+		$\Leftrightarrow$ Für jedes $j\in 1, ...n$ konvergiert $(x_{kj})$ (gegen $a_j$) in $(\mathbb{R}, \vert \vert)$ \newline
+	}
+\end{karte}
+
+\begin{karte}
+	[Normen]
+	{
+		Wie sind die folgenden Normen (auf $\mathbb{R}^n$) definiert?
+		\newline\newline
+		\underline{Durch $d_1(x,y)$ induzierte Norm:}		
+		\newline\newline\newline\newline\newline\newline
+		\underline{Euklidische Norm:}
+		\newline\newline\newline\newline\newline\newline
+		\underline{Maximumnorm:}
+	}
+	[KE1.4 - 1.4.4]
+	{
+		\underline{Durch $d_1(x,y)$ induzierte Norm:}
+		\newline
+		$\displaystyle \Vert x \Vert_1 := \left( \sum_{k=1}^{n} \vert x_k \vert \right)$
+		\newline\newline\newline
+		\underline{Euklidische Norm:}
+		\newline
+		$\displaystyle \Vert x \Vert_2 := \sqrt{\left( \sum_{k=1}^{n} \vert x_k \vert^2 \right)}$
+		\newline\newline\newline
+		\underline{Maximumnorm:}
+		\newline
+		$\displaystyle \Vert x \Vert_\infty := \max \{\vert x_k\vert \ \vert 1\leq k \leq n \}$
+	}
+\end{karte}
+
+\begin{karte}
+	[Konvergenz]
+	{
+		Wie lautet die Definition für eine Cauchyfolge? \\ (in einem normierten Raum)
+	}
+	[KE1.5 - 1.5.14]
+	{
+		Sei $(X,\Vert \Vert)$ ein normierter Raum. Eine Folge $(x_k)$ in X heißt Cauchyfolge in $(X,\Vert \Vert)$, wenn die folgende Bedingung erfüllt ist: 
+		\newline\newline\newline\newline
+		\underline{Alternative 1:}\newline
+		$ \forall \epsilon>0 \ \exists n_0 \in \mathbb{N} \ \forall k \in \mathbb{N} \ : (k>n_0 \Rightarrow \Vert x_k - x_{n_o} \Vert < \epsilon )$
+		\newline\newline\newline\newline
+		\underline{Alternative 2:}\newline
+		$ \forall \epsilon>0 \ \exists n_0 \in \mathbb{N} \ \forall k,l \in \mathbb{N} \ : (k,l>n_0 \Rightarrow \Vert x_k - x_l \Vert < \epsilon )$
+	}
+\end{karte}
+
+\begin{karte}
+	[Hausdorffeigenschaft]
+	{
+		Wie ist die Hausdorfeigenschaft definiert (\textit{für normierte Räume})?
+	}
+	[KE1.5 - 1.5.3]
+	{
+		Sei $(X,\Vert)$ ein normierter Raum, und seien $a,b \in X$ mit $a \neq b$. Dann gibt es eine Umgebung U von a und eine Umgebung V von b mit $U \cap V = \emptyset$
+	}
+\end{karte}
+
+\begin{karte}
+	[Konvergenz in $(X,\Vert \Vert)$]
+	{
+		Sei $(X,\Vert \Vert)$ ein normierter Raum. Welche der Aussagen ist wahr?
+		\newline \newline
+		(1) Jede konvergente Folge ist eine Cauchyfolge \newline\newline
+		(2) Jede Cauchyfolge ist beschränkt \newline\newline
+		(3) Jede Cauchyfolge konvergiert \newline\newline
+		(4) Besitzt eine Cauchyfolge eine konvergente Teilfolge, so ist sie selbst konvergent
+	}
+	[KE1.5 - 1.5.15]
+	{
+		(1) wahr \newline\newline 
+		(2) wahr \newline\newline
+		(3) wahr für Banachräume (wie bspw. $(\mathbb{R}^n, \Vert \Vert)$)\newline\newline
+		(4) wahr
+	}
+\end{karte}
+
+\begin{karte}
+	[Normen]
+	{
+		Seien $(\mathbb{R},\Vert \Vert)$ und $(\mathbb{R},\Vert \Vert_\infty)$ normierte reelle Räume mit einer beliebigen Norm $\Vert \Vert$ und der Maximumnorm $\Vert \ \Vert_\infty$.
+		Seien $a = \textsuperscript{t}(a_1,...,a_n) \in \mathbb{R}^n$, 
+		$(x_k)_{k\in \mathbb{N}}$ mit $\textsuperscript{t}(x_{k1},..x_{kn})$ eine Folge in $\mathbb{R}^n$
+		\newline\newline
+		(1) Welcher Zusammenhang besteht zwischen $\Vert\Vert$ und $\Vert\Vert_\infty$ \newline\newline\newline\newline
+		(2) Hängen Umgebungen zwischen $(\mathbb{R},\Vert \Vert)$ und $(\mathbb{R},\Vert \Vert_\infty)$ zusammen?\newline\newline\newline\newline
+		(3) Welche drei Konvergenzen sind hier äquivalent? (in drei verschiedenen normierten Räumen)
+	}
+	[KE1.5]
+	{
+		(1) $\Vert x\Vert \leq \alpha \Vert x\Vert_\infty$ and $\Vert x\Vert_\infty \leq \beta \Vert x\Vert$ für jedes $x\in\mathbb{R}$
+		\newline\newline\newline\newline
+		(2) U ist Umgebung von a in $(\mathbb{R},\Vert \Vert) \Leftrightarrow$  U ist Umgebung von a in $(\mathbb{R},\Vert \Vert_\infty)$ 
+		\newline\newline\newline\newline
+		(3) $(x_k)$ konvergiert gegen a in $ (\mathbb{R},\Vert \Vert) \Leftrightarrow $ $(x_k)$ konvergiert gegen a in $ (\mathbb{R},\Vert \Vert_\infty) \Leftrightarrow $ Für jedes v = 1,...,n konvergiert $(x_{kv})_{k\in\mathbb{N}}$ gegen $a_v$ in $(R,||)$
+	}
+\end{karte}
+
+\begin{karte}
+	[Metrik]
+	{
+		Wie ist eine Metrik $d(x,y)$ definiert?
+	}
+	[KE1.4.SE]
+	{
+		Sei X eine beliebige Menge. Eine Abbildung $d : X \times X \rightarrow \mathbb{R}$ heißt Metrik auf X, wenn für beliebige Elemente $x, y, z \in X$ die folgenden Axiome erfüllt sind:
+		\newline\newline\newline
+		(1) Positive Definitheit: 	$d(x,y) \geq 0$ und $d(x,y)=0 \Leftrightarrow x=y$
+		\newline\newline\newline
+		(2) Symmetrie: 	$d(x,y)=d(y,x)$
+		\newline\newline\newline
+		(3) Dreiecksungleichung: $d(x,y) \leq d(x,z)+d(z,y)$ 
+	}
+\end{karte}
+
+\begin{karte}
+	[Norm]
+	{
+		Auf dem Vektorraum $C^1([a,b])$ der stetig differenzierbaren Funktionen auf [a,b] wird definiert:
+		$ \Vert \ \Vert : C^1 ([a,b]) \rightarrow \mathbb{R}, f \rightarrow \Vert f \Vert := \Vert f \Vert_\infty + \Vert f' \Vert_\infty$ \newline\newline
+		Zeige, dass $\Vert \ \Vert$ eine Norm ist.
+	}
+	[KE1.4.SE]
+	{
+		Auf dem Vektorraum $C^1([a,b])$ der stetig differenzierbaren Funktionen auf [a,b] wird definiert:
+		$ \Vert \ \Vert : C^1 ([a,b]) \rightarrow \mathbb{R}, f \rightarrow \Vert f \Vert := \Vert f \Vert_\infty + \Vert f' \Vert_\infty$ \newline\newline
+		\underline{(i) Definitheit $\Vert x \Vert \geq 0$ und $(\Vert x \Vert = 0 \Leftrightarrow x=0)$:}
+		\newline
+		$\Vert f \Vert = \Vert f \Vert_\infty + \Vert f' \Vert_\infty \geq 0$
+		\newline\newline\newline
+		\underline{(ii) positive Homogenität $\Vert \alpha x \Vert$ = $\vert \alpha \vert \cdot \Vert x \Vert$:}
+		\newline
+		$\Vert \alpha f \Vert
+		= \Vert \alpha f \Vert_\infty + \Vert \alpha f' \Vert_\infty 
+		= \vert \alpha \vert (\Vert f \Vert_\infty + \Vert f' \Vert_\infty)
+		= \vert \alpha \vert \Vert  f \Vert_\infty
+		$
+		\newline\newline\newline
+		\underline{(iii): Dreiecksungleichung $\Vert x +y \Vert \leq \Vert x \Vert + \Vert y \Vert$:}
+		\newline
+		$\Vert f+g \Vert
+		= \Vert f+g \Vert_\infty + \Vert f'+g' \Vert_\infty 
+		\leq (\Vert f \Vert_\infty + \Vert g \Vert_\infty) + (\Vert f' \Vert_\infty + \Vert g' \Vert_\infty)
+		= (\Vert f \Vert_\infty + \Vert f' \Vert_\infty) + (\Vert g \Vert_\infty + \Vert g' \Vert_\infty)
+		=\Vert f \Vert + \Vert g \Vert
+		$
+	}
+\end{karte}
+
+\begin{karte}
+	[Metrik]
+	{
+		Sei M eine nichtleere Menge. Zeige, dass durch $d_d := \scriptsize \begin{cases} 0 & \text{falls }p=q \\ 1 & \text{falls }p \neq q \normalsize \end{cases}$ eine Metrik auf M definiert wird, die diskrete Metrik.
+	}
+	[KE1.4 - UniMarburg]
+	{
+		Sei M eine nichtleere Menge. Sei $d_d := \scriptsize \begin{cases} 0 & \text{falls }p=q \\ 1 & \text{falls }p \neq q \normalsize \end{cases}$. Dann ist $d_d$ eine Metrik.
+		\newline\newline\newline
+		\underline{(1) Positive Definitheit: 	$d(x,y) \geq 0$ und $d(x,y)=0 \Leftrightarrow x=y$}
+		\newline
+		$d(p,q) \geq 0$ und $d(p,q)=0 \Leftrightarrow p=q$ ist nach Definition gegeben.
+		\newline\newline
+		\underline{(2) Symmetrie: 	$d(x,y)=d(y,x)$}
+		\newline
+		Sei $d(p,q)=0$, also $p=q \Rightarrow$ $d(x,y)=0=d(y,x)$
+		\newline
+		Sei $d(p,q) \neq 0$, also $p \neq q \Rightarrow$ $d(x,y)=1=d(y,x)$
+		\newline\newline
+		\underline{(3) Dreiecksungleichung: $d(x,y) \leq d(x,z)+d(z,y)$ }
+		\newline
+		Falls $p=q: d(p,q) = 0 \leq d(p,r) + d(r,q)$ \newline
+		Falls $p \neq q: d(p,q) = 1 \leq d(p,r) + d(r,q)$, da mind. $p \neq r$ oder $r \neq q$ sein muss.
+	}
+\end{karte}
+
+\begin{karte}
+	[Abgeschlossenheit - Hausdorff]
+	{
+		Sei $(M,d)$ ein metrischer Raum. Zeige, dass für alle $x \in M$ die Menge $\{x\} \subseteq M$ abgeschlossen ist unter Verwendung der Hausdorffeigenschaft.
+	}
+	[KE1.5.SE]
+	{
+		Sei $x \in \{x\} \subseteq M$ entsprechend Aufgabenstellung.
+		\newline\newline
+		Sei $y \in M \setminus \{x\}$ beliebig. Wegen der Hausdorffeigenschaft des Raums existieren Umgebungen $U_x$ von x, $U_y$ von y mit $U_x \cap U_y = \emptyset$. Da $U_y$ Umgebung von y ist, gibt es auch eine offene Menge $U^*_y$ mit $U^*_y \subseteq U_y$
+		\newline\newline
+		(i) Für jedes $y \in M \setminus \{x\}$ gilt $x \notin U^*_y$, also $U^*_y \subseteq M \setminus \{x\}$. Da dies für jedes $y \in M \setminus \{x\}$ gilt, gilt zudem auch $\bigcup\limits_{y\in M \setminus \{x\}} U^*_y \subseteq M \setminus \{x\}$
+		\newline\newline
+		(ii) Andererseits muss auch gelten $M \setminus \{x\} \subseteq\bigcup\limits_{y\in M \setminus \{x\}} U^*_y$, da wir um jedes $y\in M \setminus \{x\}$ eine Umgebung legen. M muss dann natürlich in diesen gesamten Umgebungen liegen.
+		\newline\newline\newline
+		Aus (i) und (ii) folgt $M \setminus \{x\} = \bigcup\limits_{y\in M \setminus \{x\}} U^*_y$. Als Vereinigung offener Mengen ist $M \setminus \{x\}$ damit auch offen. Damit muss $\{x\}$ aber abgeschlossen sein.
+	} 
+\end{karte}
+
+
+
+%
+%  \subsection{VORLAGE}
+%
+
+\begin{karte}
+	[Thema]
+	{
+		...
+	}
+	[Kursabschnitt]
+	{
+		...
+	}
+\end{karte}
+
+\end{document}
