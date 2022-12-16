@@ -150,7 +150,7 @@
 \PassOptionsToClass{twoside}{scrartcl}%
 \PassOptionsToClass{cleardoublepage=plain,DIV=calc}{scrartcl}%
 \LoadClass{scrartcl}
-\RequirePackage{scrlayer-scrpage}
+\RequirePackage[headsepline]{scrlayer-scrpage}
 \RequirePackage{xargs}
 \RequirePackage[landscape]{geometry}
 %
