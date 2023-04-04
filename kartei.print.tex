@@ -27,11 +27,11 @@
       \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
       \ifcard@useFrontgrid%
         %vertical lines
-        \draw[front grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
-        \draw[front grid] (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[front grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[front grid] (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
         % horizontal lines
-        \draw[front grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset-.5\paperheight);%
-        \draw[front grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset+.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[front grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset-.5\paperheight);%
+        \draw[front grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset+.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
       \fi%
     \end{tikzpicture}%
   }%
@@ -40,11 +40,11 @@
       \path [use as bounding box] node [inner sep=0pt,outer sep=0pt] (A) {\box\AtBeginShipoutBox};
       \ifcard@useReargrid%
         %vertical lines
-        \draw[rear grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
-        \draw[rear grid] (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[rear grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[rear grid] (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
         % horizontal lines
-        \draw[rear grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset-.5\paperheight);%
-        \draw[rear grid] (\card@hoffset-.5\paperwidth-0.75pt,\card@voffset+.5\paperheight) -- (\card@hoffset+.5\paperwidth+0.75pt,\card@voffset+.5\paperheight);%
+        \draw[rear grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset-.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset-.5\paperheight);%
+        \draw[rear grid] (\card@hoffset-.5\paperwidth+0.75pt,\card@voffset+.5\paperheight) -- (\card@hoffset+.5\paperwidth-0.75pt,\card@voffset+.5\paperheight);%
       \fi%
     \end{tikzpicture}%
   }%
